@@ -1,0 +1,45 @@
+{
+  "name": "app",
+  "version": "0.0.0",
+  "repository": "https://github.com/vercel/examples.git",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@craft/query": "workspace:*",
+    "@craft/translation": "workspace:*",
+    "@craft/ui": "workspace:*",
+    "@craft/utils": "workspace:*",
+    "@editorjs/delimiter": "^1.4.0",
+    "@editorjs/header": "^2.8.1",
+    "@editorjs/image": "^2.9.0",
+    "@editorjs/list": "^1.9.0",
+    "@editorjs/paragraph": "^2.11.5",
+    "@editorjs/quote": "^2.6.0",
+    "@hookform/resolvers": "^3.6.0",
+    "@tanstack/react-query": "^5.45.1",
+    "next": "^14.2.4",
+    "next-intl": "^3.15.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-hook-form": "^7.52.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.5",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "autoprefixer": "^10.4.12",
+    "eslint": "^8.11.0",
+    "eslint-config-next": "^14.2.4",
+    "postcss": "^8.4.18",
+    "sass": "^1.77.6",
+    "tailwindcss": "^3.4.4",
+    "typescript": "^5.4.5"
+  }
+}

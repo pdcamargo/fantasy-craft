@@ -1,0 +1,28 @@
+{
+  "General": {
+    "hello": "Olá",
+    "world": "Mundo"
+  },
+  "Login": {
+    "header": "Sign In",
+    "subheader": "And craft your fantasy",
+    "username": "Usuário",
+    "password": "Senha",
+    "usernameHint": "Pode ser seu usuário ou email",
+    "forgotPassword": "Esqueceu a senha?",
+    "login": "Entrar",
+    "loggingIn": "Entrando...",
+    "loginWithGoogle": "Entrar com Google",
+    "loginWithDiscord": "Entrar com Discord",
+    "register": "Não tem uma conta? Registre-se",
+    "or": "ou",
+    "validation": {
+      "usernameRequired": "Usuário é obrigatório",
+      "passwordRequired": "Senha é obrigatória",
+      "usernameMin": "Usuário deve ter no mínimo 3 caracteres",
+      "passwordMin": "Senha deve ter no mínimo 6 caracteres"
+    },
+    "onSuccess": "Login efetuado com sucesso",
+    "onError": "Usuário ou senha inválidos"
+  }
+}

@@ -1,0 +1,14 @@
+.xanathar {
+  .page {
+    --background-color: #f3f2ee;
+    --background-image: url(/api/images/background/xanathar.jpeg);
+    --background-image-odd: url(/api/images/background/xanathar-odd.jpeg);
+    --header-text-color: #58180d;
+    --header-underline-color: #c0ad6a;
+    --first-letter-deg: -45deg;
+    --first-letter-colors: #000, #111, #000;
+
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+}

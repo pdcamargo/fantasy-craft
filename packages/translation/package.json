@@ -1,0 +1,37 @@
+{
+  "name": "@craft/translation",
+  "version": "0.0.1",
+  "license": "MIT",
+  "private": true,
+  "scripts": {},
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./*": [
+      "./src/*.ts",
+      "./src/*.json",
+      "./src/*.tsx",
+      "./src/*/index.ts"
+    ]
+  },
+  "files": [
+    "src"
+  ],
+  "typesVersions": {
+    "*": {
+      "*": [
+        "src/*",
+        "src/*/index"
+      ]
+    }
+  },
+  "dependencies": {
+    "@craft/utils": "workspace:*",
+    "lodash": "^4.17.21",
+    "next-intl": "^3.15.2"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.17.5"
+  }
+}
