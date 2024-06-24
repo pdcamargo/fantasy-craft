@@ -7,11 +7,14 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev --filter=app",
-    "start": "turbo run start",
-    "lint": "turbo run lint",
-    "clean": "turbo run clean"
+    "build": "turbo run build --filter=api",
+    "dev": "turbo run dev --filter=api",
+    "start": "turbo run start --filter=api",
+    "lint": "turbo run lint --filter=api",
+    "clean": "turbo run clean --filter=api",
+    "build:api": "turbo run build --filter=api",
+    "heroku-postbuild": "if [ $CLIENT_ENV ]; then pnpm run prod-app; elif [ $SERVER_ENV ]; then pnpm run prod-api; else echo no environment detected, please set CLIENT_ENV or SERVER_ENV; fi",
+    "prod-api": "pnpm run build:api"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^7.13.1",
