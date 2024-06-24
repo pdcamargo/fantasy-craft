@@ -7,12 +7,12 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "turbo run build --filter=api",
-    "dev": "turbo run dev --filter=api",
-    "start": "turbo run start --filter=api",
-    "lint": "turbo run lint --filter=api",
-    "clean": "turbo run clean --filter=api",
-    "build:api": "turbo run build --filter=api",
+    "build": "pnpm turbo run build --filter=api",
+    "dev": "pnpm turbo run dev --filter=api",
+    "start": "pnpm turbo run start --filter=api",
+    "lint": "pnpm turbo run lint --filter=api",
+    "clean": "pnpm turbo run clean --filter=api",
+    "build:api": "pnpm turbo run build --filter=api",
     "prod-api": "pnpm run build:api"
   },
   "devDependencies": {
