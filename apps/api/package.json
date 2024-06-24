@@ -5,7 +5,7 @@
   "type": "module",
   "license": "UNLICENSED",
   "scripts": {
-    "start": "node bin/server.js",
+    "start": "node build/bin/server.js",
     "build": "node ace build",
     "dev": "node ace serve --hmr",
     "test": "node ace test",
@@ -44,11 +44,13 @@
     "@types/luxon": "^3.4.2",
     "@types/node": "^20.14.5",
     "eslint": "^8.57.0",
+    "heroku": "^8.11.5",
     "hot-hook": "^0.2.6",
     "pino-pretty": "^11.2.1",
     "prettier": "^3.3.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5",
+    "vercel": "^34.2.7",
     "vite": "^5.3.1"
   },
   "dependencies": {
@@ -74,5 +76,8 @@
   "eslintConfig": {
     "extends": "@adonisjs/eslint-config/app"
   },
-  "prettier": "@adonisjs/prettier-config"
+  "prettier": "@adonisjs/prettier-config",
+  "engines": {
+    "node": "21.x"
+  }
 }
