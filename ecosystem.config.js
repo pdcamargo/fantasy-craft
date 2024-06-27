@@ -8,6 +8,7 @@ module.exports = {
       cwd: "./apps/app",
       env: {
         NODE_ENV: "production",
+        API_URL: "http://89.116.51.219:3333",
       },
     },
     {
