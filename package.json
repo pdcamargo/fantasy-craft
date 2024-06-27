@@ -13,7 +13,8 @@
     "lint": "turbo run lint --filter=api",
     "clean": "turbo run clean --filter=api",
     "build:api": "turbo run build --filter=api",
-    "prod-api": "pnpm run build:api"
+    "prod-api": "pnpm run build:api",
+    "pnpm": "pnpm"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^7.13.1",
