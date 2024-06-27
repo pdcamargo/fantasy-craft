@@ -178,7 +178,7 @@ export default class DndBooksController {
   }
 
   async pdf(ctx: HttpContext) {
-    const { request, response, route } = ctx
+    const { request, response } = ctx
 
     const id = request.param('id')
 

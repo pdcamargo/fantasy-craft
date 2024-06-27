@@ -40,9 +40,7 @@ export default class Book extends BaseModel {
     time: number
     blocks: {
       type: string
-      data: {
-        text: string
-      }
+      data: any
     }[]
   }
 
