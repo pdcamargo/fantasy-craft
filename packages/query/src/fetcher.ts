@@ -24,10 +24,12 @@ const dispatchUnauthorized = () => {
   window.dispatchEvent(event);
 };
 
+export type FetcherResponse<T = any> = [Response, T];
+
 export async function fetcher<T = any>(
   requestUrl: string,
   init: FetcherOptions = {},
-) {
+): Promise<FetcherResponse<T>> {
   const { isBlob, headers, withBearer = true, ...rest } = init;
 
   let tokenHeader: Record<string, string> = {};

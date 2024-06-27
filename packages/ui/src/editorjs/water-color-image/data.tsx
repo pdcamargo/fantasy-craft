@@ -11,16 +11,16 @@ export const waterColorEdgeVariants = ["0001.webp"];
 export const waterColorMasks = {
   edge: {
     top: waterColorEdgeVariants.map(
-      (variant) => `"/api/images/water-color/top/${variant}`,
+      (variant) => `/api/images/water-color/top/${variant}`,
     ),
     bottom: waterColorEdgeVariants.map(
-      (variant) => `"/api/images/water-color/bottom/${variant}`,
+      (variant) => `/api/images/water-color/bottom/${variant}`,
     ),
     left: waterColorEdgeVariants.map(
-      (variant) => `"/api/images/water-color/left/${variant}`,
+      (variant) => `/api/images/water-color/left/${variant}`,
     ),
     right: waterColorEdgeVariants.map(
-      (variant) => `"/api/images/water-color/right/${variant}`,
+      (variant) => `/api/images/water-color/right/${variant}`,
     ),
   },
 };

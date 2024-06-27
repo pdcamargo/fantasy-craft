@@ -1,0 +1,35 @@
+{
+  "name": "@craft/editorjs",
+  "version": "0.0.1",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build": "tsup"
+  },
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./handler": "./dist/index.cjs"
+  },
+  "files": [
+    "src"
+  ],
+  "typesVersions": {
+    "*": {
+      "*": [
+        "src/*",
+        "src/*/index"
+      ]
+    }
+  },
+  "dependencies": {
+    "marked": "^13.0.1",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.5",
+    "tsup": "^8.1.0",
+    "typescript": "^5.5.2"
+  }
+}

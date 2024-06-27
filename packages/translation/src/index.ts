@@ -17,6 +17,6 @@ export function useTranslation() {
   const t = useTranslations();
 
   return {
-    t: (key: TranslationKey | (string & {})) => t(key),
+    t: (key: TranslationKey) => t(key),
   };
 }

@@ -19,10 +19,6 @@ import {
   useIsUserLoggedIn,
 } from "@craft/query";
 import { Separator, Skeleton } from "@craft/ui";
-import { DashboardBreadcrumb } from "./components/breadcrumb";
-import { DashboradPageInfo } from "./components/page-info";
-import { DashboardToolbar } from "./components/toolbar";
-import { DashboardContent } from "./components/content";
 
 export default function DashboardLayout({ children }: React.PropsWithChildren) {
   const router = useRouter();

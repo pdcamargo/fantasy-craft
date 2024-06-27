@@ -8,8 +8,8 @@
   ],
   "scripts": {
     "build": "turbo run build --filter=api",
-    "dev": "turbo run dev --filter=api",
-    "start": "turbo run start --filter=api",
+    "dev": "turbo run dev --filter=api --filter=app",
+    "start": "node apps/api/build/bin/server.js",
     "lint": "turbo run lint --filter=api",
     "clean": "turbo run clean --filter=api",
     "build:api": "turbo run build --filter=api",
@@ -20,6 +20,8 @@
     "@typescript-eslint/parser": "^7.13.1",
     "eslint": "^8.28.0",
     "eslint-config-turbo": "latest",
-    "turbo": "^1.8.3"
-  }
+    "turbo": "^2.0.4"
+  },
+  "packageManager": "pnpm@9.4.0",
+  "name": "fantasy-craft"
 }

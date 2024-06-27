@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  I18nConfig,
   OutputData,
   ToolConstructable,
   ToolSettings,
@@ -11,6 +12,7 @@ export type EditorjsProps = {
   placeholder?: string;
   onChange?: (data: OutputData) => void;
   defaultData?: OutputData;
+  i18n?: I18nConfig;
 };
 
 export const Editorjs: React.FC<EditorjsProps> = ({
@@ -18,6 +20,7 @@ export const Editorjs: React.FC<EditorjsProps> = ({
   onChange,
   placeholder = "Type something...",
   defaultData,
+  i18n,
 }: EditorjsProps) => {
   return (
     <div
@@ -35,6 +38,7 @@ export const Editorjs: React.FC<EditorjsProps> = ({
                 onChange: () => {
                   editor.save().then(onChange);
                 },
+                i18n,
               });
             });
         }

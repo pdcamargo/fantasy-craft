@@ -1,4 +1,4 @@
-import { createRoot } from "react-dom/client";
+import { Root, createRoot } from "react-dom/client";
 
 import {
   BlockTool,
@@ -50,18 +50,18 @@ export class WaterColorImage implements BlockTool {
     current: null,
   };
 
+  private reactRoot: Root;
+
   constructor({
     data,
   }: BlockToolConstructorOptions<WaterColorImageSaveData, any>) {
-    console.log({
-      data,
-    });
-
     this._wrapper = document.createElement("div");
     this._wrapper.classList.add("water-color-image", "wrapper");
 
     this._currentData =
       data && Object.keys(data).length ? data : createDefaultState();
+
+    this.reactRoot = createRoot(this._wrapper);
   }
 
   static get toolbox() {
@@ -92,9 +92,7 @@ export class WaterColorImage implements BlockTool {
   }
 
   private renderReactComponent() {
-    const root = createRoot(this._wrapper);
-
-    root.render(
+    this.reactRoot.render(
       <WaterColorImageComponent
         ref={this.waterColorRef}
         initialState={this._currentData}
@@ -107,36 +105,4 @@ export class WaterColorImage implements BlockTool {
 
     return this._wrapper;
   }
-
-  // validate?(blockData: any): boolean {
-  //   throw new Error('Method not implemented.');
-  // }
-
-  // merge?(blockData: any): void {
-  //   throw new Error('Method not implemented.');
-  // }
-
-  // onPaste?(event: PasteEvent): void {
-  //   throw new Error('Method not implemented.');
-  // }
-
-  // destroy?(): void {
-  //   throw new Error('Method not implemented.');
-  // }
-
-  // rendered?(): void {
-  //   throw new Error('Method not implemented.');
-  // }
-
-  // updated?(): void {
-  //   throw new Error('Method not implemented.');
-  // }
-
-  // removed?(): void {
-  //   throw new Error('Method not implemented.');
-  // }
-
-  // moved?(event: MoveEvent): void {
-  //   throw new Error('Method not implemented.');
-  // }
 }

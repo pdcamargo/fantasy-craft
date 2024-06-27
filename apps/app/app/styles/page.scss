@@ -4,8 +4,8 @@
   --a4-width: 210mm;
   --a4-height: 297mm;
 
-  --page-width: var(--a4-width);
-  --page-height: var(--a4-height);
+  --page-width: 8.27in;
+  --page-height: 11.7in;
 
   --background-color: #eee5ce;
   --background-image: url(/api/images/background/default.jpg);
@@ -26,6 +26,7 @@
 
   --header-text-color: #58180d;
   --header-underline-color: #c0ad6a;
+  --color-accent: #e0e5c1;
 
   --first-letter-deg: -45deg;
   --first-letter-colors: #322814, #998250, #322814;
@@ -33,6 +34,10 @@
     var(--first-letter-deg),
     var(--first-letter-colors)
   );
+
+  --note-border-image: url(/api/images/borders/note-border.png) 12 stretch;
+  --descriptive-border-image: url(/api/images/borders/descriptive-border.png) 12
+    stretch;
 
   &.letter {
     --page-width: 8.5in;
@@ -93,6 +98,10 @@
     --column-count: 1;
   }
 
+  &.miniature {
+    zoom: 0.25 !important;
+  }
+
   width: var(--page-width);
   height: var(--page-height);
 
@@ -135,6 +144,10 @@
     margin-top: 0.325cm;
   }
 
+  .note + * {
+    margin-top: 0.45cm;
+  }
+
   p + p,
   ul + p,
   ol + p {
@@ -158,6 +171,18 @@
     width: 100%;
     font-style: italic;
     line-height: 0.54cm;
+
+    &.left {
+      text-align: left;
+    }
+
+    &.right {
+      text-align: right;
+    }
+
+    &.center {
+      text-align: center;
+    }
 
     .attribution {
       margin-top: 0;
@@ -254,21 +279,34 @@
   }
 
   dl {
-    padding-left: 1em;
-    white-space: pre-line;
-    display: block;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-top: 0.17cm;
   }
 
   dt {
     display: inline;
     margin-right: 5px;
     margin-left: -1em;
+    line-height: 1.25em;
+    text-indent: -1.3em;
+    padding-left: 1.3em;
   }
 
   dd {
     display: inline;
     margin-left: 0;
     text-indent: 0;
+  }
+
+  .break-column {
+    break-after: always;
+    -webkit-column-break-after: always;
+    margin-top: 0;
+    visibility: hidden;
   }
 
   .water-color-wrapper {
@@ -345,45 +383,119 @@
 }
 
 /*
+| NOTE
+|
+|
+|
+*/
+.page .note {
+  margin-top: 9px;
+  display: inline-block;
+  width: 100%;
+  break-inside: avoid;
+  font-family: var(--header-font-h5);
+  font-size: 0.318cm;
+  line-height: 1.2em;
+  padding: 0.13cm 0.16cm;
+  background-color: var(--color-accent);
+  border-style: solid;
+  border-width: 1px;
+  border-image: var(--note-border-image);
+  border-image-width: 11px;
+  border-image-outset: 9px 0px;
+  box-shadow: 1px 4px 14px #888888;
+
+  h5 {
+    font-size: 0.375cm;
+  }
+
+  h1 + p::first-letter {
+    font-family: var(--page-font-family);
+    float: unset;
+    padding-bottom: unset;
+    padding-left: unset;
+    margin-top: unset;
+    margin-bottom: unset;
+    margin-left: unset;
+    font-size: unset;
+    line-height: unset;
+    color: unset;
+    background-image: unset;
+    -webkit-background-clip: unset;
+    background-clip: unset;
+  }
+
+  p {
+    display: block;
+    padding-bottom: 0px;
+  }
+
+  :last-child {
+    margin-bottom: 0;
+  }
+}
+
+/*
+| DESCRIPTIVE
+|
+|
+|
+*/
+.page .descriptive {
+  font-family: var(--header-font-h5);
+  font-size: 0.318cm;
+  line-height: 1.2em;
+  padding: 0.1em;
+  background-color: #faf7ea;
+  border-style: solid;
+  border-width: 7px;
+  border-image: var(--descriptive-border-image);
+  border-image-outset: 4px;
+  box-shadow: 0 0 6px #faf7ea;
+
+  h1 + p::first-letter {
+    font-family: var(--page-font-family);
+  }
+}
+
+/*
 | SPELL
 |
 |
 |
 */
-.page {
-  .dnd-spell {
-    margin-bottom: 0.235cm;
+.page .dnd-spell {
+  margin-bottom: 0.235cm;
 
-    &-name {
-    }
+  &-name {
+  }
 
-    &-type {
-      font-style: italic;
-    }
+  &-type {
+    font-style: italic;
+  }
 
-    &-attributes {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      align-items: flex-start;
-      justify-content: flex-start;
-      margin-top: 0.17cm;
+  &-attributes {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-top: 0.17cm;
 
-      &-attr {
-        line-height: 1.25em;
-        text-indent: -1.3em; /* Pull the first line back */
-        padding-left: 1.3em; /* Offset the negative indent */
-      }
-    }
-
-    &-description {
-      display: block;
+    &-attr {
       line-height: 1.25em;
-      margin: 0;
-      padding: 0;
-      margin-top: 0.17cm;
-      white-space: pre-line;
-      font-family: var(--page-font-family);
+      text-indent: -1.3em; /* Pull the first line back */
+      padding-left: 1.3em; /* Offset the negative indent */
     }
+  }
+
+  &-description {
+    display: block;
+    line-height: 1.25em;
+    margin: 0;
+    padding: 0;
+    margin-top: 0.17cm;
+    white-space: pre-line;
+    font-family: var(--page-font-family);
   }
 }

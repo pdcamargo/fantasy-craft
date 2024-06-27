@@ -21,6 +21,9 @@ router
   })
   .middleware(middleware.auth())
 
+router.get('/dnd/books/:id/public', '#controllers/dnd_books_controller.publicFind')
+router.get('/dnd/books/:id/pdf', '#controllers/dnd_books_controller.pdf')
+
 router.post('/auth/login', '#controllers/session_controller.login')
 router.post('/auth/register', '#controllers/session_controller.register')
 router.post('/auth/logout', '#controllers/session_controller.logout').middleware(middleware.auth())

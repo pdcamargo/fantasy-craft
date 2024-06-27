@@ -20,6 +20,9 @@ export default class Book extends BaseModel {
   declare slug: string
 
   @column()
+  declare theme: string
+
+  @column()
   declare description: string
 
   @column()

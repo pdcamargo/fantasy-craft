@@ -24,5 +24,59 @@
     },
     "onSuccess": "Login efetuado com sucesso",
     "onError": "Usuário ou senha inválidos"
+  },
+  "EditorJs": {
+    "toolNames": {
+      "Text": "Parágrafo",
+      "Italic": "Itálico",
+      "Bold": "Negrito",
+      "Link": "Link",
+      "Quote": "Citação",
+      "Heading": "Título",
+      "Image": "Imagem",
+      "WaterColorImage": "Imagem Aquarela",
+      "PageDelimiter": "Divisor de Página",
+      "BreakColumn": "Quebra de Coluna",
+      "DndSpell": "Magia de DnD",
+      "Note": "Nota",
+      "Lorem": "Lorem Ipsum",
+      "List": "Lista"
+    },
+    "ui": {
+      "blockTunes": {
+        "toggler": {
+          "ClickToTune": "Clique para ajustar",
+          "OrDragToMove": "ou arraste para mover"
+        }
+      },
+      "inlineToolbar": {
+        "converter": {
+          "ConvertTo": "Converter para"
+        }
+      },
+      "toolbar": {
+        "toolbox": {
+          "Add": "Adicionar"
+        }
+      },
+      "popover": {
+        "Filter": "Filtrar",
+        "NothingFound": "Nada encontrado",
+        "ConvertTo": "Converter para"
+      }
+    },
+    "blockTunes": {
+      "Delete": "Deletar bloco",
+      "MoveUp": "Mover para cima",
+      "MoveDown": "Mover para baixo"
+    },
+    "tools": {
+      "link": {
+        "AddLink": "Adicione um link"
+      },
+      "stub": {
+        "CannotBeDisplayedCorrectly": "O bloco não pode ser exibido corretamente."
+      }
+    }
   }
 }

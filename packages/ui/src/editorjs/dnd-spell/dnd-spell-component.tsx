@@ -1,14 +1,8 @@
 import { produce } from "immer";
 import { forwardRef, useImperativeHandle, useRef, useState } from "react";
-import {
-  Popover,
-  PopoverArrow,
-  PopoverContent,
-  PopoverPortal,
-  PopoverTrigger,
-} from "../../popover";
-import { CornerRightDown, CornerRightUp, Plus, Trash2 } from "lucide-react";
-import { Separator } from "../../separator";
+
+import { DndSpellComponentAttributeLinePopover } from "./dnd-spell-component-attribute-line-popover";
+import { DndSpellComponentAttributeLine } from "./dnd-spell-component-attribute-line";
 
 export type DndSpellData = {
   name: string;
@@ -82,7 +76,7 @@ export const DndSpellComponent = forwardRef<
           }
         />
         <input
-          className="cdx-input"
+          className="cdx-input py-1 text-sm italic"
           type="text"
           placeholder="Spell URL"
           value={state.type}
@@ -96,120 +90,80 @@ export const DndSpellComponent = forwardRef<
         />
 
         {state.attributes.map((attr, index) => (
-          <div
+          <DndSpellComponentAttributeLine
             key={index}
-            className="flex items-center focus-within:outline-dotted focus-within:outline-blue-500"
+            index={index}
+            name={attr.name}
+            value={attr.value}
+            onChangeName={(name) => {
+              setState(
+                produce((draft) => {
+                  draft.attributes[index].name = name;
+                }),
+              );
+            }}
+            onChangeValue={(newValue) => {
+              setState(
+                produce((draft) => {
+                  draft.attributes[index].value = newValue;
+                }),
+              );
+            }}
           >
-            <input
-              className="cdx-input text-xs w-[25%] p-1 rounded-none border-r-0 font-bold"
-              type="text"
-              placeholder="Attribute name"
-              value={attr.name}
-              style={{
-                backgroundColor: index % 2 === 0 ? "#e5e6e7" : "#f5f5f5",
-              }}
-              onChange={(e) =>
+            <DndSpellComponentAttributeLinePopover
+              attributesLength={state.attributes.length}
+              index={index}
+              onAddAbove={() => {
                 setState(
                   produce((draft) => {
-                    draft.attributes[index].name = e.target.value;
+                    draft.attributes.splice(index, 0, {
+                      name: "",
+                      value: "",
+                    });
                   }),
-                )
-              }
-            />
-            <input
-              className="cdx-input text-xs flex-1 p-1 rounded-none border-l-0"
-              type="text"
-              placeholder="Attribute value"
-              value={attr.value}
-              style={{
-                backgroundColor: index % 2 === 0 ? "#f3f4f6" : "#fff",
+                );
               }}
-              onChange={(e) =>
+              onAddBelow={() => {
                 setState(
                   produce((draft) => {
-                    draft.attributes[index].value = e.target.value;
+                    draft.attributes.splice(index + 1, 0, {
+                      name: "",
+                      value: "",
+                    });
                   }),
-                )
-              }
+                );
+              }}
+              onMoveDown={() => {
+                setState(
+                  produce((draft) => {
+                    if (index === draft.attributes.length - 1) return;
+
+                    const temp = draft.attributes[index];
+                    draft.attributes[index] = draft.attributes[index + 1];
+                    draft.attributes[index + 1] = temp;
+                  }),
+                );
+              }}
+              onMoveUp={() => {
+                setState(
+                  produce((draft) => {
+                    if (index === 0) return;
+
+                    const temp = draft.attributes[index];
+                    draft.attributes[index] = draft.attributes[index - 1];
+                    draft.attributes[index - 1] = temp;
+                  }),
+                );
+              }}
+              onRemove={() => {
+                setState(
+                  produce((draft) => {
+                    draft.attributes.splice(index, 1);
+                  }),
+                );
+              }}
             />
-
-            <Popover>
-              <PopoverTrigger asChild>
-                <div
-                  className="cdx-input p-1 w-[26px] h-[26px] flex items-center justify-center ml-[1px]"
-                  style={{
-                    backgroundColor: index % 2 === 0 ? "#f3f4f6" : "#fff",
-                  }}
-                  tabIndex={0}
-                  role="button"
-                >
-                  <Plus />
-                </div>
-              </PopoverTrigger>
-
-              <PopoverPortal>
-                <PopoverContent
-                  side="top"
-                  align="center"
-                  className="flex flex-col p-0 w-44"
-                >
-                  <button
-                    className="flex items-center gap-2 p-2 hover:text-blue-500"
-                    onClick={() =>
-                      setState(
-                        produce((draft) => {
-                          draft.attributes.splice(index + 1, 0, {
-                            name: "",
-                            value: "",
-                          });
-                        }),
-                      )
-                    }
-                  >
-                    <div className="cdx-input p-1 w-[26px] h-[26px] flex items-center justify-center">
-                      <CornerRightDown />
-                    </div>
-                    <span className="text-sm font-semibold">Add below</span>
-                  </button>
-                  <button
-                    className="flex items-center gap-2 p-2 hover:text-blue-500"
-                    onClick={() =>
-                      setState(
-                        produce((draft) => {
-                          draft.attributes.splice(Math.max(index - 1, 0), 0, {
-                            name: "",
-                            value: "",
-                          });
-                        }),
-                      )
-                    }
-                  >
-                    <div className="cdx-input p-1 w-[26px] h-[26px] flex items-center justify-center">
-                      <CornerRightUp />
-                    </div>
-                    <span className="text-sm font-semibold">Add above</span>
-                  </button>
-                  <Separator orientation="horizontal" className="bg-gray-300" />
-                  <button
-                    className="flex items-center gap-2 p-2 hover:text-red-500"
-                    onClick={() => {
-                      setState(
-                        produce((draft) => {
-                          draft.attributes.splice(index, 1);
-                        }),
-                      );
-                    }}
-                  >
-                    <div className="cdx-input p-1 w-[26px] h-[26px] flex items-center justify-center">
-                      <Trash2 />
-                    </div>
-                    <span className="text-sm font-semibold">Remove</span>
-                  </button>
-                  <PopoverArrow />
-                </PopoverContent>
-              </PopoverPortal>
-            </Popover>
-          </div>
+          </DndSpellComponentAttributeLine>
         ))}
 
         <div
