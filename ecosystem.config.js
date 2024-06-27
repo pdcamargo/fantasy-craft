@@ -4,7 +4,7 @@ module.exports = {
     {
       name: "app",
       script: "npm",
-      args: "start",
+      args: "start -H 0.0.0.0",
       cwd: "./apps/app",
       env: {
         NODE_ENV: "production",
