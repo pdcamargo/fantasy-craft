@@ -1,16 +1,16 @@
-import puppeteer, { Browser, Page } from "puppeteer";
+import puppeteer, { Browser } from 'puppeteer'
 
-let _browser: Browser | null = null;
+let _browser: Browser | null = null
 
 export async function getBrowser() {
   if (_browser) {
-    return _browser;
+    return _browser
   }
 
   _browser = await puppeteer.launch({
-    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
     headless: true,
-  });
+  })
 
-  return _browser;
+  return _browser
 }
