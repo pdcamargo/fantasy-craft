@@ -6,6 +6,9 @@
     "apps/*",
     "packages/*"
   ],
+  "volta": {
+    "node": "21.0.0"
+  },
   "scripts": {
     "build": "turbo run build --filter=api",
     "dev": "turbo run dev --filter=api --filter=app",
