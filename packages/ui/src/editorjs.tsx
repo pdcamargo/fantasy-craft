@@ -24,7 +24,7 @@ export const Editorjs: React.FC<EditorjsProps> = ({
 }: EditorjsProps) => {
   return (
     <div
-      className="prose"
+      className="prose w-full"
       ref={(holder) => {
         if (holder && !holder.hasChildNodes() && window) {
           import("@editorjs/editorjs")

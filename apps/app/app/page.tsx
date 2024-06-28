@@ -102,7 +102,7 @@ export default function RootPage() {
     if (result) {
       setAuthToken(result.data.token);
 
-      router.push("/dashboard");
+      router.push("/dashboard/dnd/books");
       toast.success(t("Login.onSuccess"));
     }
 

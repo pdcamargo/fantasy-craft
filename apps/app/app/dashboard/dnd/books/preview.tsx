@@ -19,7 +19,9 @@ const BookPreview: React.FC<BookPreviewProps> = ({ blocks, pageTheme }) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const groups = blocksToHTML(blocks);
-  const pagesHTML = blocksHTMLToPageHTML(groups, "40px");
+  const pagesHTML = blocksHTMLToPageHTML(groups, "40px", {
+    className: "shadow-[0px_0px_10px_5px_rgba(0,0,0,0.5)]",
+  });
 
   useEffect(() => {
     const resizePreview = () => {

@@ -16,6 +16,7 @@ export * from "./editorjs";
 export * from "./form";
 export * from "./input";
 export * from "./label";
+export * from "./loader";
 export * from "./menubar";
 export * from "./navbar";
 export * from "./navigation-menu";

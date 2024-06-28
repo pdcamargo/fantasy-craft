@@ -4,6 +4,7 @@
     "world": "Mundo"
   },
   "Login": {
+    "pageTitle": "Login - Fantasy Craft",
     "header": "Sign In",
     "subheader": "And craft your fantasy",
     "username": "Usuário",
@@ -24,6 +25,38 @@
     },
     "onSuccess": "Login efetuado com sucesso",
     "onError": "Usuário ou senha inválidos"
+  },
+  "Register": {
+    "pageTitle": "Registrar-se - Fantasy Craft",
+    "header": "Sign Up",
+    "subheader": "And craft your fantasy",
+    "username": "Usuário",
+    "email": "Email",
+    "password": "Senha",
+    "fullName": "Nome",
+    "confirmPassword": "Confirme a senha",
+    "register": "Registrar",
+    "registering": "Registrando...",
+    "registerWithGoogle": "Registrar com Google",
+    "registerWithDiscord": "Registrar com Discord",
+    "login": "Já tem uma conta? Entre",
+    "or": "ou",
+    "validation": {
+      "usernameRequired": "Usuário é obrigatório",
+      "emailRequired": "Email é obrigatório",
+      "passwordRequired": "Senha é obrigatória",
+      "passwordConfirmationRequired": "Confirmação de senha é obrigatória",
+      "confirmPasswordRequired": "Confirmação de senha é obrigatória",
+      "usernameMin": "Usuário deve ter no mínimo 3 caracteres",
+      "passwordMin": "Senha deve ter no mínimo 6 caracteres",
+      "confirmPasswordMatch": "As senhas não coincidem",
+      "emailInvalid": "Email inválido",
+      "fullNameRequired": "Nome é obrigatório"
+    },
+    "onSuccess": "Registrado com sucesso",
+    "onError": "Erro ao registrar",
+    "emailAlreadyExists": "Email já cadastrado",
+    "usernameAlreadyExists": "Usuário já cadastrado"
   },
   "EditorJs": {
     "toolNames": {

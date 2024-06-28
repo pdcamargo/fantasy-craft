@@ -30,13 +30,3 @@ jobs:
             pnpm turbo build --filter=api --filter=app
             pm2 restart api
             pm2 restart app
-
-      # - name: Deploy to production server
-      #   run: |
-      #     ssh -o StrictHostKeyChecking=no root@89.116.51.219 << 'EOF'
-      #       cd /root/dev/fantasy-craft
-      #       git pull origin main
-      #       pnpm install
-      #       pnpm turbo build --filter=api --filter=app
-      #       pm2 restart all
-      #     EOF

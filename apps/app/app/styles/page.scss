@@ -1,4 +1,5 @@
 @import "./themes/xanathar.scss";
+@import "./loaders.scss";
 
 .page {
   --a4-width: 210mm;
@@ -379,6 +380,12 @@
         }
       }
     }
+  }
+
+  .wide {
+    margin-bottom: 0.325cm;
+    column-span: all;
+    display: block;
   }
 }
 

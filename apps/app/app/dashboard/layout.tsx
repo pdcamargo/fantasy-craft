@@ -19,12 +19,11 @@ import {
   useIsUserLoggedIn,
 } from "@craft/query";
 import { Separator, Skeleton } from "@craft/ui";
+import { DashboardMenu } from "./components";
 
 export default function DashboardLayout({ children }: React.PropsWithChildren) {
   const router = useRouter();
   const isLoggedIn = useIsUserLoggedIn();
-
-  const currentUserQuery = useCurrentUserQuery();
 
   useEffect(() => {
     const onUnauthorized = () => {
@@ -53,39 +52,8 @@ export default function DashboardLayout({ children }: React.PropsWithChildren) {
         "--body-text-color": "#071437",
       }}
     >
-      <Navbar isBordered>
-        <NavbarHeader className="mx-auto">
-          <NavbarContent justify="start">
-            <NavbarBrand>
-              <Logo />
-              <p className="font-bold text-inherit">FANTASY CRAFT</p>
-            </NavbarBrand>
+      <DashboardMenu />
 
-            <Separator orientation="vertical" />
-
-            <NavbarItem isActive>Home</NavbarItem>
-            <NavbarItem>D&D Homebrew</NavbarItem>
-            <NavbarItem>MTG Cards</NavbarItem>
-          </NavbarContent>
-
-          <NavbarContent justify="end">
-            <NavbarItem>
-              {currentUserQuery.isLoading && (
-                <Skeleton className="w-10 h-10" roundedFull />
-              )}
-              {!currentUserQuery.isLoading && (
-                <Avatar>
-                  <AvatarImage
-                    src="https://github.com/shadcn.png"
-                    alt="@shadcn"
-                  />
-                  <AvatarFallback>CN</AvatarFallback>
-                </Avatar>
-              )}
-            </NavbarItem>
-          </NavbarContent>
-        </NavbarHeader>
-      </Navbar>
       <main className="flex-1 flex w-full flex-col bg-[#f4f6fa]">
         {children}
       </main>
