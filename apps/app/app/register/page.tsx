@@ -119,151 +119,145 @@ export default function RegisterPage() {
   return (
     <>
       <title>{t("Register.pageTitle")}</title>
-      <div className="w-screen flex h-screen overflow-hidden bg-white">
-        <div className="flex-[50%] h-screen flex items-center justify-center px-20">
-          <Card
-            variant="white"
-            className="w-full max-w-[450px] shadow-none border-none"
-          >
-            <CardHeader>
-              <CardTitle className="text-center">
-                {t("Register.header")}
-              </CardTitle>
-              <CardDescription className="text-center">
-                {t("Register.subheader")}
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="flex items-center gap-5 mb-2">
-                <Button
-                  variant="outline"
-                  className="flex-[50%]"
-                  disabled={isRegistering}
-                >
-                  {t("Register.registerWithGoogle")}
-                </Button>
+      <div
+        className="w-screen flex justify-start items-center h-screen overflow-hidden bg-white bg-cover px-20"
+        style={{
+          backgroundImage:
+            "url(https://images.alphacoders.com/504/thumb-1920-504930.jpg)",
+        }}
+      >
+        <Card
+          variant="white"
+          className="w-full max-w-[500px] shadow-none border-none py-14 px-7"
+        >
+          <CardHeader>
+            <CardTitle className="text-center">
+              {t("Register.header")}
+            </CardTitle>
+            <CardDescription className="text-center">
+              {t("Register.subheader")}
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="flex items-center gap-5 mb-2">
+              <Button
+                variant="outline"
+                className="flex-[50%]"
+                disabled={isRegistering}
+              >
+                {t("Register.registerWithGoogle")}
+              </Button>
+
+              <Button
+                variant="outline"
+                className="flex-[50%]"
+                disabled={isRegistering}
+              >
+                {t("Register.registerWithDiscord")}
+              </Button>
+            </div>
+
+            <div className="flex items-center gap-5 py-2">
+              <Separator className="flex-1" />
+              <span className="text-muted-foreground">{t("Register.or")}</span>
+              <Separator className="flex-1" />
+            </div>
+
+            <Form {...form}>
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <FormField
+                  control={form.control}
+                  name="fullName"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>{t("Register.fullName")}</FormLabel>
+                      <FormControl>
+                        <Input {...field} autoComplete="name" />
+                      </FormControl>
+                      <FormMessage t={t} />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="username"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>{t("Register.username")}</FormLabel>
+                      <FormControl>
+                        <Input {...field} autoComplete="username" />
+                      </FormControl>
+                      <FormMessage t={t} />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>{t("Register.email")}</FormLabel>
+                      <FormControl>
+                        <Input {...field} type="email" autoComplete="email" />
+                      </FormControl>
+                      <FormMessage t={t} />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem className="mt-2">
+                      <FormLabel>{t("Register.password")}</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="password"
+                          autoComplete="new-password"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage t={t} />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="passwordConfirmation"
+                  render={({ field }) => (
+                    <FormItem className="mt-2">
+                      <FormLabel>{t("Register.confirmPassword")}</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="password"
+                          autoComplete="new-password"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage t={t} />
+                    </FormItem>
+                  )}
+                />
 
                 <Button
-                  variant="outline"
-                  className="flex-[50%]"
+                  type="submit"
+                  className="w-full mt-4"
                   disabled={isRegistering}
                 >
-                  {t("Register.registerWithDiscord")}
+                  {isRegistering
+                    ? t("Register.registering")
+                    : t("Register.register")}
                 </Button>
-              </div>
 
-              <div className="flex items-center gap-5 py-2">
-                <Separator className="flex-1" />
-                <span className="text-muted-foreground">
-                  {t("Register.or")}
-                </span>
-                <Separator className="flex-1" />
-              </div>
-
-              <Form {...form}>
-                <form onSubmit={handleSubmit(onSubmit)}>
-                  <FormField
-                    control={form.control}
-                    name="fullName"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>{t("Register.fullName")}</FormLabel>
-                        <FormControl>
-                          <Input {...field} autoComplete="name" />
-                        </FormControl>
-                        <FormMessage t={t} />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="username"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>{t("Register.username")}</FormLabel>
-                        <FormControl>
-                          <Input {...field} autoComplete="username" />
-                        </FormControl>
-                        <FormMessage t={t} />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="email"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>{t("Register.email")}</FormLabel>
-                        <FormControl>
-                          <Input {...field} type="email" autoComplete="email" />
-                        </FormControl>
-                        <FormMessage t={t} />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="password"
-                    render={({ field }) => (
-                      <FormItem className="mt-2">
-                        <FormLabel>{t("Register.password")}</FormLabel>
-                        <FormControl>
-                          <Input
-                            type="password"
-                            autoComplete="new-password"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage t={t} />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="passwordConfirmation"
-                    render={({ field }) => (
-                      <FormItem className="mt-2">
-                        <FormLabel>{t("Register.confirmPassword")}</FormLabel>
-                        <FormControl>
-                          <Input
-                            type="password"
-                            autoComplete="new-password"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage t={t} />
-                      </FormItem>
-                    )}
-                  />
-
-                  <Button
-                    type="submit"
-                    className="w-full mt-4"
-                    disabled={isRegistering}
-                  >
-                    {isRegistering
-                      ? t("Register.registering")
-                      : t("Register.register")}
-                  </Button>
-
-                  <div className="text-center mt-5 text-sm">
-                    <Link href="/">{t("Register.login")}</Link>
-                  </div>
-                </form>
-              </Form>
-            </CardContent>
-          </Card>
-        </div>
-        <div className="flex-[50%]">
-          <img
-            className="object-cover pointer-events-none select-none"
-            style={{ height: "100%", width: "100%" }}
-            src="https://i.imgur.com/GZfjDWV.png"
-            alt=""
-          />
-        </div>
+                <div className="text-center mt-5 text-sm">
+                  <Link href="/">{t("Register.login")}</Link>
+                </div>
+              </form>
+            </Form>
+          </CardContent>
+        </Card>
       </div>
     </>
   );

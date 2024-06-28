@@ -110,105 +110,96 @@ export default function RootPage() {
   };
 
   return (
-    <div className="w-screen flex h-screen overflow-hidden bg-white">
-      <div className="flex-[50%] h-screen flex items-center justify-center px-20">
-        <Card
-          variant="white"
-          className="w-full max-w-[450px] shadow-none border-none"
-        >
-          <CardHeader>
-            <CardTitle className="text-center">{t("Login.header")}</CardTitle>
-            <CardDescription className="text-center">
-              {t("Login.subheader")}
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="flex items-center gap-5 mb-2">
-              <Button
-                variant="outline"
-                className="flex-[50%]"
-                disabled={isLoggingIn}
-              >
-                {t("Login.loginWithGoogle")}
+    <div
+      className="w-screen flex justify-end items-center h-screen overflow-hidden bg-white bg-cover px-20"
+      style={{
+        backgroundImage: "url(https://images7.alphacoders.com/134/1346551.png)",
+      }}
+    >
+      <Card
+        variant="white"
+        className="w-full max-w-[500px] shadow-none border-none py-14 px-7"
+      >
+        <CardHeader>
+          <CardTitle className="text-center">{t("Login.header")}</CardTitle>
+          <CardDescription className="text-center">
+            {t("Login.subheader")}
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="flex items-center gap-5 mb-2">
+            <Button
+              variant="outline"
+              className="flex-[50%]"
+              disabled={isLoggingIn}
+            >
+              {t("Login.loginWithGoogle")}
+            </Button>
+
+            <Button
+              variant="outline"
+              className="flex-[50%]"
+              disabled={isLoggingIn}
+            >
+              {t("Login.loginWithDiscord")}
+            </Button>
+          </div>
+
+          <div className="flex items-center gap-5 py-2">
+            <Separator className="flex-1" />
+            <span className="text-muted-foreground">{t("Login.or")}</span>
+            <Separator className="flex-1" />
+          </div>
+
+          <Form {...form}>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <FormField
+                control={form.control}
+                name="username"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t("Login.username")}</FormLabel>
+                    <FormControl>
+                      <Input {...field} autoComplete="username" />
+                    </FormControl>
+                    <FormDescription>{t("Login.usernameHint")}</FormDescription>
+                    <FormMessage t={t} />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem className="mt-2">
+                    <FormLabel>{t("Login.password")}</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="password"
+                        autoComplete="current-password"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage t={t} />
+                  </FormItem>
+                )}
+              />
+
+              <div className="flex items-center justify-end text-xs pt-2 mb-4">
+                <Link href="/forgot-password">{t("Login.forgotPassword")}</Link>
+              </div>
+
+              <Button type="submit" className="w-full" disabled={isLoggingIn}>
+                {isLoggingIn ? t("Login.loggingIn") : t("Login.login")}
               </Button>
 
-              <Button
-                variant="outline"
-                className="flex-[50%]"
-                disabled={isLoggingIn}
-              >
-                {t("Login.loginWithDiscord")}
-              </Button>
-            </div>
-
-            <div className="flex items-center gap-5 py-2">
-              <Separator className="flex-1" />
-              <span className="text-muted-foreground">{t("Login.or")}</span>
-              <Separator className="flex-1" />
-            </div>
-
-            <Form {...form}>
-              <form onSubmit={handleSubmit(onSubmit)}>
-                <FormField
-                  control={form.control}
-                  name="username"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>{t("Login.username")}</FormLabel>
-                      <FormControl>
-                        <Input {...field} autoComplete="username" />
-                      </FormControl>
-                      <FormDescription>
-                        {t("Login.usernameHint")}
-                      </FormDescription>
-                      <FormMessage t={t} />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="password"
-                  render={({ field }) => (
-                    <FormItem className="mt-2">
-                      <FormLabel>{t("Login.password")}</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="password"
-                          autoComplete="current-password"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage t={t} />
-                    </FormItem>
-                  )}
-                />
-
-                <div className="flex items-center justify-end text-xs pt-2 mb-4">
-                  <Link href="/forgot-password">
-                    {t("Login.forgotPassword")}
-                  </Link>
-                </div>
-
-                <Button type="submit" className="w-full" disabled={isLoggingIn}>
-                  {isLoggingIn ? t("Login.loggingIn") : t("Login.login")}
-                </Button>
-
-                <div className="text-center mt-5 text-sm">
-                  <Link href="/sign-up">{t("Login.register")}</Link>
-                </div>
-              </form>
-            </Form>
-          </CardContent>
-        </Card>
-      </div>
-      <div className="flex-[50%]">
-        <img
-          className="object-cover pointer-events-none select-none"
-          style={{ height: "100%", width: "100%" }}
-          src="https://i.imgur.com/GZfjDWV.png"
-          alt=""
-        />
-      </div>
+              <div className="text-center mt-5 text-sm">
+                <Link href="/register">{t("Login.register")}</Link>
+              </div>
+            </form>
+          </Form>
+        </CardContent>
+      </Card>
     </div>
   );
 }
