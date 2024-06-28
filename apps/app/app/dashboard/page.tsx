@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Avatar,
   AvatarFallback,
@@ -17,11 +15,14 @@ import {
   DashboardToolbar,
   DashboradPageInfo,
 } from "./components";
+import { redirect } from "next/navigation";
 
 export default function DashboardPage() {
+  redirect("/dashboard/dnd/books");
+
   return (
     <>
-      <DashboardToolbar>
+      {/* <DashboardToolbar>
         <DashboardBreadcrumb />
 
         <DashboradPageInfo title="Dashboard" description="Overview" />
@@ -85,7 +86,7 @@ export default function DashboardPage() {
             </Card>
           </div>
         </div>
-      </DashboardContent>
+      </DashboardContent> */}
     </>
   );
 }
