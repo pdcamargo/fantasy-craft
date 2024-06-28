@@ -1,3 +1,5 @@
+import { v4 } from 'uuid'
+
 import Book from '#models/book'
 import { checkSlugValidator, createBookValidator, updateBookValidator } from '#validators/book'
 import type { HttpContext } from '@adonisjs/core/http'
@@ -110,6 +112,7 @@ export default class DndBooksController {
       slug,
       userId: user.id,
       author: user.fullName ?? user.username,
+      publicId: v4(),
     })
 
     return response.created({

@@ -1,7 +1,11 @@
 {
   "General": {
     "hello": "Olá",
-    "world": "Mundo"
+    "world": "Mundo",
+    "create": "Criar",
+    "books": "Livros",
+    "dashboard": "Dashboard",
+    "dungeonsAndDragons": "Dungeons & Dragons"
   },
   "Login": {
     "pageTitle": "Login - Fantasy Craft",
@@ -110,6 +114,19 @@
       "stub": {
         "CannotBeDisplayedCorrectly": "O bloco não pode ser exibido corretamente."
       }
+    }
+  },
+  "BookEditor": {
+    "pageTitle": "{title} - Fantasy Craft",
+    "saved": "Salvo",
+    "newBook": "Novo Livro"
+  },
+  "Navbar": {
+    "dnd": {
+      "myBooks": "Meus Livros",
+      "myBooksDescription": "Veja todos os seus livros",
+      "newBook": "Criar novo livro",
+      "newBookDescription": "Crie um novo livro"
     }
   }
 }

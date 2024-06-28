@@ -1,7 +1,19 @@
 "use client";
 
+import { useTranslation } from "@craft/translation";
 import { BookEditor } from "../book-editor";
 
 export default function DndBooksNewPage() {
-  return <BookEditor defaultBlocks={[]} />;
+  const { t } = useTranslation();
+
+  return (
+    <>
+      <title>
+        {t("BookEditor.pageTitle", {
+          title: t("BookEditor.newBook"),
+        })}
+      </title>
+      <BookEditor defaultBlocks={[]} />
+    </>
+  );
 }

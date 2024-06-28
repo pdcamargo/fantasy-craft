@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, CardContent, CardHeader, Editorjs, Loader } from "@craft/ui";
+import { Card, CardContent, Editorjs, Loader } from "@craft/ui";
 
 import { BookPreview } from "./preview";
 import { useEffect, useState } from "react";
@@ -16,6 +16,7 @@ import { fetcher } from "@craft/query";
 import { BlocksType } from "@craft/editorjs";
 import { useTranslation } from "@craft/translation";
 import { cn } from "@craft/ui/utils";
+import { useRelativeTime } from "@craft/ui/hooks";
 
 const asyncTools = {
   list: {
@@ -112,14 +113,17 @@ export type BookEditorProps = {
   defaultBlocks?: BlocksType;
   onBlocksChange?: (blocks: BlocksType) => void;
   pageTheme?: string;
+  lastTimeSaved?: Date;
 };
 
 const BookEditor: React.FC<BookEditorProps> = ({
   defaultBlocks,
   onBlocksChange,
   pageTheme,
+  lastTimeSaved,
 }) => {
   const { t } = useTranslation();
+  const relativeTime = useRelativeTime(lastTimeSaved);
   const [mountedTools, setMountedTools] = useState<Record<string, any> | null>(
     null,
   );
@@ -150,7 +154,7 @@ const BookEditor: React.FC<BookEditorProps> = ({
       <div className="w-screen h-[25px] bg-black flex items-start justify-between">
         <div></div>
         <div className="ml-auto text-xs uppercase font-semibold text-gray-400 h-[25px] flex items-center px-2">
-          Not saved
+          {relativeTime && `${t("BookEditor.saved")} ${relativeTime}`}
         </div>
       </div>
       <Card variant="white">

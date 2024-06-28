@@ -1,4 +1,4 @@
-import { useTranslations } from "next-intl";
+import { Formats, TranslationValues, useTranslations } from "next-intl";
 
 import { TranslationKey } from "./utils";
 
@@ -17,6 +17,10 @@ export function useTranslation() {
   const t = useTranslations();
 
   return {
-    t: (key: TranslationKey) => t(key),
+    t: (
+      key: TranslationKey,
+      values?: TranslationValues,
+      formats?: Partial<Formats>,
+    ) => t(key, values, formats),
   };
 }

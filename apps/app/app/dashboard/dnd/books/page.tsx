@@ -42,20 +42,20 @@ export default function BooksPage() {
         <DashboardBreadcrumb
           items={[
             {
-              label: t("Dashboard"),
+              label: t("General.dashboard"),
               href: "/dashboard",
             },
             {
-              label: t("Dungeons and Dragons"),
+              label: t("General.dungeonsAndDragons"),
               href: "/dashboard/dnd",
             },
             {
-              label: t("Books"),
+              label: t("General.books"),
               href: "/dashboard/dnd/books",
             },
             {
-              label: t("Create"),
-              href: "/dashboard/dnd/books",
+              label: t("General.create"),
+              href: "/dashboard/dnd/books/new",
             },
           ]}
         />

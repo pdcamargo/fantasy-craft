@@ -67,6 +67,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^1.1.1",
     "cmdk": "^1.0.0",
+    "dayjs": "^1.11.11",
     "embla-carousel-react": "^8.1.5",
     "immer": "^10.1.1",
     "lucide-react": "^0.395.0",
@@ -80,6 +81,7 @@
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "eslint": "^8.11.0",
+    "tailwindcss-animate": "^1.0.7",
     "typescript": "^5.4.5"
   }
 }

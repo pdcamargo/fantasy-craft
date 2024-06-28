@@ -1,5 +1,9 @@
 "use client";
 
+import dayjs from "dayjs";
+import "dayjs/locale/en";
+import "dayjs/locale/pt-br";
+
 import { Locales } from "@craft/translation";
 import { AbstractIntlMessages, NextIntlClientProvider } from "next-intl";
 import { PropsWithChildren, createContext, useContext, useState } from "react";
@@ -38,6 +42,12 @@ export const AppProvider: React.FC<{
   const [locale, setLocale] = useState<Locales>(defaultLocale || "en");
   const [timeZone, setTimeZone] = useState<string>(defaultTimeZone || "UTC");
   const [queryClient] = useState(() => new QueryClient());
+
+  if (locale === "pt-BR") {
+    dayjs.locale("pt-br");
+  } else {
+    dayjs.locale("en");
+  }
 
   return (
     <AppContext.Provider value={{ locale, setLocale, timeZone, setTimeZone }}>

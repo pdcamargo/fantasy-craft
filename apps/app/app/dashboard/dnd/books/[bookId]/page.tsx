@@ -5,6 +5,8 @@ import { Card, CardContent, Skeleton } from "@craft/ui";
 import { BookEditor } from "../book-editor";
 import { produce } from "immer";
 import { useDebouncedCallback } from "use-debounce";
+import { useLayoutEffect, useState } from "react";
+import { useTranslation } from "@craft/translation";
 
 export default function DndBooksBookIdPage({
   params,
@@ -13,6 +15,10 @@ export default function DndBooksBookIdPage({
     bookId: string;
   };
 }) {
+  const { t } = useTranslation();
+  const [lastTimeSaved, setLastTimeSaved] = useState<Date | undefined>(
+    undefined,
+  );
   const { data, isLoading } = useGetBook(params.bookId);
   const updateBookMutation = useUpdateBook(params.bookId);
 
@@ -20,11 +26,19 @@ export default function DndBooksBookIdPage({
     (data) => {
       if (!updateBookMutation.isPending) {
         updateBookMutation.mutateAsync(data);
+
+        setLastTimeSaved(new Date());
       }
     },
     1000,
     { leading: true, trailing: true },
   );
+
+  useLayoutEffect(() => {
+    if (data?.[1]?.data?.updatedAt) {
+      setLastTimeSaved(new Date(data[1].data.updatedAt));
+    }
+  }, []);
 
   if (!data || isLoading) {
     return (
@@ -71,17 +85,25 @@ export default function DndBooksBookIdPage({
   }
 
   return (
-    <BookEditor
-      defaultBlocks={response?.data?.content?.blocks ?? []}
-      onBlocksChange={(blocks) => {
-        if (!updateBookMutation.isPending) {
-          mudateBook(
-            produce(response.data, (draft) => {
-              draft.content.blocks = blocks;
-            }),
-          );
-        }
-      }}
-    />
+    <>
+      <title>
+        {t("BookEditor.pageTitle", {
+          title: response?.data?.title ?? "",
+        })}
+      </title>
+      <BookEditor
+        defaultBlocks={response?.data?.content?.blocks ?? []}
+        lastTimeSaved={lastTimeSaved}
+        onBlocksChange={(blocks) => {
+          if (!updateBookMutation.isPending) {
+            mudateBook(
+              produce(response.data, (draft) => {
+                draft.content.blocks = blocks;
+              }),
+            );
+          }
+        }}
+      />
+    </>
   );
 }

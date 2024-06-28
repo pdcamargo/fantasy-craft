@@ -28,6 +28,7 @@ import { Logo } from "../logo";
 import Link from "next/link";
 import { cn } from "@craft/ui/utils";
 import React from "react";
+import { useTranslation } from "@craft/translation";
 
 const ListItem = React.forwardRef<
   HTMLAnchorElement,
@@ -55,6 +56,7 @@ const ListItem = React.forwardRef<
 });
 
 const DashboardMenu = () => {
+  const { t } = useTranslation();
   const currentUserQuery = useCurrentUserQuery();
 
   return (
@@ -125,14 +127,19 @@ const DashboardMenu = () => {
               </NavigationMenuItem>
 
               <NavigationMenuItem>
-                <NavigationMenuTrigger>Components</NavigationMenuTrigger>
+                <NavigationMenuTrigger>D&D</NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
                     {[
                       {
-                        title: "Avatar",
-                        href: "/components/avatar",
-                        description: "Display user profile pictures.",
+                        title: t("Navbar.dnd.myBooks"),
+                        href: "/dashboard/dnd/books",
+                        description: t("Navbar.dnd.myBooksDescription"),
+                      },
+                      {
+                        title: t("Navbar.dnd.newBook"),
+                        href: "/dashboard/dnd/books/new",
+                        description: t("Navbar.dnd.newBookDescription"),
                       },
                     ].map((component) => (
                       <ListItem
