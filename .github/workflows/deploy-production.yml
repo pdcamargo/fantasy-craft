@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: print out example job
+      - name: Setup SSH
         uses: appleboy/ssh-action@v0.1.10
         with:
           host: 89.116.51.219

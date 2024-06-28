@@ -37,6 +37,7 @@ const ListItem = React.forwardRef<
   return (
     <li>
       <NavigationMenuLink asChild>
+        {/* @ts-expect-error */}
         <Link
           ref={ref}
           className={cn(
