@@ -110,9 +110,12 @@ export default function RootPage() {
   };
 
   return (
-    <div className="w-screen flex h-screen overflow-hidden">
+    <div className="w-screen flex h-screen overflow-hidden bg-white">
       <div className="flex-[50%] h-screen flex items-center justify-center px-20">
-        <Card className="w-full max-w-[450px] shadow-none border-none">
+        <Card
+          variant="white"
+          className="w-full max-w-[450px] shadow-none border-none"
+        >
           <CardHeader>
             <CardTitle className="text-center">{t("Login.header")}</CardTitle>
             <CardDescription className="text-center">
