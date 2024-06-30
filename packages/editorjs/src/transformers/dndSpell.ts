@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { dndSpellTemplate } from "./templates";
 
 const dndSpellSchema = z.object({
   type: z.literal("dndSpell"),
@@ -23,24 +24,5 @@ type DndSpellData = z.infer<typeof dndSpellSchema>;
 export function dndSpell(block: DndSpellData) {
   dndSpellSchema.parse(block);
 
-  return `
-    <div class="dnd-spell">
-      <h4 class="dnd-spell-name">${block.data.name}</h4>
-      <p class="dnd-spell-type">${block.data.type}</p>
-      <div class="dnd-spell-attributes">
-        ${block.data.attributes
-          .map((attr: { name: string; value: string }) =>
-            attr.name && attr.value
-              ? `
-              <div class="dnd-spell-attributes-attr">
-                <strong>${attr.name}</strong>: ${attr.value}
-              </div>
-            `
-              : "",
-          )
-          .join("")}
-      </div>
-      <pre class="dnd-spell-description">${block.data.description}</pre>
-    </div>
-  `;
+  return dndSpellTemplate(block.data);
 }

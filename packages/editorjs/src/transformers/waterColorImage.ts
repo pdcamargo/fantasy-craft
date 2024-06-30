@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { waterColorImageTemplate } from "./templates";
 
 const waterColorImageSchema = z.object({
   type: z.literal("waterColorImage"),
@@ -32,16 +33,5 @@ type WaterColorImageData = z.infer<typeof waterColorImageSchema>;
 export function waterColorImage(block: WaterColorImageData) {
   waterColorImageSchema.parse(block);
 
-  return `
-    <div 
-      class="water-color-wrapper ${block.data.waterColor.position} ${block.data.waterColor.type}"
-      style="--water-color-image: url(${block.data.waterColor.url})"
-    >
-      <div class="water-color-container">
-        <div class="water-color-mask">
-          <img src="${block.data.file.url}" alt="${block.data.file.caption ?? ""}" />
-        </div>
-      </div>
-    </div>
-  `;
+  return waterColorImageTemplate(block.data);
 }

@@ -1,4 +1,6 @@
 import { z } from "zod";
+import { textToAnchorId } from "../utils";
+import { headingTemplate } from "./templates";
 
 const headerSchema = z.object({
   type: z.literal("header"),
@@ -10,20 +12,11 @@ const headerSchema = z.object({
 
 type HeaderData = z.infer<typeof headerSchema>;
 
-const headerTextToAnchorId = (text: string) => {
-  return text
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)/g, "");
-};
-
 /**
  * Validates the input data as a Header block and then returns the HTML string.
  */
 export function header(block: HeaderData) {
   headerSchema.parse(block);
 
-  const anchorId = headerTextToAnchorId(block.data.text);
-
-  return `<h${block.data.level} id="${anchorId}">${block.data.text}</h${block.data.level}>`;
+  return headingTemplate(block.data);
 }

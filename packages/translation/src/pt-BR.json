@@ -77,7 +77,8 @@
       "DndSpell": "Magia de DnD",
       "Note": "Nota",
       "Lorem": "Lorem Ipsum",
-      "List": "Lista"
+      "List": "Lista",
+      "FrontCover": "Capa do Livro"
     },
     "ui": {
       "blockTunes": {

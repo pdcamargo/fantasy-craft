@@ -1,24 +1,13 @@
 "use client";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@craft/ui/avatar";
-import {
-  Navbar,
-  NavbarBrand,
-  NavbarContent,
-  NavbarHeader,
-  NavbarItem,
-} from "@craft/ui/navbar";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-import { Logo } from "./logo";
 import {
   UNAUTHORIZED_RESPONSE,
   setAuthToken,
-  useCurrentUserQuery,
   useIsUserLoggedIn,
 } from "@craft/query";
-import { Separator, Skeleton } from "@craft/ui";
 import { DashboardMenu } from "./components";
 
 export default function DashboardLayout({ children }: React.PropsWithChildren) {

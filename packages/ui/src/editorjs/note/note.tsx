@@ -20,7 +20,7 @@ export class Note implements BlockTool {
 
   constructor({ data }: BlockToolConstructorOptions<NoteComponentData, any>) {
     this._wrapper = document.createElement("div");
-    this._wrapper.classList.add("break-column-wrapper");
+    this._wrapper.classList.add("note-wrapper");
 
     this.reactRoot = createRoot(this._wrapper);
 

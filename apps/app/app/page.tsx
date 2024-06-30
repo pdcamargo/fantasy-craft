@@ -4,7 +4,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@craft/ui/card";
@@ -16,21 +15,18 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-  useFormField,
   useForm,
 } from "@craft/ui/form";
 import { Button } from "@craft/ui/button";
-import { useState } from "react";
 import { Input } from "@craft/ui/input";
 import { Separator, toast } from "@craft/ui";
 import Link from "next/link";
-import { Locales, useTranslation } from "@craft/translation";
-import { useLocaleState } from "./providers";
+import { useTranslation } from "@craft/translation";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { fetcher, setAuthToken } from "@craft/query";
+import { fetcher, setAuthToken, useIsUserLoggedIn } from "@craft/query";
 
 const loginSchema = z.object({
   username: z
@@ -66,7 +62,8 @@ type UserLoginResult = {
 } | null;
 
 export default function RootPage() {
-  const [locale, setLocale] = useLocaleState();
+  const isLoggedIn = useIsUserLoggedIn();
+
   const router = useRouter();
 
   const { mutateAsync: signIn, isPending: isLoggingIn } = useMutation({
@@ -108,6 +105,12 @@ export default function RootPage() {
 
     toast.error(t("Login.onError"));
   };
+
+  if (isLoggedIn) {
+    router.push("/dashboard/dnd/books");
+
+    return null;
+  }
 
   return (
     <div

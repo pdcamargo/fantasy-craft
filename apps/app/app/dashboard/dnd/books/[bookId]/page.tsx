@@ -2,7 +2,7 @@
 
 import { useGetBook, useUpdateBook } from "@craft/query";
 import { Card, CardContent, Skeleton } from "@craft/ui";
-import { BookEditor } from "../book-editor";
+import { BookEditor } from "../../../components/book-editor";
 import { produce } from "immer";
 import { useDebouncedCallback } from "use-debounce";
 import { useLayoutEffect, useState } from "react";

@@ -46,8 +46,9 @@ export class PageDelimiter implements BlockTool {
 
   render(): HTMLElement {
     this.reactRoot.render(
-      <div className="w-full h-[2px] border-2 border-gray-900 border-dashed my-12 flex items-center justify-center shadow-smooth">
-        <span className="text-center bg-white shadow-lg border-2 border-gray-900 font-bold px-3 py-1 text-xs uppercase select-none">
+      <div className="w-full h-[60px] my-12 flex items-center justify-center relative">
+        <div className="border-2 border-gray-900 border-dashed w-full h-[2px] absolute shadow-smooth"></div>
+        <span className="text-center bg-white shadow-lg border-2 border-gray-900 font-bold px-3 py-1 text-xs uppercase select-none absolute">
           Page end
         </span>
       </div>,

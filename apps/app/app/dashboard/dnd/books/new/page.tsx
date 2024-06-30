@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslation } from "@craft/translation";
-import { BookEditor } from "../book-editor";
+import { BookEditor } from "../../../components/book-editor";
 
 export default function DndBooksNewPage() {
   const { t } = useTranslation();

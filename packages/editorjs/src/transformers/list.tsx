@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { listTemplate } from "./templates";
 
 const listSchema = z.object({
   type: z.literal("list"),
@@ -16,9 +17,5 @@ type ListData = z.infer<typeof listSchema>;
 export function list(block: ListData) {
   listSchema.parse(block);
 
-  const items = block.data.items
-    .map((item: string) => `<li>${item}</li>`)
-    .join("");
-
-  return `<ul style="list-style:${block.data.style === "ordered" ? "decimal" : "disc"}">${items}</ul>`;
+  return listTemplate(block.data);
 }

@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { quoteTemplate } from "./templates";
 
 const quoteSchema = z.object({
   type: z.literal("quote"),
@@ -17,14 +18,5 @@ type QuoteData = z.infer<typeof quoteSchema>;
 export function quote(block: QuoteData) {
   quoteSchema.parse(block);
 
-  return `
-  <blockquote class="${block.data.alignment}">
-    ${block.data.text}
-
-    ${
-      block.data.caption
-        ? `<footer class="attribution">${block.data.caption}</footer>`
-        : ""
-    }
-  </blockquote>`;
+  return quoteTemplate(block.data);
 }
