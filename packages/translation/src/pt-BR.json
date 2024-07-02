@@ -5,7 +5,9 @@
     "create": "Criar",
     "books": "Livros",
     "dashboard": "Dashboard",
-    "dungeonsAndDragons": "Dungeons & Dragons"
+    "dungeonsAndDragons": "Dungeons & Dragons",
+    "naruto5e": "Naruto 5e",
+    "characters": "Personagens"
   },
   "Login": {
     "pageTitle": "Login - Fantasy Craft",
@@ -128,6 +130,12 @@
       "myBooksDescription": "Veja todos os seus livros",
       "newBook": "Criar novo livro",
       "newBookDescription": "Crie um novo livro"
+    },
+    "n5e": {
+      "myCharacters": "Meus Personagens",
+      "myCharactersDescription": "Veja todos os seus personagens",
+      "newCharacter": "Criar novo personagem",
+      "newCharacterDescription": "Crie um novo personagem"
     }
   }
 }

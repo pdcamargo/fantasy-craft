@@ -4,12 +4,19 @@ import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
 
 import { Inter as FontSans } from "next/font/google";
+import { Roboto } from "next/font/google";
 import { AppProvider } from "./providers";
 import { Locales } from "@craft/translation";
 
 const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
+});
+
+const fontRoboto = Roboto({
+  weight: ["400", "500", "700"],
+  subsets: ["latin"],
+  variable: "--font-roboto",
 });
 
 export default async function RootLayout({
@@ -36,7 +43,7 @@ export default async function RootLayout({
         <title>Fantasy Craft</title>
       </head>
       <body
-        className={`min-h-screen bg-background font-sans antialiased ${fontSans.variable}`}
+        className={`min-h-screen bg-background font-sans antialiased ${fontSans.variable} ${fontRoboto.variable}`}
       >
         <AppProvider messages={messages} defaultLocale={locale as Locales}>
           {children}

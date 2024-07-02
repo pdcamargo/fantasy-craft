@@ -1,6 +1,11 @@
 {
   "root": true,
-  "extends": ["next/babel", "next/core-web-vitals", "turbo"],
+  "extends": [
+    "next/babel",
+    "next/core-web-vitals",
+    "turbo",
+    "plugin:tailwindcss/recommended"
+  ],
   "rules": {
     "import/no-anonymous-default-export": "off"
   }

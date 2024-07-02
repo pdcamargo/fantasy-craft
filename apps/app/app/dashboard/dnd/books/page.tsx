@@ -53,10 +53,6 @@ export default function BooksPage() {
               label: t("General.books"),
               href: "/dashboard/dnd/books",
             },
-            {
-              label: t("General.create"),
-              href: "/dashboard/dnd/books/new",
-            },
           ]}
         />
 

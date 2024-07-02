@@ -154,6 +154,35 @@ const DashboardMenu = () => {
                   </ul>
                 </NavigationMenuContent>
               </NavigationMenuItem>
+              <NavigationMenuItem>
+                <NavigationMenuTrigger>
+                  {t("General.naruto5e")}
+                </NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+                    {[
+                      {
+                        title: t("Navbar.n5e.myCharacters"),
+                        href: "/dashboard/n5e/characters",
+                        description: t("Navbar.n5e.myCharactersDescription"),
+                      },
+                      {
+                        title: t("Navbar.n5e.newCharacter"),
+                        href: "/dashboard/n5e/characters/new",
+                        description: t("Navbar.n5e.newCharacterDescription"),
+                      },
+                    ].map((component) => (
+                      <ListItem
+                        key={component.title}
+                        title={component.title}
+                        href={component.href}
+                      >
+                        {component.description}
+                      </ListItem>
+                    ))}
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
         </NavbarContent>
