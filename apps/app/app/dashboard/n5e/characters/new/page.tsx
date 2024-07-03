@@ -12,7 +12,10 @@ import {
 import {
   AbilitiesScores,
   ArmorClass,
+  CompactAbility,
   ElementalAffinity,
+  HPCP,
+  Initiative,
   MoveSpeed,
   Proficiency,
   SavingThrows,
@@ -57,8 +60,41 @@ export default function NewCharacterPage() {
               <span className="font-thin text-xs">
                 Genjutsu-Specialist - Layered-Reality
               </span>
+              <span className="font-thin text-xs mt-1 italic">
+                Tobirama's Legacy Class Mod
+              </span>
 
               <ElementalAffinity affinities={[]} />
+            </div>
+
+            <Separator
+              orientation="vertical"
+              className="bg-white/10 h-14 self-center mx-10"
+            />
+
+            <div className="flex items-center gap-5 ml-auto">
+              <HPCP
+                hp={{
+                  current: 20,
+                  max: 20,
+                  temp: 0,
+                }}
+                cp={{
+                  current: 10,
+                  max: 10,
+                  temp: 0,
+                }}
+              />
+
+              <Separator orientation="vertical" className="bg-white/10 h-14" />
+
+              <Proficiency proficiency={6} />
+
+              <ArmorClass armorClass={16} />
+
+              <Initiative initiative={0} />
+
+              <MoveSpeed speed={30} />
             </div>
           </div>
         </DashboradPageInfo>
@@ -66,8 +102,22 @@ export default function NewCharacterPage() {
 
       <DashboardContent>
         <Card variant="white" className="flex-1 font-roboto relative z-[1]">
-          <CardContent className="pt-6">
-            <div className="w-full">
+          <CardContent
+            className="pt-6 grid"
+            style={{
+              gridTemplateColumns: "repeat(3, 1fr)",
+              gap: "5px",
+            }}
+          >
+            <CompactAbility skillsHeadingText="Skills" ability="Strength" />
+            <CompactAbility skillsHeadingText="Skills" ability="Constitution" />
+            <CompactAbility skillsHeadingText="Skills" ability="Dexterity" />
+
+            <CompactAbility skillsHeadingText="Skills" ability="Intelligence" />
+            <CompactAbility skillsHeadingText="Skills" ability="Wisdom" />
+            <CompactAbility skillsHeadingText="Skills" ability="Charisma" />
+
+            {/* <div className="w-full">
               <div className="flex gap-3">
                 <AbilitiesScores
                   abilities={{
@@ -144,7 +194,7 @@ export default function NewCharacterPage() {
                   <Skills skills={[]} />
                 </div>
               </div>
-            </div>
+            </div> */}
           </CardContent>
         </Card>
       </DashboardContent>

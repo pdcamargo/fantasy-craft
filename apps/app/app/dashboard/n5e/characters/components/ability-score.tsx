@@ -1,3 +1,4 @@
+import { cn } from "@craft/ui/utils";
 import { AbilityScoreBoxSvg } from "../../components";
 
 export const abilityScores = [
@@ -15,20 +16,21 @@ export type AbilityScoreProps = {
   modifier: number;
 };
 
-export const AbilityScore: React.FC<AbilityScoreProps> = ({
-  name,
-  value,
-  modifier,
-}) => {
+export const AbilityScore: React.FC<
+  AbilityScoreProps & {
+    headingText?: string;
+    className?: string;
+  }
+> = ({ name, value, modifier, headingText, className }) => {
   return (
-    <div className="relative w-[81px] h-[95px] text-center">
+    <div className={cn("relative w-[81px] h-[95px] text-center", className)}>
       <div className="absolute overflow-hidden top-0 bottom-0 left-0 right-0 pointer-events-none">
         <AbilityScoreBoxSvg className="w-full h-full" />
       </div>
 
       <div className="pt-[2px] relative">
         <span className="uppercase font-[700] text-[#b0b7bd] text-[9px]">
-          {name}
+          {headingText ?? name}
         </span>
       </div>
 
