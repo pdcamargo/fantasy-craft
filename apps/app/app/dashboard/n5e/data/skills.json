@@ -1,0 +1,86 @@
+[
+  {
+    "name": "Acrobatics",
+    "defaultAbility": "Dexterity"
+  },
+  {
+    "name": "Animal Handling",
+    "defaultAbility": "Wisdom"
+  },
+  {
+    "name": "Athletics",
+    "defaultAbility": "Strength"
+  },
+  {
+    "name": "Chakra Control",
+    "defaultAbility": "Constitution"
+  },
+  {
+    "name": "Crafting",
+    "defaultAbility": "Intelligence"
+  },
+  {
+    "name": "Deception",
+    "defaultAbility": "Charisma"
+  },
+  {
+    "name": "History",
+    "defaultAbility": "Intelligence"
+  },
+  {
+    "name": "Illusions",
+    "defaultAbility": "Intelligence"
+  },
+  {
+    "name": "Insight",
+    "defaultAbility": "Wisdom"
+  },
+  {
+    "name": "Intimidation",
+    "defaultAbility": "Charisma"
+  },
+  {
+    "name": "Investigation",
+    "defaultAbility": "Intelligence"
+  },
+  {
+    "name": "Martial Arts",
+    "defaultAbility": "Strength"
+  },
+  {
+    "name": "Medicine",
+    "defaultAbility": "Wisdom"
+  },
+  {
+    "name": "Nature",
+    "defaultAbility": "Intelligence"
+  },
+  {
+    "name": "Ninshou",
+    "defaultAbility": "Intelligence"
+  },
+  {
+    "name": "Perception",
+    "defaultAbility": "Wisdom"
+  },
+  {
+    "name": "Performance",
+    "defaultAbility": "Charisma"
+  },
+  {
+    "name": "Persuasion",
+    "defaultAbility": "Charisma"
+  },
+  {
+    "name": "Sleight of Hand",
+    "defaultAbility": "Dexterity"
+  },
+  {
+    "name": "Stealth",
+    "defaultAbility": "Dexterity"
+  },
+  {
+    "name": "Survival",
+    "defaultAbility": "Wisdom"
+  }
+]

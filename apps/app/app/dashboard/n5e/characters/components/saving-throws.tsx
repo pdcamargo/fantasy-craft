@@ -3,27 +3,27 @@ import { cn } from "@craft/ui/utils";
 export const savesArray = [
   {
     name: "Strength",
-    modifier: "Strength",
+    defaultAbility: "Strength",
   },
   {
     name: "Dexterity",
-    modifier: "Dexterity",
+    defaultAbility: "Dexterity",
   },
   {
     name: "Constitution",
-    modifier: "Constitution",
+    defaultAbility: "Constitution",
   },
   {
     name: "Intelligence",
-    modifier: "Intelligence",
+    defaultAbility: "Intelligence",
   },
   {
     name: "Wisdom",
-    modifier: "Wisdom",
+    defaultAbility: "Wisdom",
   },
   {
     name: "Charisma",
-    modifier: "Charisma",
+    defaultAbility: "Charisma",
   },
 ] as const;
 
@@ -32,7 +32,7 @@ export type SaveName = (typeof savesArray)[number]["name"];
 export type SaveConfig = Array<{
   name: SaveName;
   bonus: number;
-  customModifier?: string;
+  customAbility?: string;
   isProficient?: boolean;
 }>;
 
@@ -40,11 +40,13 @@ export const SavingThrow: React.FC<{
   save: {
     name: SaveName;
     bonus: number;
-    customModifier?: string;
+    customAbility?: string;
     isProficient?: boolean;
   };
+  editable?: boolean;
+  onProficiencyChange?: (isProficient: boolean) => void;
   className?: string;
-}> = ({ save, className }) => {
+}> = ({ save, className, editable, onProficiencyChange }) => {
   return (
     <div
       className={cn(
@@ -63,8 +65,14 @@ export const SavingThrow: React.FC<{
               "bg-[#333] border border-dotted border-[#838383] h-[10px] w-[10px] inline-flex rounded-full",
               {
                 "bg-[#C53131]": save.isProficient,
+                "cursor-pointer": editable,
               },
             )}
+            onClick={() => {
+              if (editable && onProficiencyChange) {
+                onProficiencyChange(!save.isProficient);
+              }
+            }}
           ></div>
         </span>
       </div>

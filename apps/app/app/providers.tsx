@@ -6,7 +6,8 @@ import "dayjs/locale/pt-br";
 
 import { Locales } from "@craft/translation";
 import { AbstractIntlMessages, NextIntlClientProvider } from "next-intl";
-import { PropsWithChildren, createContext, useContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
+import NiceModal from "@ebay/nice-modal-react";
 
 type ContextType = {
   locale: Locales;
@@ -50,17 +51,19 @@ export const AppProvider: React.FC<{
   }
 
   return (
-    <AppContext.Provider value={{ locale, setLocale, timeZone, setTimeZone }}>
-      <NextIntlClientProvider
-        messages={messages}
-        timeZone={timeZone}
-        locale={locale}
-      >
-        <QueryClientProvider client={queryClient}>
-          {children}
-        </QueryClientProvider>
-      </NextIntlClientProvider>
-    </AppContext.Provider>
+    <NiceModal.Provider>
+      <AppContext.Provider value={{ locale, setLocale, timeZone, setTimeZone }}>
+        <NextIntlClientProvider
+          messages={messages}
+          timeZone={timeZone}
+          locale={locale}
+        >
+          <QueryClientProvider client={queryClient}>
+            {children}
+          </QueryClientProvider>
+        </NextIntlClientProvider>
+      </AppContext.Provider>
+    </NiceModal.Provider>
   );
 };
 

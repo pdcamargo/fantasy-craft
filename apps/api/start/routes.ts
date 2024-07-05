@@ -24,6 +24,16 @@ router
 router.get('/dnd/books/:id/public', '#controllers/dnd_books_controller.publicFind')
 router.get('/dnd/books/:id/pdf', '#controllers/dnd_books_controller.pdf')
 
+router
+  .group(() => {
+    router.get('/n5e/characters', '#controllers/n5e_controller.listAllCharacters')
+    router.post('/n5e/characters', '#controllers/n5e_controller.createCharacter')
+    router.put('/n5e/characters/:id', '#controllers/n5e_controller.updateCharacter')
+  })
+  .middleware(middleware.auth())
+
+router.get('/n5e/characters/:id', '#controllers/n5e_controller.findCharacter')
+
 router.post('/auth/login', '#controllers/session_controller.login')
 router.post('/auth/register', '#controllers/session_controller.register')
 router.post('/auth/logout', '#controllers/session_controller.logout').middleware(middleware.auth())

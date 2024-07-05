@@ -7,6 +7,7 @@ import type { HasMany } from '@adonisjs/lucid/types/relations'
 
 import Book from '#models/book'
 import { AccessToken, DbAccessTokensProvider } from '@adonisjs/auth/access_tokens'
+import N5eCharacter from './n5e-character.js'
 
 const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
   uids: ['email', 'username'],
@@ -41,6 +42,9 @@ export default class User extends compose(BaseModel, AuthFinder) {
 
   @hasMany(() => Book)
   declare books: HasMany<typeof Book>
+
+  @hasMany(() => N5eCharacter)
+  declare n5eCharacters: HasMany<typeof N5eCharacter>
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime

@@ -19,7 +19,6 @@ import {
   MoveSpeed,
   Proficiency,
   SavingThrows,
-  Skills,
 } from "../components";
 
 export default function NewCharacterPage() {
@@ -108,94 +107,7 @@ export default function NewCharacterPage() {
               gridTemplateColumns: "repeat(3, 1fr)",
               gap: "5px",
             }}
-          >
-            <CompactAbility skillsHeadingText="Skills" ability="Strength" />
-            <CompactAbility skillsHeadingText="Skills" ability="Constitution" />
-            <CompactAbility skillsHeadingText="Skills" ability="Dexterity" />
-
-            <CompactAbility skillsHeadingText="Skills" ability="Intelligence" />
-            <CompactAbility skillsHeadingText="Skills" ability="Wisdom" />
-            <CompactAbility skillsHeadingText="Skills" ability="Charisma" />
-
-            {/* <div className="w-full">
-              <div className="flex gap-3">
-                <AbilitiesScores
-                  abilities={{
-                    Charisma: {
-                      value: 14,
-                      modifier: 2,
-                    },
-                    Constitution: {
-                      value: 18,
-                      modifier: 4,
-                    },
-                    Dexterity: {
-                      value: 10,
-                      modifier: 0,
-                    },
-                    Intelligence: {
-                      value: 18,
-                      modifier: 4,
-                    },
-                    Strength: {
-                      value: 10,
-                      modifier: 0,
-                    },
-                    Wisdom: {
-                      value: 12,
-                      modifier: 1,
-                    },
-                  }}
-                />
-
-                <div className="flex flex-col gap-2">
-                  <div className="flex items-start gap-2">
-                    <SavingThrows
-                      saves={[
-                        {
-                          name: "Strength",
-                          bonus: 0,
-                        },
-                        {
-                          name: "Dexterity",
-                          bonus: 0,
-                        },
-                        {
-                          name: "Constitution",
-                          bonus: 5,
-                          isProficient: true,
-                        },
-                        {
-                          name: "Intelligence",
-                          bonus: 5,
-                          isProficient: true,
-                        },
-                        {
-                          name: "Wisdom",
-                          bonus: 2,
-                          isProficient: true,
-                        },
-                        {
-                          name: "Charisma",
-                          bonus: 2,
-                        },
-                      ]}
-                    />
-
-                    <div className="flex gap-2">
-                      <Proficiency proficiency={6} />
-
-                      <MoveSpeed speed={30} />
-
-                      <ArmorClass armorClass={16} />
-                    </div>
-                  </div>
-
-                  <Skills skills={[]} />
-                </div>
-              </div>
-            </div> */}
-          </CardContent>
+          ></CardContent>
         </Card>
       </DashboardContent>
     </div>

@@ -1,0 +1,167 @@
+[
+  {
+    "name": "Genjutsu-Specialist",
+    "chakraDie": 12,
+    "hitDie": 6,
+    "subclasses": [
+      "Beguiler",
+      "Corrupt Thoughts",
+      "Illusionist",
+      "Layered Reality",
+      "Misty Distortionist",
+      "Siren",
+      "Time Slipper"
+    ]
+  },
+  {
+    "name": "Hunter-Nin",
+    "chakraDie": 8,
+    "hitDie": 10,
+    "subclasses": [
+      "Blade Warden",
+      "Necrotic Hand",
+      "Grave Stalker",
+      "Arsenalist",
+      "Undertaker",
+      "Vice Agent",
+      "Void Walker",
+      "Wolves Legacy"
+    ]
+  },
+  {
+    "name": "Intelligence-Operative",
+    "chakraDie": 10,
+    "hitDie": 8,
+    "subclasses": [
+      "Azure Analyst",
+      "Calculated Strategist",
+      "Grave Controller",
+      "Interrogationist",
+      "Mastermind Strategist",
+      "Operative Precognitive",
+      "Operative Sensory",
+      "Shadowhand",
+      "Tactical Strategist"
+    ]
+  },
+  {
+    "name": "Medical-Nin",
+    "chakraDie": 10,
+    "hitDie": 8,
+    "subclasses": [
+      "Adept Medic",
+      "Black Medicine",
+      "Combat Medic",
+      "Natural Medicine",
+      "Shaman",
+      "Transmuter"
+    ]
+  },
+  {
+    "name": "Ninjutsu-Specialist",
+    "chakraDie": 12,
+    "hitDie": 6,
+    "subclasses": [
+      "Blaze Walker",
+      "Hijutsu Elitist",
+      "Lightning Breaker",
+      "Sanguine Master",
+      "Scribe Master",
+      "Stone Crusher",
+      "Storm Terror",
+      "Summoner",
+      "The Professor",
+      "Trace Talent",
+      "Tsunami"
+    ]
+  },
+  {
+    "name": "Scout-Nin",
+    "chakraDie": 10,
+    "hitDie": 8,
+    "subclasses": [
+      "Arbiter Scout",
+      "Assault Scout",
+      "Cloning Scout",
+      "Barrier Scout",
+      "Elemental Scout",
+      "Pathfinder Scout",
+      "Phantom Scout",
+      "Tactical Scout",
+      "Trickster Scout"
+    ]
+  },
+  {
+    "name": "Taijutsu-Specialist",
+    "chakraDie": 6,
+    "hitDie": 12,
+    "subclasses": [
+      "Disturbance",
+      "Passionate Flame",
+      "Ironclad",
+      "Nin-Tai",
+      "Righteous Fury",
+      "Ruin",
+      "Stancer",
+      "Talent & Focus"
+    ]
+  },
+  {
+    "name": "Weapon-Specialist",
+    "chakraDie": 8,
+    "hitDie": 10,
+    "subclasses": [
+      "Battle Dancer Form",
+      "Gungnir Piercer Form",
+      "Obsidian Hammer Form",
+      "Phantom Blade Form",
+      "Primal Weapon Form",
+      "Ranger Form",
+      "Samurai Form",
+      "Slayer Form"
+    ]
+  },
+  {
+    "name": "Puppet-Master",
+    "chakraDie": 10,
+    "hitDie": 8,
+    "subclasses": [
+      "Black Technique Puppeteer",
+      "Blue Technique Warmaster",
+      "Green Technique Marionettist",
+      "Purple Technique Juggernaut",
+      "Red Technique Performer",
+      "White Technique Weaver"
+    ]
+  },
+  {
+    "name": "Cooking-Nin",
+    "chakraDie": 8,
+    "hitDie": 10,
+    "subclasses": [
+      "Battle Cook",
+      "Entremetier Chef",
+      "Patissier Chef",
+      "Herbalist CN",
+      "Fry Cook",
+      "Alchemist CN",
+      "Mixologist",
+      "Sour Taste",
+      "Show Cook",
+      "Vendeur crème glacée"
+    ]
+  },
+  {
+    "name": "Science-Nin",
+    "chakraDie": 10,
+    "hitDie": 8,
+    "subclasses": [
+      "Alchemist-SN",
+      "Shinobi-Ware",
+      "Spyware",
+      "Technobi",
+      "Ninjaneer",
+      "Mad-Scientist"
+    ]
+  }
+]

@@ -1,5 +1,6 @@
 import { cn } from "@craft/ui/utils";
 import { AbilityScoreBoxSvg } from "../../components";
+import { ContentEditable } from "@craft/ui";
 
 export const abilityScores = [
   "Strength",
@@ -14,6 +15,8 @@ export type AbilityScoreProps = {
   name: (typeof abilityScores)[number];
   value: number;
   modifier: number;
+  editable?: boolean;
+  onChange?: (value: number) => void;
 };
 
 export const AbilityScore: React.FC<
@@ -21,7 +24,7 @@ export const AbilityScore: React.FC<
     headingText?: string;
     className?: string;
   }
-> = ({ name, value, modifier, headingText, className }) => {
+> = ({ name, value, modifier, headingText, onChange, editable, className }) => {
   return (
     <div className={cn("relative w-[81px] h-[95px] text-center", className)}>
       <div className="absolute overflow-hidden top-0 bottom-0 left-0 right-0 pointer-events-none">
@@ -40,9 +43,22 @@ export const AbilityScore: React.FC<
         </span>
       </div>
 
-      <div className="text-[#b0b7bd] bottom-[4px] text-[16px] font-bold absolute left-0 right-0">
+      <ContentEditable
+        editable={editable}
+        type="number"
+        className="text-[#b0b7bd] bottom-[4px] text-[16px] font-bold absolute px-3"
+        style={{
+          left: "50%",
+          transform: "translateX(-50%)",
+        }}
+        onChange={(newValue) => {
+          if (onChange) {
+            onChange(Number(newValue));
+          }
+        }}
+      >
         {value}
-      </div>
+      </ContentEditable>
     </div>
   );
 };

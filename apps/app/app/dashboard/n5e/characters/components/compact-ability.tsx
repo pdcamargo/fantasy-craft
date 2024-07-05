@@ -1,16 +1,25 @@
 import { Separator } from "@craft/ui";
 import { abilityScores, AbilityScore } from "./ability-score";
 import { SavingThrow, savesArray } from "./saving-throws";
-import { SkillGroup, getSkillsForAbility } from "./skills";
+import { SkillGroup, SkillName, getSkillsForAbility } from "./skills";
+import { N5eCharacterWrapper } from "app/dashboard/n5e/utils/n5e-character-wrapper";
 
 export type CompactAbilityProps = {
   ability: (typeof abilityScores)[number];
   skillsHeadingText?: string;
+  character: N5eCharacterWrapper;
+  onAbilityChange?: (value: number) => void;
+  onSavingThrowProficiencyChange?: (isProficient: boolean) => void;
+  onSkillProficiencyChange?: (skill: SkillName, isProficient: boolean) => void;
 };
 
 export const CompactAbility: React.FC<CompactAbilityProps> = ({
   ability,
   skillsHeadingText,
+  character,
+  onAbilityChange,
+  onSavingThrowProficiencyChange,
+  onSkillProficiencyChange,
 }) => {
   const skills = getSkillsForAbility(ability)!;
 
@@ -24,9 +33,11 @@ export const CompactAbility: React.FC<CompactAbilityProps> = ({
       <div className="flex items-start gap-5 m-[-20px]">
         <AbilityScore
           name={ability}
-          value={0}
-          modifier={0}
+          value={character.abilities[ability]}
+          modifier={character.abilityMods[ability]}
           headingText="Ability Score"
+          editable
+          onChange={onAbilityChange}
         />
 
         <div>
@@ -36,10 +47,12 @@ export const CompactAbility: React.FC<CompactAbilityProps> = ({
           <SavingThrow
             save={{
               name: ability,
-              bonus: 0,
-              isProficient: false,
-              customModifier: undefined,
+              bonus: character.saves[ability],
+              isProficient: character.savesProficiencies[ability],
+              customAbility: undefined,
             }}
+            editable
+            onProficiencyChange={onSavingThrowProficiencyChange}
           />
         </div>
       </div>
@@ -48,9 +61,11 @@ export const CompactAbility: React.FC<CompactAbilityProps> = ({
 
       <SkillGroup
         ability={ability}
-        skills={[]}
-        groupSkills={skills}
+        skills={character.skills}
+        groupSkills={skills as any}
         headingText={skillsHeadingText}
+        editable
+        onProficiencyChange={onSkillProficiencyChange}
       />
     </div>
   );

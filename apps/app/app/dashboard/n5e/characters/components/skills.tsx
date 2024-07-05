@@ -1,91 +1,95 @@
 import { cn } from "@craft/ui/utils";
+import {
+  N5eCharacterWrapper,
+  SkillsRecord,
+} from "../../utils/n5e-character-wrapper";
 
 export const skillArray = [
   {
     name: "Acrobatics",
-    defaultModifier: "Dexterity" as const,
+    defaultAbility: "Dexterity",
   },
   {
     name: "Animal Handling",
-    defaultModifier: "Wisdom" as const,
+    defaultAbility: "Wisdom",
   },
   {
     name: "Athletics",
-    defaultModifier: "Strength" as const,
+    defaultAbility: "Strength",
   },
   {
     name: "Chakra Control",
-    defaultModifier: "Constitution" as const,
+    defaultAbility: "Constitution",
   },
   {
     name: "Crafting",
-    defaultModifier: "Intelligence" as const,
+    defaultAbility: "Intelligence",
   },
   {
     name: "Deception",
-    defaultModifier: "Charisma" as const,
+    defaultAbility: "Charisma",
   },
   {
     name: "History",
-    defaultModifier: "Intelligence" as const,
+    defaultAbility: "Intelligence",
   },
   {
     name: "Illusions",
-    defaultModifier: "Intelligence" as const,
+    defaultAbility: "Intelligence",
   },
   {
     name: "Insight",
-    defaultModifier: "Wisdom" as const,
+    defaultAbility: "Wisdom",
   },
   {
     name: "Intimidation",
-    defaultModifier: "Charisma" as const,
+    defaultAbility: "Charisma",
   },
   {
     name: "Investigation",
-    defaultModifier: "Intelligence" as const,
+    defaultAbility: "Intelligence",
   },
   {
     name: "Martial Arts",
-    defaultModifier: "Strength" as const,
+    defaultAbility: "Strength",
   },
   {
     name: "Medicine",
-    defaultModifier: "Wisdom" as const,
+    defaultAbility: "Wisdom",
   },
   {
     name: "Nature",
-    defaultModifier: "Intelligence" as const,
+    defaultAbility: "Intelligence",
   },
   {
     name: "Ninshou",
-    defaultModifier: "Intelligence" as const,
+    defaultAbility: "Intelligence",
   },
   {
     name: "Perception",
-    defaultModifier: "Wisdom" as const,
+    defaultAbility: "Wisdom",
   },
   {
     name: "Performance",
-    defaultModifier: "Charisma" as const,
+    defaultAbility: "Charisma",
   },
   {
     name: "Persuasion",
-    defaultModifier: "Charisma" as const,
+    defaultAbility: "Charisma",
   },
   {
     name: "Sleight of Hand",
-    defaultModifier: "Dexterity" as const,
+    defaultAbility: "Dexterity",
   },
   {
     name: "Stealth",
-    defaultModifier: "Dexterity" as const,
+    defaultAbility: "Dexterity",
   },
   {
     name: "Survival",
-    defaultModifier: "Wisdom" as const,
+    defaultAbility: "Wisdom",
   },
-];
+] as const;
 
 export type SkillName = (typeof skillArray)[number]["name"];
 
@@ -98,24 +102,21 @@ const groupOrder = [
   "Charisma",
 ];
 
-const skillGroups = Object.groupBy(
-  skillArray,
-  (skill) => skill.defaultModifier,
-);
+const skillGroups = Object.groupBy(skillArray, (skill) => skill.defaultAbility);
 
 export const skillGroupsArray = Object.entries(skillGroups).sort(
   ([a], [b]) => groupOrder.indexOf(a) - groupOrder.indexOf(b),
 );
 
 export const getSkillsForAbility = (
-  ability: (typeof skillArray)[number]["defaultModifier"],
+  ability: (typeof skillArray)[number]["defaultAbility"],
 ) => {
   return skillGroups[ability as keyof typeof skillGroups];
 };
 export type SkillConfig = Array<{
   name: SkillName;
   bonus: number;
-  customModifier?: string;
+  customAbility?: string;
   isProficient?: boolean;
 }>;
 
@@ -125,40 +126,26 @@ export type SkillsProps = {
 
 export const SkillGroup: React.FC<{
   groupSkills: typeof skillArray;
-  skills: SkillConfig;
+  skills: SkillsRecord;
   ability: string;
   headingText?: string;
-}> = ({ groupSkills, skills, ability, headingText }) => {
+  editable?: boolean;
+  onProficiencyChange?: (skill: SkillName, isProficient: boolean) => void;
+}> = ({
+  groupSkills,
+  skills,
+  ability,
+  headingText,
+  editable,
+  onProficiencyChange,
+}) => {
   return (
-    <div
-      className="relative"
-      // className="relative p-[13px_20px] border-[20px]"
-      // style={{
-      //   borderImage: "url(/fancy-box-2-bg.svg) 20 30 20 30 fill",
-      // }}
-    >
+    <div className="relative">
       <div className="relative -m-[20px]" role="table">
         <h3 className="text-xs uppercase font-bold text-white mb-4 text-center">
           {headingText ?? `${ability} Skills`}
         </h3>
 
-        {/* <div
-          className="flex mb-[5px] text-[10px] font-bold uppercase text-[#b0b7bd]"
-          role="row"
-        >
-          <div className="w-[30px]" role="columnheader">
-            Prof
-          </div>
-          <div className="w-[40px] p-[0_5px]" role="columnheader">
-            Mod
-          </div>
-          <div className="flex-[1_1]" role="columnheader">
-            Skill
-          </div>
-          <div className="pr-[10px]" role="columnheader">
-            Bonus
-          </div>
-        </div> */}
         <div
           role="rowgroup"
           style={{
@@ -168,21 +155,22 @@ export const SkillGroup: React.FC<{
           }}
         >
           {groupSkills.map((groupSkill) => {
-            let skill = skills.find((s) => s.name === groupSkill.name);
+            let skill = skills[groupSkill.name];
 
             if (!skill) {
               skill = {
-                bonus: 0,
-                name: groupSkill.name,
+                customBonus: 0,
                 isProficient: false,
+                customAbility: undefined,
+                bonus: 0,
               };
             }
 
-            const modifier = skill.customModifier || groupSkill.defaultModifier;
+            const ability = skill.customAbility || groupSkill.defaultAbility;
 
             return (
               <div
-                key={skill.name}
+                key={groupSkill.name}
                 className="flex items-center mb-[5px] text-[#b0b7bd]"
                 role="row"
               >
@@ -197,22 +185,31 @@ export const SkillGroup: React.FC<{
                         "bg-[#333] border border-dotted border-[#838383] h-[10px] w-[10px] inline-flex rounded-full",
                         {
                           "bg-[#C53131]": skill.isProficient,
+                          "cursor-pointer": editable,
                         },
                       )}
-                    ></div>
+                      onClick={() => {
+                        if (editable) {
+                          onProficiencyChange?.(
+                            groupSkill.name,
+                            !skill.isProficient,
+                          );
+                        }
+                      }}
+                    />
                   </span>
                 </div>
                 <div
                   className="w-[35px] font-bold uppercase text-xs text-center"
                   role="cell"
                 >
-                  {modifier.slice(0, 3)}
+                  {ability.slice(0, 3)}
                 </div>
                 <div
                   className="p-[5px_0] flex-[1_1] border-[rgba(197,49,49,0.4)] border-b text-[14px] text-nowrap whitespace-nowrap"
                   role="cell"
                 >
-                  {skill.name}
+                  {groupSkill.name}
                 </div>
                 <div
                   className="p-[3px] border-[rgba(197,49,49,0.4)] border-b text-[14px]"
@@ -227,27 +224,6 @@ export const SkillGroup: React.FC<{
           })}
         </div>
       </div>
-    </div>
-  );
-};
-
-export const Skills: React.FC<SkillsProps> = ({ skills }: SkillsProps) => {
-  return (
-    <div
-      style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(3, 1fr)",
-        gap: "20px",
-      }}
-    >
-      {skillGroupsArray.map(([modifier, groupSkills]) => (
-        <SkillGroup
-          key={modifier}
-          ability={modifier}
-          groupSkills={groupSkills!}
-          skills={skills}
-        />
-      ))}
     </div>
   );
 };
