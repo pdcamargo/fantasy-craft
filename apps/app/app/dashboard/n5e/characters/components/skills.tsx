@@ -146,14 +146,7 @@ export const SkillGroup: React.FC<{
           {headingText ?? `${ability} Skills`}
         </h3>
 
-        <div
-          role="rowgroup"
-          style={{
-            display: "grid",
-            gap: "5px",
-            gridTemplateColumns: "repeat(2, 1fr)",
-          }}
-        >
+        <div role="rowgroup" className="grid gap-1 grid-cols-1 xl:grid-cols-2">
           {groupSkills.map((groupSkill) => {
             let skill = skills[groupSkill.name];
 
@@ -215,8 +208,11 @@ export const SkillGroup: React.FC<{
                   className="p-[3px] border-[rgba(197,49,49,0.4)] border-b text-[14px]"
                   role="cell"
                 >
-                  <div className="h-[24px] w-[30px] text-[20px] border-[#C53131] border text-white flex items-center justify-center rounded">
-                    {skill.bonus > 0 ? `+${skill.bonus}` : skill.bonus}
+                  <div className="h-[24px] w-[30px] text-[18px] border-[#C53131] border text-white flex items-center justify-center rounded">
+                    <small className="font-thin text-[60%]">
+                      {skill.bonus > 0 ? `+` : ""}
+                    </small>{" "}
+                    {skill.bonus}
                   </div>
                 </div>
               </div>

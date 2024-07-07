@@ -12,6 +12,13 @@ export type AbilityName =
   | "Wisdom"
   | "Charisma";
 
+export type ElementalAffinity =
+  | "fire"
+  | "water"
+  | "earth"
+  | "wind"
+  | "lightning";
+
 export type SkillName =
   | "Acrobatics"
   | "Animal Handling"
@@ -84,15 +91,88 @@ export class N5eCharacterWrapper {
     return evaluate(formula, { level });
   }
 
+  public get clan() {
+    return this.character.clan;
+  }
+
+  public get elementalAffinities() {
+    return this.character.elementalAffinities;
+  }
+
   public get armorClass() {
-    const formula = `10 + abilityMod + armorBonus + shieldBonus + otherBonus`;
+    const formula = `10 + abilityMod + floor(proficiency / 2) + armorBonus + shieldBonus + otherBonus`;
 
     return evaluate(formula, {
       abilityMod: this.dexMod,
+      proficiency: this.proficiencyBonus,
       armorBonus: 0,
       shieldBonus: 0,
       otherBonus: 0,
     });
+  }
+
+  public get chakraDie() {
+    const chakraDie = this.character.classes.reduce(
+      (acc, klass) => acc + klass.chakraDie,
+      0,
+    );
+
+    return chakraDie;
+  }
+
+  public get hitDie() {
+    const hitDie = this.character.classes.reduce(
+      (acc, klass) => acc + klass.hitDie,
+      0,
+    );
+
+    return hitDie;
+  }
+
+  public get currentHp() {
+    return this.character.currentHp;
+  }
+
+  public get temporaryHp() {
+    return this.character.temporaryHp;
+  }
+
+  public get maxHp() {
+    const formula =
+      "((hitDie + conMod + otherBonusPerLevel) * level) + otherBonus";
+
+    return evaluate(formula, {
+      hitDie: this.hitDie,
+      conMod: this.conMod,
+      level: this.character.level,
+      otherBonusPerLevel: 0,
+      otherBonus: 0,
+    });
+  }
+
+  public get currentCp() {
+    return this.character.currentCp;
+  }
+
+  public get temporaryCp() {
+    return this.character.temporaryCp;
+  }
+
+  public get maxCp() {
+    const formula =
+      "(((chakraDie / 2) + conMod + otherBonusPerLevel) * level) + otherBonus";
+
+    return evaluate(formula, {
+      chakraDie: this.chakraDie,
+      conMod: this.conMod,
+      level: this.character.level,
+      otherBonusPerLevel: 0,
+      otherBonus: 0,
+    });
+  }
+
+  public get movementSpeed() {
+    return this.character.movementSpeed;
   }
 
   public get str() {

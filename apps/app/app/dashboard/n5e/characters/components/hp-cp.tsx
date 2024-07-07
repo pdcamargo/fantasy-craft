@@ -1,18 +1,21 @@
 import { Separator } from "@craft/ui";
+import { cn } from "@craft/ui/utils";
 
 export type ValueConfig = {
   current: number;
   max: number;
   temp: number;
+  die: string;
 };
 
 export const HPCP: React.FC<{
   hp: ValueConfig;
   cp: ValueConfig;
-}> = ({ hp, cp }) => {
+  className?: string;
+}> = ({ hp, cp, className }) => {
   return (
     <div
-      className="relative w-[317px] h-[90px] border-[20px]"
+      className={cn("relative w-[317px] h-[90px] border-[20px]", className)}
       style={{
         borderImage: "url(/fancy-horizontal-box-2-bg.svg) 20 20 20 20 fill",
       }}
@@ -20,7 +23,7 @@ export const HPCP: React.FC<{
       <div className="w-[inherit] h-[inherit] m-[-20px] relative px-3 py-1 flex items-center">
         <div className="w-[50%] h-[inherit] flex flex-col items-center justify-center">
           <span className="text-[#b0b7bd] text-[11px] uppercase font-[700] mt-[-10px]">
-            Hit Points
+            Hit Points ({hp.die})
           </span>
 
           <div className="text-[#b0b7bd] text-[30px] font-medium relative flex items-center justify-center w-full">
@@ -60,7 +63,7 @@ export const HPCP: React.FC<{
 
         <div className="w-[50%] h-[inherit] flex flex-col items-center justify-center">
           <span className="text-[#b0b7bd] text-[11px] uppercase font-[700] mt-[-10px]">
-            Chakra Points
+            Chakra Points ({cp.die})
           </span>
 
           <div className="text-[#b0b7bd] text-[30px] font-medium relative flex items-center justify-center w-full">

@@ -1,9 +1,15 @@
+import { cn } from "@craft/ui/utils";
+
 export const MoveSpeed: React.FC<{
   speed: number;
-}> = ({ speed }) => {
+  className?: string;
+}> = ({ speed, className }) => {
   return (
     <div
-      className="relative w-[100px] h-[95px] text-center border-[20px]"
+      className={cn(
+        "relative w-[100px] h-[95px] text-center border-[20px]",
+        className,
+      )}
       style={{
         borderImage: "url(/fancy-box-2-bg.svg) 10 10 10 10 fill",
       }}

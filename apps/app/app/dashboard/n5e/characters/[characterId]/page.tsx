@@ -30,6 +30,7 @@ import { useDebouncedSave } from "@craft/ui/hooks";
 
 import { N5eCharacterWrapper } from "app/dashboard/n5e/utils/n5e-character-wrapper";
 import { useQueryClient } from "@tanstack/react-query";
+import { JutsuDatabase } from "../../utils/jutsu-database";
 
 export default function NewCharacterPage({
   params,
@@ -67,6 +68,10 @@ export default function NewCharacterPage({
     }),
   );
 
+  const saveElementalAffinities = useDebouncedSave((value) =>
+    updateCharacter.mutateAsync({ elementalAffinities: value }),
+  );
+
   const { data, isLoading } = useGetCharacter(params.characterId);
   const { t } = useTranslation();
 
@@ -100,6 +105,11 @@ export default function NewCharacterPage({
 
   const n5eCharacter = new N5eCharacterWrapper(character);
 
+  const available = JutsuDatabase.getJutsuAvailableForCharacter(n5eCharacter);
+  const current = JutsuDatabase.createQueryableJutsuList(character.jutsus);
+
+  console.log({ current: current.getResultsGroupedByRank() });
+
   return (
     <div className="bg-contain bg-no-repeat">
       <div
@@ -112,8 +122,8 @@ export default function NewCharacterPage({
       </div>
 
       <DashboardToolbar className="relative z-[1]">
-        <DashboradPageInfo className="pb-0">
-          <div className="flex items-start gap-3">
+        <DashboradPageInfo className="pb-0 pt-0 lg:pt-12 px-6 lg:px-0">
+          <div className="flex items-start gap-3 flex-col lg:flex-row">
             <div className="rounded-lg border border-[#C53131] size-[100px] font-roboto relative overflow-hidden select-none">
               <img
                 src="/ashura.jpg"
@@ -145,37 +155,61 @@ export default function NewCharacterPage({
                 Tobirama's Legacy Class Mod
               </span>
 
-              <ElementalAffinity affinities={character.elementalAffinities} />
+              <ElementalAffinity
+                affinities={character.elementalAffinities}
+                onChange={saveElementalAffinities}
+                editable
+              />
             </div>
 
             <Separator
               orientation="vertical"
-              className="bg-white/10 h-14 self-center mx-10"
+              className="bg-white/10 h-14 self-center mx-10 hidden lg:block"
             />
 
-            <div className="flex items-center gap-5 ml-auto">
+            <div className="flex justify-start gap-5 flex-col w-full md:w-[unset] lg:flex-row lg:ml-auto lg:items-center lg:justify-start">
               <HPCP
+                className="w-full md:w-[317px]"
                 hp={{
-                  current: character.currentHp,
-                  max: character.maxHp,
-                  temp: character.temporaryHp,
+                  current: n5eCharacter.currentHp,
+                  max: n5eCharacter.maxHp,
+                  temp: n5eCharacter.temporaryHp,
+                  die: `d${n5eCharacter.hitDie}`,
                 }}
                 cp={{
-                  current: character.currentCp,
-                  max: character.maxCp,
-                  temp: character.temporaryCp,
+                  current: n5eCharacter.currentCp,
+                  max: n5eCharacter.maxCp,
+                  temp: n5eCharacter.temporaryCp,
+                  die: `d${n5eCharacter.chakraDie}`,
                 }}
               />
 
-              <Separator orientation="vertical" className="bg-white/10 h-14" />
+              <Separator
+                orientation="vertical"
+                className="bg-white/10 h-14 hidden lg:block"
+              />
 
-              <Proficiency proficiency={n5eCharacter.proficiencyBonus} />
+              <div className="w-full grid grid-cols-2 gap-5 md:w-[unset] md:flex md:items-center">
+                <Proficiency
+                  proficiency={n5eCharacter.proficiencyBonus}
+                  className="mx-auto self-center lg:self-[unset] lg:mx-[unset]"
+                />
 
-              <ArmorClass armorClass={n5eCharacter.armorClass} />
+                <ArmorClass
+                  armorClass={n5eCharacter.armorClass}
+                  className="mx-auto self-center lg:self-[unset] lg:mx-[unset]"
+                />
 
-              <Initiative initiative={n5eCharacter.dexMod} />
+                <Initiative
+                  initiative={n5eCharacter.dexMod}
+                  className="mx-auto self-center lg:self-[unset] lg:mx-[unset]"
+                />
 
-              <MoveSpeed speed={30} />
+                <MoveSpeed
+                  speed={30}
+                  className="mx-auto self-center lg:self-[unset] lg:mx-[unset]"
+                />
+              </div>
             </div>
           </div>
         </DashboradPageInfo>
@@ -183,13 +217,7 @@ export default function NewCharacterPage({
 
       <DashboardContent>
         <Card variant="white" className="flex-1 font-roboto relative z-[1]">
-          <CardContent
-            className="pt-6 grid"
-            style={{
-              gridTemplateColumns: "repeat(3, 1fr)",
-              gap: "5px",
-            }}
-          >
+          <CardContent className="pt-6 grid gap-1 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             <CompactAbility
               character={n5eCharacter}
               skillsHeadingText="Skills"

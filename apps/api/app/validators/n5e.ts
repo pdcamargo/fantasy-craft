@@ -46,8 +46,6 @@ export const updateCharacterValidator = vine.compile(
     background: vine.string().trim().optional(),
     level: vine.number().min(1).optional(),
     alignment: vine.string().trim().optional(),
-    chakraDie: vine.number().min(1).optional(),
-    hitDie: vine.number().min(1).optional(),
     ryo: vine.number().min(0).optional(),
     customData: vine.record(vine.any()).optional(),
     customTabs: vine.record(vine.string()).optional(),

@@ -42,6 +42,7 @@ export const updateCharacterSchema = z.object({
   abilities: abilitiesSchema.optional(),
   savingThrows: savingThrowSchema.optional(),
   skills: z.array(skillSchema).optional(),
+  elementalAffinities: z.array(z.string()).optional(),
 });
 
 export type UpdateCharacterData = z.infer<typeof updateCharacterSchema>;

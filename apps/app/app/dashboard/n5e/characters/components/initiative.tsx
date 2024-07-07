@@ -1,9 +1,15 @@
+import { cn } from "@craft/ui/utils";
+
 export const Initiative: React.FC<{
   initiative: number;
-}> = ({ initiative }) => {
+  className?: string;
+}> = ({ initiative, className }) => {
   return (
     <div
-      className="relative w-[80px] h-[55px] text-center border-[20px]"
+      className={cn(
+        "relative w-[80px] h-[55px] text-center border-[20px]",
+        className,
+      )}
       style={{
         borderImage: "url(/fancy-box-3-bg.svg) 20 20 20 20 fill",
       }}

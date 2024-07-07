@@ -61,15 +61,12 @@ export type N5eCharacter = {
   alignment: string;
   level: number;
   experience: number;
-  chakraDie: number;
-  hitDie: number;
   ryo: number;
   currentHp: number;
-  maxHp: number;
   temporaryHp: number;
   currentCp: number;
-  maxCp: number;
   temporaryCp: number;
+  movementSpeed: number;
   feats: string[];
   jutsus: string[];
   abilities: Record<AbilityName, { value: number; customBonus?: number }>;

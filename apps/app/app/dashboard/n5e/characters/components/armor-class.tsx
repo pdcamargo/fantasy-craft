@@ -1,9 +1,15 @@
+import { cn } from "@craft/ui/utils";
+
 export const ArmorClass: React.FC<{
   armorClass: number;
-}> = ({ armorClass }) => {
+  className?: string;
+}> = ({ armorClass, className }) => {
   return (
     <div
-      className="relative h-[110px] w-[95px] text-center border-[20px]"
+      className={cn(
+        "relative h-[110px] w-[95px] text-center border-[20px]",
+        className,
+      )}
       style={{
         borderImage: "url(/fancy-armor-box-bg.svg) 20 20 20 20 fill",
       }}

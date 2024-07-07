@@ -9,12 +9,18 @@ const elementalAffinities = [
   "water",
 ] as const;
 
+type AffinityName = (typeof elementalAffinities)[number];
+
 export type ElementalAffinityProps = {
   affinities: ((typeof elementalAffinities)[number] | "medical")[];
+  editable?: boolean;
+  onChange?: (affinities: Array<AffinityName>) => void;
 };
 
 export const ElementalAffinity: React.FC<ElementalAffinityProps> = ({
   affinities,
+  editable,
+  onChange,
 }) => {
   return (
     <span className="flex items-center gap-2 mt-3">
@@ -25,12 +31,33 @@ export const ElementalAffinity: React.FC<ElementalAffinityProps> = ({
           alt={`${affinity} Icon`}
           className={cn("size-6", {
             "opacity-75": !affinities.includes(affinity),
+            "cursor-pointer": editable,
           })}
           style={{
             filter: !affinities.includes(affinity)
               ? "grayscale(1) brightness(75%)"
               : undefined,
           }}
+          onClick={
+            editable
+              ? () => {
+                  if (onChange) {
+                    if (affinities.includes(affinity)) {
+                      onChange(
+                        affinities.filter(
+                          (a) => a !== affinity,
+                        ) as Array<AffinityName>,
+                      );
+                    } else {
+                      onChange([
+                        ...affinities,
+                        affinity,
+                      ] as Array<AffinityName>);
+                    }
+                  }
+                }
+              : undefined
+          }
         />
       ))}
 

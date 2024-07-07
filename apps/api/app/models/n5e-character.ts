@@ -52,12 +52,6 @@ export default class N5eCharacter extends BaseModel {
   declare experience: number
 
   @column()
-  declare chakraDie: number
-
-  @column()
-  declare hitDie: number
-
-  @column()
   declare ryo: number
 
   @column()
@@ -119,19 +113,16 @@ export default class N5eCharacter extends BaseModel {
   declare currentHp: number
 
   @column()
-  declare maxHp: number
-
-  @column()
   declare temporaryHp: number
 
   @column()
   declare currentCp: number
 
   @column()
-  declare maxCp: number
+  declare temporaryCp: number
 
   @column()
-  declare temporaryCp: number
+  declare movementSpeed: number
 
   @column()
   declare customData: Record<string, any>
