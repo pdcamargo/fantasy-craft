@@ -107,6 +107,7 @@ export class JutsuDatabase {
       "Non-Elemental Ninjutsu",
       "Taijutsu",
       "Genjutsu",
+      "Bukijutsu",
     ];
 
     // Jutsu available for the character's clan
