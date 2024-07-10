@@ -7,6 +7,7 @@ import { Inter as FontSans } from "next/font/google";
 import { Roboto } from "next/font/google";
 import { AppProvider } from "./providers";
 import { Locales } from "@craft/translation";
+import { getFeatureFlags } from "./feature-flags";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -32,6 +33,8 @@ export default async function RootLayout({
     locale,
   });
 
+  const featureFlags = await getFeatureFlags();
+
   return (
     <html lang={locale} className="h-full dark">
       <head>
@@ -45,7 +48,11 @@ export default async function RootLayout({
       <body
         className={`min-h-screen bg-background font-sans antialiased ${fontSans.variable} ${fontRoboto.variable}`}
       >
-        <AppProvider messages={messages} defaultLocale={locale as Locales}>
+        <AppProvider
+          messages={messages}
+          defaultLocale={locale as Locales}
+          featureFlags={featureFlags}
+        >
           {children}
         </AppProvider>
       </body>

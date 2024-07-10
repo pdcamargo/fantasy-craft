@@ -3,6 +3,7 @@ import { z } from "zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { fetcher } from "../../fetcher";
 import { GET_CHARACTER_QUERY_KEY } from "./useGetCharacter";
+import { ALL_CHARACTERS_QUERY_KEY } from "./useAllCharacters";
 
 const classSchema = z.object({
   name: z.string(),
@@ -43,6 +44,8 @@ export const updateCharacterSchema = z.object({
   savingThrows: savingThrowSchema.optional(),
   skills: z.array(skillSchema).optional(),
   elementalAffinities: z.array(z.string()).optional(),
+  jutsus: z.array(z.string()).optional(),
+  feats: z.array(z.string()).optional(),
 });
 
 export type UpdateCharacterData = z.infer<typeof updateCharacterSchema>;
@@ -65,7 +68,11 @@ export const updateCharacterFunction = async (
 
   if (response.ok) {
     options.queryClient.invalidateQueries({
-      queryKey: [GET_CHARACTER_QUERY_KEY, characterId],
+      queryKey: [characterId],
+    });
+
+    options.queryClient.invalidateQueries({
+      queryKey: [ALL_CHARACTERS_QUERY_KEY],
     });
   }
 
@@ -82,7 +89,11 @@ export const useUpdateCharacter = (characterId: string) => {
     },
     onSuccess: () => {
       client.invalidateQueries({
-        queryKey: [characterId],
+        queryKey: [GET_CHARACTER_QUERY_KEY, characterId],
+      });
+
+      client.invalidateQueries({
+        queryKey: [ALL_CHARACTERS_QUERY_KEY],
       });
     },
   });

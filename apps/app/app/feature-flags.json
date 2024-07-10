@@ -1,0 +1,12 @@
+{
+  "LoginWithGoogle": {
+    "active": false,
+    "activeForUsers": [],
+    "inactiveForUsers": []
+  },
+  "LoginWithDiscord": {
+    "active": false,
+    "activeForUsers": [],
+    "inactiveForUsers": []
+  }
+}

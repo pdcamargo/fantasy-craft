@@ -51,6 +51,8 @@ export const updateCharacterValidator = vine.compile(
     customTabs: vine.record(vine.string()).optional(),
     resistances: vine.array(vine.string()).optional(),
     immunities: vine.array(vine.string()).optional(),
+    jutsus: vine.array(vine.string()).optional(),
+    feats: vine.array(vine.string()).optional(),
     // "fire" | "water" | "earth" | "wind" | "lightning"
     elementalAffinities: vine
       .array(vine.enum(['fire', 'water', 'earth', 'wind', 'lightning']))

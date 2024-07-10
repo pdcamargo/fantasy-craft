@@ -63,8 +63,8 @@ const DashboardMenu = () => {
   return (
     <Navbar isBordered>
       <NavbarHeader className="mx-auto">
-        <NavbarContent justify="start">
-          <NavbarBrand>
+        <NavbarContent justify="start" className="flex">
+          <NavbarBrand className="hidden lg:flex">
             <Logo />
             <p className="font-bold text-inherit">FANTASY CRAFT</p>
           </NavbarBrand>

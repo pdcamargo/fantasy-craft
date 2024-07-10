@@ -82,6 +82,8 @@ export default class N5EController {
       ...data,
       classes: JSON.stringify(classes ?? []) as any,
       skills: JSON.stringify(skills ?? []) as any,
+      jutsus: JSON.stringify(data.jutsus ?? []) as any,
+      feats: JSON.stringify(data.feats ?? []) as any,
     }
 
     if (!classes) {
@@ -90,6 +92,14 @@ export default class N5EController {
 
     if (!skills) {
       delete newVal.skills
+    }
+
+    if (!data.jutsus) {
+      delete newVal.jutsus
+    }
+
+    if (!data.feats) {
+      delete newVal.feats
     }
 
     character.merge(newVal)

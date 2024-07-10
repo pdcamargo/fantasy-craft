@@ -129,6 +129,14 @@
   .container {
     @apply sm:max-w-[95%] md:max-w-[95%] lg:max-w-[95%] xl:max-w-[1280px] 2xl:max-w-[1536px];
   }
+
+  .invisible-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
 }
 
 /*
@@ -350,3 +358,4 @@
     url("https://raw.githubusercontent.com/jonathonf/solbera-dnd-fonts/master/Dungeon%20Drop%20Case/Dungeon%20Drop%20Case.otf")
       format("opentype");
 }
+

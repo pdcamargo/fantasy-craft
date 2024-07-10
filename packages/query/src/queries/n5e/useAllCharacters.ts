@@ -50,6 +50,7 @@ export type CharacterClass = {
 };
 
 export type N5eCharacter = {
+  id: string;
   name: string;
   classes: CharacterClass[];
   classMod: {
@@ -117,3 +118,4 @@ export const useAllCharacters = (options?: AllCharactersQueryOptions) => {
     ...options,
   });
 };
+

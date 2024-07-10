@@ -27,6 +27,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { fetcher, setAuthToken, useIsUserLoggedIn } from "@craft/query";
+import { FeatureFlag } from "./feature-flag";
 
 const loginSchema = z.object({
   username: z
@@ -114,14 +115,14 @@ export default function RootPage() {
 
   return (
     <div
-      className="w-screen flex justify-end items-center h-screen overflow-hidden bg-white bg-cover px-20"
+      className="w-screen flex justify-end items-center h-screen overflow-hidden bg-white bg-cover px-5 lg:px-20"
       style={{
         backgroundImage: "url(https://images7.alphacoders.com/134/1346551.png)",
       }}
     >
       <Card
         variant="white"
-        className="w-full max-w-[500px] shadow-none border-none py-14 px-7"
+        className="w-full max-w-[500px] shadow-none border-none py-6 lg:py-14 px-2 lg:px-7"
       >
         <CardHeader>
           <CardTitle className="text-center">{t("Login.header")}</CardTitle>
@@ -130,29 +131,35 @@ export default function RootPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="flex items-center gap-5 mb-2">
-            <Button
-              variant="outline"
-              className="flex-[50%]"
-              disabled={isLoggingIn}
-            >
-              {t("Login.loginWithGoogle")}
-            </Button>
+          <FeatureFlag oneOf={["LoginWithDiscord", "LoginWithGoogle"]}>
+            <div className="flex items-center gap-5 mb-2">
+              <FeatureFlag name="LoginWithGoogle">
+                <Button
+                  variant="outline"
+                  className="flex-[50%]"
+                  disabled={isLoggingIn}
+                >
+                  {t("Login.loginWithGoogle")}
+                </Button>
+              </FeatureFlag>
 
-            <Button
-              variant="outline"
-              className="flex-[50%]"
-              disabled={isLoggingIn}
-            >
-              {t("Login.loginWithDiscord")}
-            </Button>
-          </div>
+              <FeatureFlag name="LoginWithDiscord">
+                <Button
+                  variant="outline"
+                  className="flex-[50%]"
+                  disabled={isLoggingIn}
+                >
+                  {t("Login.loginWithDiscord")}
+                </Button>
+              </FeatureFlag>
+            </div>
 
-          <div className="flex items-center gap-5 py-2">
-            <Separator className="flex-1" />
-            <span className="text-muted-foreground">{t("Login.or")}</span>
-            <Separator className="flex-1" />
-          </div>
+            <div className="flex items-center gap-5 py-2">
+              <Separator className="flex-1" />
+              <span className="text-muted-foreground">{t("Login.or")}</span>
+              <Separator className="flex-1" />
+            </div>
+          </FeatureFlag>
 
           <Form {...form}>
             <form onSubmit={handleSubmit(onSubmit)}>

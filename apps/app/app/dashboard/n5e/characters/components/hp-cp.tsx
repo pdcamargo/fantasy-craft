@@ -20,16 +20,18 @@ export const HPCP: React.FC<{
         borderImage: "url(/fancy-horizontal-box-2-bg.svg) 20 20 20 20 fill",
       }}
     >
-      <div className="w-[inherit] h-[inherit] m-[-20px] relative px-3 py-1 flex items-center">
+      <div className="w-[-webkit-fill-available] h-[inherit] m-[-20px] relative px-2 py-1 flex items-center">
         <div className="w-[50%] h-[inherit] flex flex-col items-center justify-center">
           <span className="text-[#b0b7bd] text-[11px] uppercase font-[700] mt-[-10px]">
             Hit Points ({hp.die})
           </span>
 
           <div className="text-[#b0b7bd] text-[30px] font-medium relative flex items-center justify-center w-full">
-            <span className="h-[34px] w-[60px] relative inline-flex justify-center items-center text-white rounded text-nowrap gap-3">
+            <span className="h-[34px] w-[60px] relative inline-flex justify-center items-center text-white rounded text-nowrap gap-1">
               <span className="inline-flex flex-col relative">
-                <span className="leading-[1]">{hp.current}</span>
+                <span className="leading-[1] w-[50px] text-right">
+                  {hp.current}
+                </span>
                 <small
                   className="text-[10px] uppercase absolute font-thin"
                   style={{
@@ -43,7 +45,9 @@ export const HPCP: React.FC<{
               </span>{" "}
               <small className="font-thin">/</small>{" "}
               <span className="inline-flex flex-col relative">
-                <span className="leading-[1]">{hp.max}</span>
+                <span className="leading-[1] w-[50px] text-right">
+                  {hp.max}
+                </span>
                 <small
                   className="text-[10px] uppercase absolute font-thin"
                   style={{
@@ -67,9 +71,11 @@ export const HPCP: React.FC<{
           </span>
 
           <div className="text-[#b0b7bd] text-[30px] font-medium relative flex items-center justify-center w-full">
-            <span className="h-[34px] w-[60px] relative inline-flex justify-center items-center text-white rounded text-nowrap gap-3">
+            <span className="h-[34px] w-[60px] relative inline-flex justify-center items-center text-white rounded text-nowrap gap-1">
               <span className="inline-flex flex-col relative">
-                <span className="leading-[1]">{cp.current}</span>
+                <span className="leading-[1] w-[50px] text-right">
+                  {cp.current}
+                </span>
                 <small
                   className="text-[10px] uppercase absolute font-thin"
                   style={{
@@ -83,7 +89,7 @@ export const HPCP: React.FC<{
               </span>{" "}
               <small className="font-thin">/</small>{" "}
               <span className="inline-flex flex-col relative">
-                <span className="leading-[1]">{cp.max}</span>
+                <span className="leading-[1] w-[50px] text-left">{cp.max}</span>
                 <small
                   className="text-[10px] uppercase absolute font-thin"
                   style={{

@@ -74,7 +74,7 @@ const DashboardBreadcrumb: React.FC<DashboardBreadcrumbProps> = ({ items }) => {
   if (items.length === 0) return null;
 
   return (
-    <Breadcrumb>
+    <Breadcrumb className="px-4 lg:px-0">
       <BreadcrumbList>
         <BreadcrumbItem>
           <BreadcrumbItemWrapper item={items[0]} />
@@ -116,3 +116,4 @@ const DashboardBreadcrumb: React.FC<DashboardBreadcrumbProps> = ({ items }) => {
 };
 
 export { DashboardBreadcrumb };
+

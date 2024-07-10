@@ -4,7 +4,7 @@ import {
   N5eCharacterWrapper,
 } from "./n5e-character-wrapper";
 
-type Jutsu = (typeof jutsus)[number];
+export type Jutsu = (typeof jutsus)[number];
 
 class JutsuQuery {
   private data: Jutsu[];
@@ -44,6 +44,20 @@ class JutsuQuery {
     const filteredData = this.data.filter(
       (jutsu) => jutsu.name.toLowerCase() === name.toLowerCase(),
     );
+    return new JutsuQuery(filteredData);
+  }
+
+  withRank(rank: Jutsu["rank"]): JutsuQuery {
+    const filteredData = this.data.filter((jutsu) => jutsu.rank === rank);
+
+    return new JutsuQuery(filteredData);
+  }
+
+  withoutNames(...names: string[]): JutsuQuery {
+    const filteredData = this.data.filter(
+      (jutsu) => !names.includes(jutsu.name),
+    );
+
     return new JutsuQuery(filteredData);
   }
 
@@ -96,13 +110,11 @@ export class JutsuDatabase {
     ];
 
     // Jutsu available for the character's clan
-    return this.query
-      .withTypes(
-        ...allCharactersJutsuType,
-        ...elementalAffinities.map((affinity) => `${affinity} Release`),
-        clan,
-      )
-      .getResults();
+    return this.query.withTypes(
+      ...allCharactersJutsuType,
+      ...elementalAffinities.map((affinity) => `${affinity} Release`),
+      clan,
+    );
   }
 
   public static getJutsuDefinitions(jutsuNames: string[]) {

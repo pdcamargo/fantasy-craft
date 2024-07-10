@@ -11,7 +11,7 @@
   },
   "Login": {
     "pageTitle": "Login - Fantasy Craft",
-    "header": "Sign In",
+    "header": "Inicie sessão",
     "subheader": "And craft your fantasy",
     "username": "Usuário",
     "password": "Senha",
@@ -21,7 +21,7 @@
     "loggingIn": "Entrando...",
     "loginWithGoogle": "Entrar com Google",
     "loginWithDiscord": "Entrar com Discord",
-    "register": "Não tem uma conta? Registre-se",
+    "register": "Precisa de conta? Registre-se",
     "or": "ou",
     "validation": {
       "usernameRequired": "Usuário é obrigatório",
@@ -34,7 +34,7 @@
   },
   "Register": {
     "pageTitle": "Registrar-se - Fantasy Craft",
-    "header": "Sign Up",
+    "header": "Crie sua conta",
     "subheader": "And craft your fantasy",
     "username": "Usuário",
     "email": "Email",
