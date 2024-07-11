@@ -1,0 +1,17 @@
+@layer components {
+  .dialog {
+    &-content {
+      @apply fixed z-50 grid w-full gap-4 border border-white/10 bg-background p-6 shadow-lg rounded-tl-3xl rounded-tr-3xl;
+      @apply lg:rounded-lg lg:max-w-lg;
+
+      bottom: 0;
+      left: 0;
+
+      @media (screen(lg)) {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+  }
+}

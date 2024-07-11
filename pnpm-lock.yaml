@@ -186,6 +186,9 @@ importers:
       '@hookform/resolvers':
         specifier: ^3.6.0
         version: 3.6.0(react-hook-form@7.52.0(react@18.3.1))
+      '@preact/signals-react':
+        specifier: ^2.1.0
+        version: 2.1.0(react@18.3.1)
       '@tanstack/react-query':
         specifier: ^5.45.1
         version: 5.45.1(react@18.3.1)
@@ -253,6 +256,9 @@ importers:
       postcss:
         specifier: ^8.4.18
         version: 8.4.19
+      postcss-import:
+        specifier: ^16.1.0
+        version: 16.1.0(postcss@8.4.19)
       sass:
         specifier: ^1.77.6
         version: 1.77.6
@@ -1279,6 +1285,14 @@ packages:
 
   '@poppinss/validator-lite@1.0.3':
     resolution: {integrity: sha512-u4dmT7PDHwNtxY3q1jHVp/u+hMEEcBlkzd37QwwM4tVt/0mLlEDttSfPQ+TT7sqPG4VEtWKwVSlMInwPUYyJpA==}
+
+  '@preact/signals-core@1.7.0':
+    resolution: {integrity: sha512-bEZLgmJGSBVP5PUPDowhPW3bVdMmp9Tr5OEl+SQK+8Tv9T7UsIfyN905cfkmmeqw8z4xp8T6zrl4M1uj9+HAfg==}
+
+  '@preact/signals-react@2.1.0':
+    resolution: {integrity: sha512-jWq2ldDWXdbKpg+aMGuOZfj9tS5JkVlGJ5hGNzNe1Zfe7RLFfvldBEfNe6ZT7KZddecAxKhyoxSsEypgbfx/Gw==}
+    peerDependencies:
+      react: ^16.14.0 || 17.x || 18.x
 
   '@puppeteer/browsers@2.2.3':
     resolution: {integrity: sha512-bJ0UBsk0ESOs6RFcLXOt99a3yTDcOKlzfjad+rhFwdaG1Lu/Wzq58GHYCDTlZ9z6mldf4g+NTb+TXEfe0PpnsQ==}
@@ -5307,6 +5321,12 @@ packages:
     peerDependencies:
       postcss: ^8.0.0
 
+  postcss-import@16.1.0:
+    resolution: {integrity: sha512-7hsAZ4xGXl4MW+OKEWCnF6T5jqBw80/EE9aXg1r2yyn1RsVEU8EtKXbijEODa+rg7iih4bKf7vlvTGYR4CnPNg==}
+    engines: {node: '>=18.0.0'}
+    peerDependencies:
+      postcss: ^8.0.0
+
   postcss-js@4.0.1:
     resolution: {integrity: sha512-dDLF8pEO191hJMtlHFPRa8xsizHaM82MLfNkUHdUtVEV3tgTp5oj+8qbEqYM57SLfc74KSbw//4SeJma2LRVIw==}
     engines: {node: ^12 || ^14 || >= 16}
@@ -6420,6 +6440,11 @@ packages:
       '@types/react':
         optional: true
 
+  use-sync-external-store@1.2.2:
+    resolution: {integrity: sha512-PElTlVMwpblvbNqQ82d2n6RjStvdSoNe9FG28kNfz3WiXilJm4DdNkEzRhCZuIDwY8U08WVihhGR5iRqAwfDiw==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+
   util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
 
@@ -7494,6 +7519,14 @@ snapshots:
   '@poppinss/validator-lite@1.0.3':
     dependencies:
       validator: 13.12.0
+
+  '@preact/signals-core@1.7.0': {}
+
+  '@preact/signals-react@2.1.0(react@18.3.1)':
+    dependencies:
+      '@preact/signals-core': 1.7.0
+      react: 18.3.1
+      use-sync-external-store: 1.2.2(react@18.3.1)
 
   '@puppeteer/browsers@2.2.3':
     dependencies:
@@ -9907,8 +9940,8 @@ snapshots:
       '@typescript-eslint/parser': 6.21.0(eslint@8.28.0)(typescript@5.4.5)
       eslint: 8.28.0
       eslint-import-resolver-node: 0.3.6
-      eslint-import-resolver-typescript: 3.5.2(eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.13.1(eslint@8.28.0)(typescript@5.5.2))(eslint@8.28.0))(eslint@8.28.0)
-      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@6.21.0(eslint@8.28.0)(typescript@5.4.5))(eslint-import-resolver-typescript@3.5.2)(eslint@8.28.0)
+      eslint-import-resolver-typescript: 3.5.2(eslint-plugin-import@2.29.1)(eslint@8.28.0)
+      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.13.1(eslint@8.28.0)(typescript@5.5.2))(eslint@8.28.0)
       eslint-plugin-jsx-a11y: 6.8.0(eslint@8.28.0)
       eslint-plugin-react: 7.34.3(eslint@8.28.0)
       eslint-plugin-react-hooks: 4.6.0(eslint@8.28.0)
@@ -9942,12 +9975,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-import-resolver-typescript@3.5.2(eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.13.1(eslint@8.28.0)(typescript@5.5.2))(eslint@8.28.0))(eslint@8.28.0):
+  eslint-import-resolver-typescript@3.5.2(eslint-plugin-import@2.29.1)(eslint@8.28.0):
     dependencies:
       debug: 4.3.5
       enhanced-resolve: 5.11.0
       eslint: 8.28.0
-      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@6.21.0(eslint@8.28.0)(typescript@5.4.5))(eslint-import-resolver-typescript@3.5.2)(eslint@8.28.0)
+      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.13.1(eslint@8.28.0)(typescript@5.5.2))(eslint@8.28.0)
       get-tsconfig: 4.2.0
       globby: 13.1.2
       is-core-module: 2.11.0
@@ -9956,18 +9989,17 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-module-utils@2.8.1(@typescript-eslint/parser@6.21.0(eslint@8.28.0)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.5.2(eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.13.1(eslint@8.28.0)(typescript@5.5.2))(eslint@8.28.0))(eslint@8.28.0))(eslint@8.28.0):
+  eslint-module-utils@2.8.1(@typescript-eslint/parser@7.13.1(eslint@8.28.0)(typescript@5.5.2))(eslint-import-resolver-node@0.3.9)(eslint@8.28.0):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
-      '@typescript-eslint/parser': 6.21.0(eslint@8.28.0)(typescript@5.4.5)
+      '@typescript-eslint/parser': 7.13.1(eslint@8.28.0)(typescript@5.5.2)
       eslint: 8.28.0
       eslint-import-resolver-node: 0.3.9
-      eslint-import-resolver-typescript: 3.5.2(eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.13.1(eslint@8.28.0)(typescript@5.5.2))(eslint@8.28.0))(eslint@8.28.0)
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-import@2.29.1(@typescript-eslint/parser@6.21.0(eslint@8.28.0)(typescript@5.4.5))(eslint-import-resolver-typescript@3.5.2)(eslint@8.28.0):
+  eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.13.1(eslint@8.28.0)(typescript@5.5.2))(eslint@8.28.0):
     dependencies:
       array-includes: 3.1.8
       array.prototype.findlastindex: 1.2.5
@@ -9977,7 +10009,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 8.28.0
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.8.1(@typescript-eslint/parser@6.21.0(eslint@8.28.0)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.5.2(eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.13.1(eslint@8.28.0)(typescript@5.5.2))(eslint@8.28.0))(eslint@8.28.0))(eslint@8.28.0)
+      eslint-module-utils: 2.8.1(@typescript-eslint/parser@7.13.1(eslint@8.28.0)(typescript@5.5.2))(eslint-import-resolver-node@0.3.9)(eslint@8.28.0)
       hasown: 2.0.2
       is-core-module: 2.13.1
       is-glob: 4.0.3
@@ -9988,7 +10020,7 @@ snapshots:
       semver: 6.3.1
       tsconfig-paths: 3.15.0
     optionalDependencies:
-      '@typescript-eslint/parser': 6.21.0(eslint@8.28.0)(typescript@5.4.5)
+      '@typescript-eslint/parser': 7.13.1(eslint@8.28.0)(typescript@5.5.2)
     transitivePeerDependencies:
       - eslint-import-resolver-typescript
       - eslint-import-resolver-webpack
@@ -11801,6 +11833,13 @@ snapshots:
       read-cache: 1.0.0
       resolve: 1.22.8
 
+  postcss-import@16.1.0(postcss@8.4.19):
+    dependencies:
+      postcss: 8.4.19
+      postcss-value-parser: 4.2.0
+      read-cache: 1.0.0
+      resolve: 1.22.8
+
   postcss-js@4.0.1(postcss@8.4.38):
     dependencies:
       camelcase-css: 2.0.1
@@ -13083,6 +13122,10 @@ snapshots:
       tslib: 2.6.3
     optionalDependencies:
       '@types/react': 18.3.3
+
+  use-sync-external-store@1.2.2(react@18.3.1):
+    dependencies:
+      react: 18.3.1
 
   util-deprecate@1.0.2: {}
 

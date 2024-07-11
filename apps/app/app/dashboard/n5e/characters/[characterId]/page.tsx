@@ -23,6 +23,7 @@ import {
   ArmorClass,
   CompactAbility,
   ElementalAffinity,
+  FancyBox,
   HPCP,
   Initiative,
   MoveSpeed,
@@ -137,6 +138,11 @@ export default function NewCharacterPage({
   const available = JutsuDatabase.getJutsuAvailableForCharacter(n5eCharacter);
   const current = JutsuDatabase.createQueryableJutsuList(character.jutsus);
   const currentFeats = FeatDatabase.createQueryableFeatList(character.feats);
+
+  const ninjutsuQuery = current.ninjutsu();
+  const taijutsuQuery = current.taijutsu();
+  const genjutsuQuery = current.genjutsu();
+  const bukijutsuQuery = current.bukijutsu();
 
   return (
     <div className="bg-contain bg-no-repeat">
@@ -455,7 +461,33 @@ export default function NewCharacterPage({
             </div>
 
             <div className="flex-1 w-full">
-              {Object.entries(current.getResultsGroupedByRank()).map(
+              <div className="bg-gray-100 rounded-lg shadow-smooth-lg p-2 flex items-center gap-2">
+                <FancyBox className="w-[250px]">Ninjutsu</FancyBox>
+
+                <FancyBox
+                  className="w-[200px]"
+                  heading="Ninjutsu"
+                  subheading="Ability"
+                >
+                  {n5eCharacter.ninjutsuAbility}
+                </FancyBox>
+                <FancyBox
+                  className="w-[200px]"
+                  heading="Ninjutsu"
+                  subheading="Save DC"
+                >
+                  {n5eCharacter.ninjutsuDc}
+                </FancyBox>
+                <FancyBox
+                  className="w-[200px]"
+                  heading="Ninjutsu"
+                  subheading="Attack Bonus"
+                >
+                  {n5eCharacter.ninjutsuAttackBonus}
+                </FancyBox>
+              </div>
+
+              {/* {Object.entries(current.getResultsGroupedByRank()).map(
                 ([rank, jutsus]) => {
                   return (
                     <Collapsible key={rank} defaultOpen>
@@ -499,7 +531,7 @@ export default function NewCharacterPage({
                     </Collapsible>
                   );
                 },
-              )}
+              )} */}
             </div>
 
             <div className="flex w-full">

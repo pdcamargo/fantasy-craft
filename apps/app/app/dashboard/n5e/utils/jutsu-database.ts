@@ -17,6 +17,69 @@ class JutsuQuery {
     return new JutsuQuery(data);
   }
 
+  ninjutsu() {
+    const types = [
+      "Non-Elemental Ninjutsu",
+      "Fire Release",
+      "Water Release",
+      "Earth Release",
+      "Wind Release",
+      "Lightning Release",
+    ];
+
+    const filteredData = this.data.filter(
+      // keywords can include any of the types and the type can be exactly one of the types
+      (jutsu) =>
+        types.some((type) =>
+          jutsu.keywords.toLowerCase().includes(type.toLowerCase()),
+        ) || types.includes(jutsu.type),
+    );
+
+    return new JutsuQuery(filteredData);
+  }
+
+  taijutsu() {
+    const types = ["Taijutsu"];
+
+    const filteredData = this.data.filter(
+      // keywords can include any of the types and the type can be exactly one of the types
+      (jutsu) =>
+        types.some((type) =>
+          jutsu.keywords.toLowerCase().includes(type.toLowerCase()),
+        ) || types.includes(jutsu.type),
+    );
+
+    return new JutsuQuery(filteredData);
+  }
+
+  genjutsu() {
+    const types = ["Genjutsu"];
+
+    const filteredData = this.data.filter(
+      // keywords can include any of the types and the type can be exactly one of the types
+      (jutsu) =>
+        types.some((type) =>
+          jutsu.keywords.toLowerCase().includes(type.toLowerCase()),
+        ) || types.includes(jutsu.type),
+    );
+
+    return new JutsuQuery(filteredData);
+  }
+
+  bukijutsu() {
+    const types = ["Bukijutsu"];
+
+    const filteredData = this.data.filter(
+      // keywords can include any of the types and the type can be exactly one of the types
+      (jutsu) =>
+        types.some((type) =>
+          jutsu.keywords.toLowerCase().includes(type.toLowerCase()),
+        ) || types.includes(jutsu.type),
+    );
+
+    return new JutsuQuery(filteredData);
+  }
+
   withTypes(...types: string[]): JutsuQuery {
     const filteredData = this.data.filter((jutsu) =>
       types.some((type) => jutsu.type.toLowerCase() === type.toLowerCase()),

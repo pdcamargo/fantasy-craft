@@ -1,8 +1,11 @@
 @import "./styles/page.scss";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss/base";
+
+@import "tailwindcss/components";
+@import "@craft/ui/styles.scss";
+
+@import "tailwindcss/utilities";
 
 :root {
   --background: 0 0% 100%;
@@ -136,6 +139,24 @@
     &::-webkit-scrollbar {
       display: none;
     }
+  }
+
+  .fade-gradient-to-l {
+    --gradient-color: hsl(var(--background));
+    background-image: linear-gradient(
+      to left,
+      rgba(255, 255, 255, 0),
+      var(--gradient-color)
+    );
+  }
+
+  .fade-gradient-to-r {
+    --gradient-color: hsl(var(--background));
+    background-image: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0),
+      var(--gradient-color)
+    );
   }
 }
 
@@ -358,4 +379,3 @@
     url("https://raw.githubusercontent.com/jonathonf/solbera-dnd-fonts/master/Dungeon%20Drop%20Case/Dungeon%20Drop%20Case.otf")
       format("opentype");
 }
-

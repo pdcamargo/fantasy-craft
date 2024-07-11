@@ -8,3 +8,4 @@ export * from "./saving-throws";
 export * from "./skills";
 export * from "./proficiency";
 export * from "./compact-ability";
+export * from "./fancy-box";

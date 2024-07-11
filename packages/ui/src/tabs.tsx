@@ -3,6 +3,7 @@
 import * as React from "react";
 import * as TabsPrimitive from "@radix-ui/react-tabs";
 import { cn } from "./utils";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const Tabs = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.Root>,
@@ -45,6 +46,66 @@ const TabsTrigger = React.forwardRef<
 ));
 TabsTrigger.displayName = TabsPrimitive.Trigger.displayName;
 
+const TabsScrollButton = React.forwardRef<
+  React.ElementRef<"button">,
+  React.ComponentPropsWithoutRef<"button"> & {
+    direction: "left" | "right";
+    shouldScroll?: boolean;
+    scrollBy?: number;
+  }
+>(
+  (
+    {
+      className,
+      onPointerDown,
+      direction,
+      shouldScroll = true,
+      scrollBy,
+      ...props
+    },
+    ref,
+  ) => (
+    <button
+      ref={ref}
+      className={cn(
+        "sticky top-0 -my-1 min-w-10 size-10 flex items-center",
+        {
+          "right-0 fade-gradient-to-r justify-end": direction === "right",
+          "left-0 fade-gradient-to-l justify-start": direction === "left",
+        },
+        className,
+      )}
+      onPointerDown={(event) => {
+        onPointerDown?.(event);
+
+        if (event.isDefaultPrevented()) return;
+
+        // get parent and scroll to direction
+        const parent = event.currentTarget.parentElement;
+
+        if (parent instanceof HTMLElement) {
+          if (direction === "right") {
+            parent.scrollBy({
+              left: scrollBy || 100,
+              behavior: "smooth",
+            });
+
+            return;
+          }
+
+          parent.scrollBy({
+            left: -(scrollBy || 100),
+            behavior: "smooth",
+          });
+        }
+      }}
+      {...props}
+    >
+      {direction === "left" ? <ChevronLeft /> : <ChevronRight />}
+    </button>
+  ),
+);
+
 const TabsContent = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof TabsPrimitive.Content>
@@ -60,4 +121,4 @@ const TabsContent = React.forwardRef<
 ));
 TabsContent.displayName = TabsPrimitive.Content.displayName;
 
-export { Tabs, TabsList, TabsTrigger, TabsContent };
+export { Tabs, TabsList, TabsTrigger, TabsScrollButton, TabsContent };

@@ -386,4 +386,96 @@ export class N5eCharacterWrapper {
       >,
     );
   }
+
+  // TODO: custom ability
+  public get ninjutsuAbility() {
+    return "Intelligence" as AbilityName;
+  }
+
+  // TODO: custom ability
+  public get taijutsuAbility() {
+    return "Strength" as AbilityName;
+  }
+
+  // TODO: custom ability
+  public get genjutsuAbility() {
+    return "Charisma" as AbilityName;
+  }
+
+  // TODO: custom ability
+  public get bukijutsuAbility() {
+    return "Dexterity" as AbilityName;
+  }
+
+  public get ninjutsuAttackBonus() {
+    const formula = `proficiencyBonus + abilityMod`;
+
+    return evaluate(formula, {
+      proficiencyBonus: this.proficiencyBonus,
+      abilityMod: this.abilityMods[this.ninjutsuAbility],
+    });
+  }
+
+  public get taijutsuAttackBonus() {
+    const formula = `proficiencyBonus + abilityMod`;
+
+    return evaluate(formula, {
+      proficiencyBonus: this.proficiencyBonus,
+      abilityMod: this.abilityMods[this.taijutsuAbility],
+    });
+  }
+
+  public get genjutsuAttackBonus() {
+    const formula = `proficiencyBonus + abilityMod`;
+
+    return evaluate(formula, {
+      proficiencyBonus: this.proficiencyBonus,
+      abilityMod: this.abilityMods[this.genjutsuAbility],
+    });
+  }
+
+  public get bukijutsuAttackBonus() {
+    const formula = `proficiencyBonus + abilityMod`;
+
+    return evaluate(formula, {
+      proficiencyBonus: this.proficiencyBonus,
+      abilityMod: this.abilityMods[this.bukijutsuAbility],
+    });
+  }
+
+  public get ninjutsuDc() {
+    const formula = `8 + proficiencyBonus + abilityMod`;
+
+    return evaluate(formula, {
+      proficiencyBonus: this.proficiencyBonus,
+      abilityMod: this.abilityMods[this.ninjutsuAbility],
+    });
+  }
+
+  public get taijutsuDc() {
+    const formula = `8 + proficiencyBonus + abilityMod`;
+
+    return evaluate(formula, {
+      proficiencyBonus: this.proficiencyBonus,
+      abilityMod: this.abilityMods[this.taijutsuAbility],
+    });
+  }
+
+  public get genjutsuDc() {
+    const formula = `8 + proficiencyBonus + abilityMod`;
+
+    return evaluate(formula, {
+      proficiencyBonus: this.proficiencyBonus,
+      abilityMod: this.abilityMods[this.genjutsuAbility],
+    });
+  }
+
+  public get bukijutsuDc() {
+    const formula = `8 + proficiencyBonus + abilityMod`;
+
+    return evaluate(formula, {
+      proficiencyBonus: this.proficiencyBonus,
+      abilityMod: this.abilityMods[this.bukijutsuAbility],
+    });
+  }
 }

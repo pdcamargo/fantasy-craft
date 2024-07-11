@@ -1,6 +1,8 @@
 "use client";
 
+import { parseMarkdown } from "@craft/editorjs";
 import {
+  Button,
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
@@ -12,17 +14,22 @@ import {
   CommandList,
   Dialog,
   DialogContent,
+  DialogFooter,
   DialogHeader,
   DialogPortal,
   DialogTitle,
+  Separator,
   Tabs,
   TabsContent,
   TabsList,
+  TabsScrollButton,
   TabsTrigger,
 } from "@craft/ui";
+import { isScreenLg } from "@craft/ui/hooks";
 
 import NiceModal, { useModal } from "@ebay/nice-modal-react";
 import { Feat } from "app/dashboard/n5e/utils/feat-database";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import React from "react";
 
 export type FeatSelectProps = {
@@ -30,9 +37,76 @@ export type FeatSelectProps = {
   onFeatSelect?: (feat: string) => void;
 };
 
+const ConfirmFeatSelect = NiceModal.create(
+  ({ feat, onConfirm }: { feat: Feat; onConfirm: () => void }) => {
+    const modal = useModal(ConfirmFeatSelect);
+
+    return (
+      <Dialog
+        open={modal.visible}
+        onOpenChange={(isOpen) => {
+          if (!isOpen) {
+            modal.hide();
+            return;
+          }
+
+          modal.show();
+        }}
+      >
+        <DialogPortal>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>{feat.name}</DialogTitle>
+            </DialogHeader>
+
+            <div className="text-sm flex flex-col gap-2">
+              {feat.preRequisite && (
+                <span>
+                  <b>Prerequisite:</b> {feat.preRequisite}
+                </span>
+              )}
+              <span>{feat.type}</span>
+            </div>
+
+            <Separator />
+
+            <pre
+              className="block m-0 p-0 font-sans text-wrap"
+              dangerouslySetInnerHTML={{
+                __html: parseMarkdown(feat.description),
+              }}
+            />
+
+            <DialogFooter className="flex flex-row w-full flex-1 items-center gap-5 justify-between border-t border-white/10 pt-4">
+              <Button variant="secondary" onClick={modal.hide}>
+                Cancel
+              </Button>
+
+              <Button
+                variant="default"
+                onClick={() => {
+                  onConfirm();
+
+                  modal.hide();
+                }}
+              >
+                Confirm
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </DialogPortal>
+      </Dialog>
+    );
+  },
+);
+
+const useConfirmFeatSelect = () => useModal(ConfirmFeatSelect);
+
 export const FeatSelect = NiceModal.create(
   ({ feats, onFeatSelect }: FeatSelectProps) => {
     const modal = useModal(FeatSelect);
+
+    const confirmModal = useConfirmFeatSelect();
 
     const groupedFeats = Object.groupBy(feats, (item) => item.type);
 
@@ -56,12 +130,14 @@ export const FeatSelect = NiceModal.create(
               <DialogTitle>Feat Select</DialogTitle>
             </DialogHeader>
             <Tabs>
-              <TabsList>
+              <TabsList className="px-0">
+                <TabsScrollButton direction="left" />
                 {featTabs.map(([type]) => (
                   <TabsTrigger key={type} value={type}>
                     {type.replace("Feat", "").trim()}
                   </TabsTrigger>
                 ))}
+                <TabsScrollButton direction="right" />
               </TabsList>
               {featTabs.map(([type, feats], idx) => (
                 <TabsContent key={idx} value={type}>
@@ -74,7 +150,17 @@ export const FeatSelect = NiceModal.create(
                           <CommandItem
                             key={feat.name}
                             onSelect={(value) => {
-                              onFeatSelect?.(value);
+                              if (isScreenLg()) {
+                                onFeatSelect?.(value);
+                                return;
+                              }
+
+                              confirmModal.show({
+                                feat,
+                                onConfirm: () => {
+                                  onFeatSelect?.(value);
+                                },
+                              });
                             }}
                           >
                             {feat.name}
