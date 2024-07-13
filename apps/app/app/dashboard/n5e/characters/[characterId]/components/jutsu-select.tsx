@@ -72,6 +72,11 @@ const ConfirmJutsuSelect = NiceModal.create(
                   <b>Duration:</b> {jutsu.duration}
                 </span>
               )}
+              {jutsu.cost && (
+                <span>
+                  <b>Cost:</b> {jutsu.cost}
+                </span>
+              )}
             </div>
 
             <Separator />

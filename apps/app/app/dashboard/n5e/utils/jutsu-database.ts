@@ -6,6 +6,19 @@ import {
 
 export type Jutsu = (typeof jutsus)[number];
 
+const ranks = [
+  "E-Rank",
+  "D-Rank",
+  "C-Rank",
+  "B-Rank",
+  "A-Rank",
+  "S-Rank",
+] as const;
+
+export type JutsuRank = (typeof ranks)[number];
+
+export type JutsuRankGroup = Record<JutsuRank, Jutsu[]>;
+
 class JutsuQuery {
   private data: Jutsu[];
 
@@ -129,15 +142,6 @@ class JutsuQuery {
   }
 
   getResultsGroupedByRank() {
-    const ranks = [
-      "E-Rank",
-      "D-Rank",
-      "C-Rank",
-      "B-Rank",
-      "A-Rank",
-      "S-Rank",
-    ] as const;
-
     // record with rank as key and jutsu as value
     const groupedResults = ranks.reduce(
       (acc, rank) => {

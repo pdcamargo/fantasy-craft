@@ -158,6 +158,10 @@
       var(--gradient-color)
     );
   }
+
+  [data-state="open"] .state-open-rotate {
+    transform: rotate(90deg);
+  }
 }
 
 /*

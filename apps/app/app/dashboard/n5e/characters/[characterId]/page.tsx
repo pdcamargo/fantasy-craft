@@ -11,6 +11,10 @@ import {
   ContentEditable,
   Loader,
   Separator,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
 } from "@craft/ui";
 
 import {
@@ -34,6 +38,7 @@ import {
   BackgroundSelect,
   ClanSelect,
   ClassSelect,
+  JutsuList,
   useJutsuSelect,
 } from "./components";
 import { useDebouncedSave } from "@craft/ui/hooks";
@@ -42,6 +47,7 @@ import { N5eCharacterWrapper } from "app/dashboard/n5e/utils/n5e-character-wrapp
 import { JutsuDatabase } from "../../utils/jutsu-database";
 import { FeatDatabase } from "../../utils/feat-database";
 import { useFeatSelect } from "./components/feat-select";
+import { JutsuGroup } from "./components/jutsu-group";
 
 export default function NewCharacterPage({
   params,
@@ -459,41 +465,7 @@ export default function NewCharacterPage({
                 }}
               />
             </div>
-
-            <div className="flex-1 w-full">
-              <div className="bg-gray-100 rounded-lg shadow-smooth-lg p-2 flex items-center gap-2">
-                <FancyBox className="w-[250px]">Ninjutsu</FancyBox>
-
-                <FancyBox
-                  className="w-[200px]"
-                  heading="Ninjutsu"
-                  subheading="Ability"
-                >
-                  {n5eCharacter.ninjutsuAbility}
-                </FancyBox>
-                <FancyBox
-                  className="w-[200px]"
-                  heading="Ninjutsu"
-                  subheading="Save DC"
-                >
-                  {n5eCharacter.ninjutsuDc}
-                </FancyBox>
-                <FancyBox
-                  className="w-[200px]"
-                  heading="Ninjutsu"
-                  subheading="Attack Bonus"
-                >
-                  {n5eCharacter.ninjutsuAttackBonus}
-                </FancyBox>
-              </div>
-
-              {/* {Object.entries(current.getResultsGroupedByRank()).map(
-                ([rank, jutsus]) => {
-                  return (
-                    <Collapsible key={rank} defaultOpen>
-                      <CollapsibleTrigger>{rank}</CollapsibleTrigger>
-
-                      <div>
+            {/* <div>
                         <Button
                           onClick={() => {
                             jutsuSelect.show({
@@ -511,27 +483,64 @@ export default function NewCharacterPage({
                         >
                           Add {rank} jutsu
                         </Button>
-                      </div>
+                      </div> */}
+            <div className="flex-1 w-full">
+              <Tabs defaultValue="ninjutsu">
+                <TabsList>
+                  <TabsTrigger value="ninjutsu">
+                    Ninjutsu ({ninjutsuQuery.queryLength})
+                  </TabsTrigger>
+                  <TabsTrigger value="genjutsu">
+                    Genjutsu ({genjutsuQuery.queryLength})
+                  </TabsTrigger>
+                  <TabsTrigger value="taijutsu">
+                    Taijutsu ({taijutsuQuery.queryLength})
+                  </TabsTrigger>
+                  <TabsTrigger value="bukijutsu">
+                    Bukijutsu ({bukijutsuQuery.queryLength})
+                  </TabsTrigger>
+                </TabsList>
 
-                      <CollapsibleContent>
-                        {jutsus.map((jutsu) => {
-                          return (
-                            <div
-                              key={jutsu.name}
-                              className="bg-white rounded-lg"
-                            >
-                              <h3 className="text-lg font-bold">
-                                {jutsu.name}
-                              </h3>
-                              <p>{jutsu.description}</p>
-                            </div>
-                          );
-                        })}
-                      </CollapsibleContent>
-                    </Collapsible>
-                  );
-                },
-              )} */}
+                <TabsContent value="ninjutsu">
+                  <JutsuGroup
+                    groupType="Ninjutsu"
+                    ability={n5eCharacter.ninjutsuAbility}
+                    attackBonus={n5eCharacter.ninjutsuAttackBonus}
+                    group={ninjutsuQuery.getResultsGroupedByRank()}
+                    saveDc={n5eCharacter.ninjutsuDc}
+                  />
+                </TabsContent>
+
+                <TabsContent value="genjutsu">
+                  <JutsuGroup
+                    groupType="Genjutsu"
+                    ability={n5eCharacter.genjutsuAbility}
+                    attackBonus={n5eCharacter.genjutsuAttackBonus}
+                    group={genjutsuQuery.getResultsGroupedByRank()}
+                    saveDc={n5eCharacter.genjutsuDc}
+                  />
+                </TabsContent>
+
+                <TabsContent value="taijutsu">
+                  <JutsuGroup
+                    groupType="Taijutsu"
+                    ability={n5eCharacter.taijutsuAbility}
+                    attackBonus={n5eCharacter.taijutsuAttackBonus}
+                    group={taijutsuQuery.getResultsGroupedByRank()}
+                    saveDc={n5eCharacter.taijutsuDc}
+                  />
+                </TabsContent>
+
+                <TabsContent value="bukijutsu">
+                  <JutsuGroup
+                    groupType="Bukijutsu"
+                    ability={n5eCharacter.bukijutsuAbility}
+                    attackBonus={n5eCharacter.bukijutsuAttackBonus}
+                    group={bukijutsuQuery.getResultsGroupedByRank()}
+                    saveDc={n5eCharacter.bukijutsuDc}
+                  />
+                </TabsContent>
+              </Tabs>
             </div>
 
             <div className="flex w-full">
