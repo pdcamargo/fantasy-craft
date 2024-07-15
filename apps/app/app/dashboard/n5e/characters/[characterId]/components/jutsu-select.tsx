@@ -9,6 +9,7 @@ import {
   DialogHeader,
   DialogPortal,
   DialogTitle,
+  ScrollArea,
   Separator,
   Tabs,
   TabsContent,
@@ -18,14 +19,12 @@ import {
 } from "@craft/ui";
 import {
   Command,
-  CommandDialog,
   CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
   CommandList,
 } from "@craft/ui/command";
-import { isScreenLg } from "@craft/ui/hooks";
 import NiceModal, { useModal } from "@ebay/nice-modal-react";
 import { Jutsu } from "app/dashboard/n5e/utils/jutsu-database";
 
@@ -51,42 +50,46 @@ const ConfirmJutsuSelect = NiceModal.create(
               <DialogTitle>{jutsu.name}</DialogTitle>
             </DialogHeader>
 
-            <div className="text-sm flex flex-col gap-2">
-              {jutsu.castingTime && (
-                <span>
-                  <b>Casting time:</b> {jutsu.castingTime}
-                </span>
-              )}
-              {jutsu.range && (
-                <span>
-                  <b>Range:</b> {jutsu.range}
-                </span>
-              )}
-              {jutsu.components && (
-                <span>
-                  <b>Components:</b> {jutsu.components}
-                </span>
-              )}
-              {jutsu.duration && (
-                <span>
-                  <b>Duration:</b> {jutsu.duration}
-                </span>
-              )}
-              {jutsu.cost && (
-                <span>
-                  <b>Cost:</b> {jutsu.cost}
-                </span>
-              )}
-            </div>
+            <ScrollArea type="always" className="h-[350px]">
+              <div className="text-sm flex flex-col gap-2">
+                {jutsu.castingTime && (
+                  <span>
+                    <b>Casting time:</b> {jutsu.castingTime}
+                  </span>
+                )}
+                {jutsu.range && (
+                  <span>
+                    <b>Range:</b> {jutsu.range}
+                  </span>
+                )}
+                {jutsu.components && (
+                  <span>
+                    <b>Components:</b> {jutsu.components}
+                  </span>
+                )}
+                {jutsu.duration && (
+                  <span>
+                    <b>Duration:</b> {jutsu.duration}
+                  </span>
+                )}
+                {jutsu.cost && (
+                  <span>
+                    <b>Cost:</b> {jutsu.cost}
+                  </span>
+                )}
+              </div>
 
-            <Separator />
+              <Separator className="my-2" />
 
-            <pre
-              className="block m-0 p-0 font-sans text-wrap"
-              dangerouslySetInnerHTML={{
-                __html: parseMarkdown(jutsu.description),
-              }}
-            />
+              <div
+                className="block m-0 p-0 font-sans text-wrap pr-3"
+                dangerouslySetInnerHTML={{
+                  __html: parseMarkdown(
+                    `${jutsu.description}<br /><br />${jutsu?.atHigherLevels ? `**At higher levels**: ${jutsu.atHigherLevels}` : ""}`,
+                  ),
+                }}
+              />
+            </ScrollArea>
 
             <DialogFooter className="flex flex-row w-full flex-1 items-center gap-5 justify-between border-t border-white/10 pt-4">
               <Button variant="secondary" onClick={modal.hide}>
@@ -169,12 +172,6 @@ export const JutsuSelect = NiceModal.create(
                           <CommandItem
                             key={jutsu.name}
                             onSelect={(value) => {
-                              if (isScreenLg()) {
-                                onJutsuSelect?.(value);
-
-                                return;
-                              }
-
                               confirmJutsuSelect.show({
                                 jutsu,
                                 onConfirm: () => {

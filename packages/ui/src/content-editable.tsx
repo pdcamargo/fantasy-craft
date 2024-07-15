@@ -1,11 +1,26 @@
 import React, { useRef } from "react";
 
-export type ContentEditableProps = React.HTMLProps<HTMLDivElement> & {
-  onChange?: (value: string) => void;
+type BaseProps = Omit<
+  React.HTMLProps<HTMLDivElement>,
+  "onChange" | "min" | "max"
+> & {
   as?: React.ElementType;
   editable?: boolean;
-  type?: "string" | "number";
 };
+
+type NumberProps = BaseProps & {
+  onChange?: (value: number) => void;
+  type?: "number";
+  min?: number;
+  max?: number;
+};
+
+type StringProps = BaseProps & {
+  onChange?: (value: string) => void;
+  type?: "string";
+};
+
+export type ContentEditableProps = NumberProps | StringProps;
 
 export const ContentEditable = React.forwardRef<
   HTMLDivElement,
@@ -28,6 +43,17 @@ export const ContentEditable = React.forwardRef<
 
       if (type === "number") {
         newValue = newValue.replace(/[^\d]/g, "");
+        newValue = parseInt(newValue, 10).toString();
+
+        if ("min" in props && props.min !== undefined) {
+          newValue = Math.max(props.min, parseInt(newValue, 10)).toString();
+        }
+
+        if ("max" in props && props.max !== undefined) {
+          newValue = Math.min(props.max, parseInt(newValue, 10)).toString();
+        }
+      } else {
+        newValue = String(newValue.trim());
       }
 
       const ipt = innerRef.current!;
@@ -40,6 +66,8 @@ export const ContentEditable = React.forwardRef<
 
       ipt.innerHTML = "";
       ipt.textContent = newValue;
+
+      // @ts-expect-error -- typescript gets crazy with having two type definitions for onChange
       onChange?.(newValue);
 
       const newRange = document.createRange();
@@ -53,11 +81,52 @@ export const ContentEditable = React.forwardRef<
     };
 
     const handleBeforeInput = (e: React.FormEvent<HTMLDivElement>) => {
+      const isArrowUpOrDown = ["ArrowUp", "ArrowDown"].includes(
+        (e.nativeEvent as InputEvent).inputType,
+      );
+
+      if (isArrowUpOrDown && type === "number" && editable) {
+        return;
+      }
+
       if (type === "number") {
         const input = e.nativeEvent as InputEvent;
         if (!/^\d$/.test(input.data!)) {
           e.preventDefault();
         }
+      }
+    };
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+      if (type === "number" && editable) {
+        const isArrow = ["ArrowUp", "ArrowDown"].includes(e.key);
+
+        if (!isArrow) return;
+
+        e.preventDefault();
+
+        const input = innerRef.current!;
+
+        const currentValue = parseInt(input.textContent ?? "0", 10);
+
+        if (e.key === "ArrowUp") {
+          input.textContent = (currentValue + 1).toString();
+        } else {
+          input.textContent = (currentValue - 1).toString();
+        }
+
+        const newValue = parseInt(input.textContent ?? "0", 10);
+
+        if ("min" in props && props.min !== undefined) {
+          input.textContent = Math.max(props.min, newValue).toString();
+        }
+
+        if ("max" in props && props.max !== undefined) {
+          input.textContent = Math.min(props.max, newValue).toString();
+        }
+
+        // @ts-expect-error -- typescript gets crazy with having two type definitions for onChange
+        onChange?.(parseInt(input.textContent ?? "0", 10));
       }
     };
 
@@ -75,6 +144,7 @@ export const ContentEditable = React.forwardRef<
         suppressContentEditableWarning
         onInput={handleInput}
         onBeforeInput={handleBeforeInput}
+        onKeyDown={handleKeyDown}
         {...props}
       />
     );

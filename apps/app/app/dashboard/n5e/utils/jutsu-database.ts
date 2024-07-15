@@ -19,7 +19,9 @@ export type JutsuRank = (typeof ranks)[number];
 
 export type JutsuRankGroup = Record<JutsuRank, Jutsu[]>;
 
-class JutsuQuery {
+export type JutsuGroupType = "Ninjutsu" | "Genjutsu" | "Taijutsu" | "Bukijutsu";
+
+export class JutsuQuery {
   private data: Jutsu[];
 
   constructor(data: Jutsu[]) {

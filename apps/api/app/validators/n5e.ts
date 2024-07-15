@@ -35,12 +35,18 @@ const skillSchema = vine.object({
   customAbility: vine.string().optional(),
 })
 
+const classModSchema = vine.object({
+  name: vine.string(),
+  level: vine.number(),
+})
+
 export const updateCharacterValidator = vine.compile(
   vine.object({
     name: vine.string().trim().optional(),
     clan: vine.string().trim().optional(),
     abilities: abilitiesSchema.clone().optional(),
     classes: vine.array(classSchema).optional().nullable(),
+    classMod: classModSchema.optional().nullable(),
     skills: vine.array(skillSchema).optional(),
     savingThrows: savingThrowSchema.clone().optional(),
     background: vine.string().trim().optional(),

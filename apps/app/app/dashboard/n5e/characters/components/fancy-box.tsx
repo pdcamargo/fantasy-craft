@@ -17,7 +17,7 @@ export const FancyBox: React.FC<{
       }}
     >
       <div
-        className={cn("w-[inherit] h-[inherit] m-[-20px] relative", {
+        className={cn("w-auto h-[inherit] m-[-20px] relative", {
           "flex items-center justify-center": !heading && !subheading,
         })}
       >

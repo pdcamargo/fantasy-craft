@@ -70,7 +70,8 @@ const TabsScrollButton = React.forwardRef<
       className={cn(
         "sticky top-0 -my-1 min-w-10 size-10 flex items-center",
         {
-          "right-0 fade-gradient-to-r justify-end": direction === "right",
+          "right-0 fade-gradient-to-r justify-end ml-auto ":
+            direction === "right",
           "left-0 fade-gradient-to-l justify-start": direction === "left",
         },
         className,

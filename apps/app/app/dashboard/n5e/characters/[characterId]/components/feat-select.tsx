@@ -25,7 +25,6 @@ import {
   TabsScrollButton,
   TabsTrigger,
 } from "@craft/ui";
-import { isScreenLg } from "@craft/ui/hooks";
 
 import NiceModal, { useModal } from "@ebay/nice-modal-react";
 import { Feat } from "app/dashboard/n5e/utils/feat-database";
@@ -150,11 +149,6 @@ export const FeatSelect = NiceModal.create(
                           <CommandItem
                             key={feat.name}
                             onSelect={(value) => {
-                              if (isScreenLg()) {
-                                onFeatSelect?.(value);
-                                return;
-                              }
-
                               confirmModal.show({
                                 feat,
                                 onConfirm: () => {

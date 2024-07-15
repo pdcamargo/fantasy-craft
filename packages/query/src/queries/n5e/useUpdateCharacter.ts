@@ -34,12 +34,18 @@ const skillSchema = z.object({
   customAbility: z.string().optional().nullable(),
 });
 
+const classModSchema = z.object({
+  name: z.string(),
+  level: z.number(),
+});
+
 export const updateCharacterSchema = z.object({
   name: z.string().optional().nullable(),
   clan: z.string().optional().nullable(),
   background: z.string().optional().nullable(),
   level: z.number().optional().nullable(),
   classes: z.array(classSchema).optional(),
+  classMod: classModSchema.optional().nullable(),
   abilities: abilitiesSchema.optional(),
   savingThrows: savingThrowSchema.optional(),
   skills: z.array(skillSchema).optional(),

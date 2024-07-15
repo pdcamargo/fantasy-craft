@@ -81,6 +81,7 @@ export default class N5EController {
     const newVal = {
       ...data,
       classes: JSON.stringify(classes ?? []) as any,
+      classMod: JSON.stringify(data.classMod ?? {}) as any,
       skills: JSON.stringify(skills ?? []) as any,
       jutsus: JSON.stringify(data.jutsus ?? []) as any,
       feats: JSON.stringify(data.feats ?? []) as any,
@@ -100,6 +101,10 @@ export default class N5EController {
 
     if (!data.feats) {
       delete newVal.feats
+    }
+
+    if (!data.classMod) {
+      delete newVal.classMod
     }
 
     character.merge(newVal)

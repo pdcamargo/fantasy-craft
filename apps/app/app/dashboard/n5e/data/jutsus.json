@@ -191,7 +191,7 @@
     "components": "HS, CM",
     "cost": "1 Chakra",
     "keywords": "Ninjutsu, Medical",
-    "description": "You touch one willing creature, imbuing it with vitality. If the target has at least 1 hit point, it gains a number of temporary hit points equal to 1d4 + you ninjutsu ability modifier. The temporary hit points are lost at the end of the creatures next turn. D-Rank:",
+    "description": "You touch one willing creature, imbuing it with vitality. If the target has at least 1 hit point, it gains a number of temporary hit points equal to 1d4 + you ninjutsu ability modifier. The temporary hit points are lost at the end of the creatures next turn.",
     "atHigherLevels": ""
   },
   {
@@ -2635,7 +2635,7 @@
     "components": "HS, CM, CS",
     "cost": "23 Chakra",
     "keywords": "Ninjutsu, Fuinjutsu",
-    "description": "You infuse chakra into chakra seals as you attempt to tear into the underworld with the seal of the emptiness. You select a 30-foot radius sphere within range, creating a sphere of emptiness, where the material plane and the space inside the sphere are of different dimensional make ups. For the jutsu’s duration, the sphere and any place within 100 feet of it are difficult terrain, and non-Chakra enhanced objects fully inside the sphere are shunted to the space in-between dimensions if they aren’t being worn or carried. When the sphere appears and at the start of each of your turns, until the jutsu ends, unsecured objects within 100 feet of the sphere are pulled towards the spheres center, ending in an unoccupied space as close to the center as possible. A creature that starts its turn within 100 feet of the sphere must make a Charisma saving throw or be pulled straight towards the spheres center, ending in an unoccupied space as close as possible to the center. A creature that enters the sphere for the first time on a turn or starts its turn there takes 10d10 force damage and is restrained until it is no longer in the sphere. If the sphere is in the air, the restrained creature hovers inside the sphere. A creature can use its action to make a strength saving throw against your Ninjutsu save DC, ending this restrained condition on itself or another creature in the sphere that it can reach. A creature who is reduced to 0 hit points by this jutsu is shunted into the space in-between dimensions where they drift forever frozen in time, along with any items it was wearing or carrying. D-Rank:",
+    "description": "You infuse chakra into chakra seals as you attempt to tear into the underworld with the seal of the emptiness. You select a 30-foot radius sphere within range, creating a sphere of emptiness, where the material plane and the space inside the sphere are of different dimensional make ups. For the jutsu’s duration, the sphere and any place within 100 feet of it are difficult terrain, and non-Chakra enhanced objects fully inside the sphere are shunted to the space in-between dimensions if they aren’t being worn or carried. When the sphere appears and at the start of each of your turns, until the jutsu ends, unsecured objects within 100 feet of the sphere are pulled towards the spheres center, ending in an unoccupied space as close to the center as possible. A creature that starts its turn within 100 feet of the sphere must make a Charisma saving throw or be pulled straight towards the spheres center, ending in an unoccupied space as close as possible to the center. A creature that enters the sphere for the first time on a turn or starts its turn there takes 10d10 force damage and is restrained until it is no longer in the sphere. If the sphere is in the air, the restrained creature hovers inside the sphere. A creature can use its action to make a strength saving throw against your Ninjutsu save DC, ending this restrained condition on itself or another creature in the sphere that it can reach. A creature who is reduced to 0 hit points by this jutsu is shunted into the space in-between dimensions where they drift forever frozen in time, along with any items it was wearing or carrying.",
     "atHigherLevels": ""
   },
   {
@@ -3610,7 +3610,7 @@
     "components": "HS, CM",
     "cost": "30 Chakra",
     "keywords": "Ninjutsu, Earth Release, Kinjutsu",
-    "description": "You create a single star shaped earthen construct in the sky, 1 mile in the air before you cause it to shatter. Select a space you can see within range. All creatures of your choice within 500 feet of the selected space must make a Strength saving throw as the weight of a dying star is thrust upon them. On a failed save they are Stunned and knocked prone as they become unable to move and find it hard to even breathe. A creature who begins their turn in this space, ends their turn in this space, or enters this space for the first time must make the Strength saving throw. A creature stunned by this jutsu takes 9d8 earth damage at the beginning of their turn. A creature stunned by this jutsu takes 9d8 earth damage at the end of their turns if they do not make the Saving throw to end this jutsu’s effects. A stunned creature makes a Strength Saving throw at the end of their turns (They do not automatically fail as a result of being Stunned). On a successful save, they end the stunned condition on themselves immediately. D-Rank:",
+    "description": "You create a single star shaped earthen construct in the sky, 1 mile in the air before you cause it to shatter. Select a space you can see within range. All creatures of your choice within 500 feet of the selected space must make a Strength saving throw as the weight of a dying star is thrust upon them. On a failed save they are Stunned and knocked prone as they become unable to move and find it hard to even breathe. A creature who begins their turn in this space, ends their turn in this space, or enters this space for the first time must make the Strength saving throw. A creature stunned by this jutsu takes 9d8 earth damage at the beginning of their turn. A creature stunned by this jutsu takes 9d8 earth damage at the end of their turns if they do not make the Saving throw to end this jutsu’s effects. A stunned creature makes a Strength Saving throw at the end of their turns (They do not automatically fail as a result of being Stunned). On a successful save, they end the stunned condition on themselves immediately.",
     "atHigherLevels": ""
   },
   {
@@ -4572,7 +4572,7 @@
     "components": "HS, CM, CS",
     "cost": "30 Chakra",
     "keywords": "Wind Release, Ninjutsu",
-    "description": "You create a spiraling cylinder of wind centered on yourself that has a 90 Foot radius and is 120 Feet High. This cylinder becomes difficult terrain for the duration, even for flying creatures. Unattended objects in this cylinder that are large or smaller are pulled upwards and spins around the center at 200 Mph. A creature that starts its turn in the cylinder must make a strength save or be pulled upwards towards the center and be restrained while in motion. All objects and creatures inside the cylinder, excluding yourself, take 8d10 Wind Damage at the start of each of your turns. Creatures can make a strength save on each of its turns as an action to not be restrained on its turn. Swirl. Creatures who would fail their saving throw, spreads all Elemental conditions currently affecting them around to all creatures, excluding the caster within 5 feet of them. Hostile creatures within 5 feet of the failing one gains 1 rank of all elemental conditions currently affecting it. D-Rank:",
+    "description": "You create a spiraling cylinder of wind centered on yourself that has a 90 Foot radius and is 120 Feet High. This cylinder becomes difficult terrain for the duration, even for flying creatures. Unattended objects in this cylinder that are large or smaller are pulled upwards and spins around the center at 200 Mph. A creature that starts its turn in the cylinder must make a strength save or be pulled upwards towards the center and be restrained while in motion. All objects and creatures inside the cylinder, excluding yourself, take 8d10 Wind Damage at the start of each of your turns. Creatures can make a strength save on each of its turns as an action to not be restrained on its turn. Swirl. Creatures who would fail their saving throw, spreads all Elemental conditions currently affecting them around to all creatures, excluding the caster within 5 feet of them. Hostile creatures within 5 feet of the failing one gains 1 rank of all elemental conditions currently affecting it.",
     "atHigherLevels": ""
   },
   {
@@ -5547,7 +5547,7 @@
     "components": "HS, CM, CS",
     "cost": "Special",
     "keywords": "Fire Release, Ninjutsu, Fuinjutsu, Medical, Kinjutsu",
-    "description": "You touch a willing creature, passing on your flame. A creature you touch regains a number of hit and chakra points equal to your maximum hit and chakra points respectively. They gain a number of Temporary hit points equal to their Maximum Hit points and a number of Temporary Chakra points equal to their Maximum Chakra points. You end all conditions on the target and they feel immediately revitalized, gaining Advantage on all ability checks, skill checks, saving throws, and attack rolls for the next minute. After this minute duration, your Maximum Hit & Chakra points become 0, and cannot be increased by any means. D-Rank:",
+    "description": "You touch a willing creature, passing on your flame. A creature you touch regains a number of hit and chakra points equal to your maximum hit and chakra points respectively. They gain a number of Temporary hit points equal to their Maximum Hit points and a number of Temporary Chakra points equal to their Maximum Chakra points. You end all conditions on the target and they feel immediately revitalized, gaining Advantage on all ability checks, skill checks, saving throws, and attack rolls for the next minute. After this minute duration, your Maximum Hit & Chakra points become 0, and cannot be increased by any means.",
     "atHigherLevels": ""
   },
   {
@@ -6509,7 +6509,7 @@
     "components": "HS, CM",
     "cost": "22 Chakra",
     "keywords": "Water Release, Ninjutsu",
-    "description": "You begin to feel the presence of all free-flowing water particles within 120 feet of you. For the duration you can control all water as if it was an extension of your body. All Ninjutsu that has the Water Release keyword of A-Rank or lower, has their cost reduced by half. You gain additional actions you can use on your turn. Water Drill. As an action on your turn, you can make a ranged ninjutsu attack against a creature you can see within range dealing 10d12 cold damage as water surround and collapses over them. Water Armor. As a reaction to being hit with an attack you coat your body in a thick layer of solidified water to lessen the impact. You gain 25 temporary hit points until the beginning of your next turn. Watery Chains. As an action on your turn, you can have the surrounding water form chains as they attempt to capture a creature within range. The target must make a Strength saving throw being restrained and incapacitated on a failed save. On their turns they can make a Strength saving throw to end this effect on them. D-Rank:",
+    "description": "You begin to feel the presence of all free-flowing water particles within 120 feet of you. For the duration you can control all water as if it was an extension of your body. All Ninjutsu that has the Water Release keyword of A-Rank or lower, has their cost reduced by half. You gain additional actions you can use on your turn. Water Drill. As an action on your turn, you can make a ranged ninjutsu attack against a creature you can see within range dealing 10d12 cold damage as water surround and collapses over them. Water Armor. As a reaction to being hit with an attack you coat your body in a thick layer of solidified water to lessen the impact. You gain 25 temporary hit points until the beginning of your next turn. Watery Chains. As an action on your turn, you can have the surrounding water form chains as they attempt to capture a creature within range. The target must make a Strength saving throw being restrained and incapacitated on a failed save. On their turns they can make a Strength saving throw to end this effect on them.",
     "atHigherLevels": ""
   },
   {
@@ -7692,7 +7692,7 @@
     "components": "HS, CM",
     "cost": "1 Chakra",
     "keywords": "Genjutsu, Auditory",
-    "description": "You coat your tongue in chakra, manipulating the vibrations it provides while speaking. You imitate the voice of any creature you’ve heard before with amazing accuracy. Creatures would need to actively take the See through lies, skill action to tell your voice is fabricated. D-Rank:",
+    "description": "You coat your tongue in chakra, manipulating the vibrations it provides while speaking. You imitate the voice of any creature you’ve heard before with amazing accuracy. Creatures would need to actively take the See through lies, skill action to tell your voice is fabricated.",
     "atHigherLevels": ""
   },
   {
@@ -10968,7 +10968,7 @@
     "components": "HS, CM",
     "cost": "30 Chakra",
     "keywords": "Genjutsu, Fuinjutsu, Tactile, Visual, Kinjutsu",
-    "description": "Drawing on the deepest fears of a group of creatures, you create illusory creatures in their minds, visible only to them. Each creature in a 30-foot-radius sphere centered on a point of your choice within range must make a Wisdom saving throw. On a failed save, creatures gain 5 ranks of fear for the duration. The illusion calls on the creature’s deepest fears, manifesting its worst nightmares as a tangible threat. At the end of each of the frightened creature’s turns, it must make a Wisdom saving throw or take 8d10 psychic damage. On a successful save, the genjutsu ends for that creature. D-Rank:",
+    "description": "Drawing on the deepest fears of a group of creatures, you create illusory creatures in their minds, visible only to them. Each creature in a 30-foot-radius sphere centered on a point of your choice within range must make a Wisdom saving throw. On a failed save, creatures gain 5 ranks of fear for the duration. The illusion calls on the creature’s deepest fears, manifesting its worst nightmares as a tangible threat. At the end of each of the frightened creature’s turns, it must make a Wisdom saving throw or take 8d10 psychic damage. On a successful save, the genjutsu ends for that creature.",
     "atHigherLevels": ""
   },
   {
@@ -13243,7 +13243,7 @@
     "components": "CM, M",
     "cost": "Special (25 Chakra)",
     "keywords": "Taijutsu, Medical, Kinjutsu",
-    "description": "You press a point on the base of a willing ally’s spine. When you do, you release their bodies limited synapse response time, enhancing it, allowing an allied creature to move at the speed of thought. For the duration, the target gains 2 additional bonus action and reaction. The target of this jutsu cannot concentrate on any other jutsu for the duration. After one minute their body slows down, becoming weakened for 1 hour. You cannot target yourself with this jutsu. If a creature benefiting from this jutsu gains 2 or more ranks of Shocked, they become stunned until the end of their next turn. A creature cannot gain the benefits of this jutsu more than once per rest. D-Rank:",
+    "description": "You press a point on the base of a willing ally’s spine. When you do, you release their bodies limited synapse response time, enhancing it, allowing an allied creature to move at the speed of thought. For the duration, the target gains 2 additional bonus action and reaction. The target of this jutsu cannot concentrate on any other jutsu for the duration. After one minute their body slows down, becoming weakened for 1 hour. You cannot target yourself with this jutsu. If a creature benefiting from this jutsu gains 2 or more ranks of Shocked, they become stunned until the end of their next turn. A creature cannot gain the benefits of this jutsu more than once per rest.",
     "atHigherLevels": ""
   },
   {

@@ -1,6 +1,12 @@
-import { Jutsu, JutsuRankGroup } from "app/dashboard/n5e/utils/jutsu-database";
+import {
+  Jutsu,
+  JutsuGroupType,
+  JutsuQuery,
+  JutsuRankGroup,
+} from "app/dashboard/n5e/utils/jutsu-database";
 import { FancyBox } from "../../components";
 import {
+  Button,
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
@@ -8,33 +14,46 @@ import {
   Tabs,
   TabsContent,
   TabsList,
+  TabsScrollButton,
   TabsTrigger,
 } from "@craft/ui";
 import { parseMarkdown } from "@craft/editorjs";
 import { ChevronRight } from "lucide-react";
+import { useJutsuSelect } from "./jutsu-select";
 
 export type JutsuListProps = {
   group: JutsuRankGroup;
+  availableJutsusQuery: JutsuQuery;
+  onJutsuSelect?: (jutsuName: string) => void;
+  groupType: JutsuGroupType;
 };
 
 const getJutsuBackgroundColor = (jutsu: Jutsu) => {
   const castingTime = jutsu.castingTime;
 
   if (castingTime.includes("Reaction")) return "#c9dbf8";
-  if (castingTime.includes("Action")) return "#fff3cc";
   if (castingTime.includes("Bonus Action")) return "#d9ead3";
   if (castingTime.includes("Full Turn Action")) return "#fce5cd";
+  if (castingTime.includes("Action")) return "#fff3cc";
 
   return "#f5cbcc";
 };
 
-export const JutsuList: React.FC<JutsuListProps> = ({ group }) => {
+export const JutsuList: React.FC<JutsuListProps> = ({
+  group,
+  availableJutsusQuery,
+  onJutsuSelect,
+  groupType,
+}) => {
   const entries = Object.entries(group);
+  const jutsuSelect = useJutsuSelect();
 
   return (
-    <div className="flex flex-col gap-7">
+    <div className="flex flex-col gap-7 mt-2">
       <Tabs defaultValue="E-Rank">
-        <TabsList>
+        <TabsList className="px-0 md:px-1">
+          <TabsScrollButton className="md:hidden" direction="left" />
+
           {entries.map(([rank, jutsus]) => {
             return (
               <TabsTrigger key={rank} value={rank}>
@@ -42,11 +61,34 @@ export const JutsuList: React.FC<JutsuListProps> = ({ group }) => {
               </TabsTrigger>
             );
           })}
+
+          <TabsScrollButton className="md:hidden" direction="right" />
         </TabsList>
         {entries.map(([rank, jutsus]) => {
+          const availableForRank = availableJutsusQuery
+            .withRank(rank)
+            .withoutNames(...jutsus.map((j) => j.name))
+            .getResults();
+
           return (
             <TabsContent value={rank} key={rank}>
-              <div className="grid grid-cols-2 gap-y-3 gap-x-4 w-full">
+              <Button
+                variant="info"
+                className="mb-4"
+                onClick={() => {
+                  jutsuSelect.show({
+                    jutsus: availableForRank,
+                    heading: rank,
+                    onJutsuSelect: (jutsuName) => {
+                      onJutsuSelect?.(jutsuName);
+                    },
+                  });
+                }}
+              >
+                Add {groupType} {rank} jutsu
+              </Button>
+
+              <div className="grid grid-cols-1 xl:grid-cols-2 gap-y-3 gap-x-4 w-full">
                 {jutsus.map((jutsu) => {
                   return (
                     <Collapsible key={rank}>

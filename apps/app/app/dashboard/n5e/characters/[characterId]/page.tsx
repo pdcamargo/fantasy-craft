@@ -10,10 +10,17 @@ import {
   CollapsibleTrigger,
   ContentEditable,
   Loader,
+  Popover,
+  PopoverArrow,
+  PopoverContent,
+  PopoverPortal,
+  PopoverTrigger,
+  ScrollArea,
   Separator,
   Tabs,
   TabsContent,
   TabsList,
+  TabsScrollButton,
   TabsTrigger,
 } from "@craft/ui";
 
@@ -37,6 +44,7 @@ import { useGetCharacter, useUpdateCharacter } from "@craft/query";
 import {
   BackgroundSelect,
   ClanSelect,
+  ClassModSelect,
   ClassSelect,
   JutsuList,
   useJutsuSelect,
@@ -48,6 +56,7 @@ import { JutsuDatabase } from "../../utils/jutsu-database";
 import { FeatDatabase } from "../../utils/feat-database";
 import { useFeatSelect } from "./components/feat-select";
 import { JutsuGroup } from "./components/jutsu-group";
+import { Trash } from "lucide-react";
 
 export default function NewCharacterPage({
   params,
@@ -107,6 +116,12 @@ export default function NewCharacterPage({
       },
     ),
   );
+  const saveLevel = useDebouncedSave((value) =>
+    updateCharacter.mutateAsync({ level: value }),
+  );
+  const saveClassMod = useDebouncedSave((value) =>
+    updateCharacter.mutateAsync({ classMod: value }),
+  );
 
   const { data, isLoading } = useGetCharacter(params.characterId);
   const { t } = useTranslation();
@@ -164,14 +179,26 @@ export default function NewCharacterPage({
       <DashboardToolbar className="relative z-[1]">
         <DashboradPageInfo className="pb-0 pt-0 lg:pt-12">
           <div className="flex items-start gap-3 flex-col lg:flex-row">
-            <div className="rounded-lg border border-[#C53131] size-[100px] font-roboto relative overflow-hidden select-none">
+            <div className="rounded-lg border border-[#C53131] min-w-[100px] size-[100px] font-roboto relative overflow-hidden select-none">
               <img
                 src="/ashura.jpg"
                 alt="Character Avatar"
                 className="w-full"
               />
               <div className="bg-black h-5 w-full rounded-b absolute flex items-center justify-center text-center text-xs font-bold bottom-0">
-                LVL {character.level}
+                <span>LVL</span>
+                <ContentEditable
+                  className="px-1"
+                  as="span"
+                  type="number"
+                  onChange={(newLevel) => {
+                    saveLevel(newLevel);
+                  }}
+                  min={1}
+                  max={20}
+                >
+                  {character.level}
+                </ContentEditable>
               </div>
             </div>
             <div className="flex flex-col w-[250px]">
@@ -191,9 +218,16 @@ export default function NewCharacterPage({
                 </small>
               </span>
               <ClassSelect onChange={saveClass} value={character.classes} />
-              <span className="font-thin text-xs mt-1 italic">
-                Tobirama's Legacy Class Mod
-              </span>
+
+              <ClassModSelect
+                value={character?.classMod?.name ?? ""}
+                onChange={(newClassMod) => {
+                  saveClassMod({
+                    name: newClassMod,
+                    level: 1,
+                  });
+                }}
+              />
 
               <ElementalAffinity
                 affinities={character.elementalAffinities}
@@ -465,28 +499,11 @@ export default function NewCharacterPage({
                 }}
               />
             </div>
-            {/* <div>
-                        <Button
-                          onClick={() => {
-                            jutsuSelect.show({
-                              jutsus: available
-                                .withRank(rank)
-                                .withoutNames(...jutsus.map((j) => j.name))
-                                .getResults(),
-                              heading: rank,
-                              onJutsuSelect: (jutsuName) => {
-                                console.log(jutsuName);
-                                saveJutsus([...character.jutsus, jutsuName]);
-                              },
-                            });
-                          }}
-                        >
-                          Add {rank} jutsu
-                        </Button>
-                      </div> */}
-            <div className="flex-1 w-full">
+            <div className="flex-1 w-full mt-7">
               <Tabs defaultValue="ninjutsu">
-                <TabsList>
+                <TabsList className="px-0 md:px-1">
+                  <TabsScrollButton className="md:hidden" direction="left" />
+
                   <TabsTrigger value="ninjutsu">
                     Ninjutsu ({ninjutsuQuery.queryLength})
                   </TabsTrigger>
@@ -499,45 +516,75 @@ export default function NewCharacterPage({
                   <TabsTrigger value="bukijutsu">
                     Bukijutsu ({bukijutsuQuery.queryLength})
                   </TabsTrigger>
+
+                  <TabsScrollButton className="md:hidden" direction="right" />
                 </TabsList>
 
-                <TabsContent value="ninjutsu">
+                <TabsContent
+                  className="-mt-2 p-2 border-2 border-muted rounded"
+                  value="ninjutsu"
+                >
                   <JutsuGroup
                     groupType="Ninjutsu"
                     ability={n5eCharacter.ninjutsuAbility}
                     attackBonus={n5eCharacter.ninjutsuAttackBonus}
                     group={ninjutsuQuery.getResultsGroupedByRank()}
                     saveDc={n5eCharacter.ninjutsuDc}
+                    availableJutsusQuery={available.ninjutsu()}
+                    onJutsuSelect={(jutsuName) => {
+                      saveJutsus([...character.jutsus, jutsuName]);
+                    }}
                   />
                 </TabsContent>
 
-                <TabsContent value="genjutsu">
+                <TabsContent
+                  className="-mt-2 p-2 border-2 border-muted rounded"
+                  value="genjutsu"
+                >
                   <JutsuGroup
                     groupType="Genjutsu"
                     ability={n5eCharacter.genjutsuAbility}
                     attackBonus={n5eCharacter.genjutsuAttackBonus}
                     group={genjutsuQuery.getResultsGroupedByRank()}
                     saveDc={n5eCharacter.genjutsuDc}
+                    availableJutsusQuery={available.genjutsu()}
+                    onJutsuSelect={(jutsuName) => {
+                      saveJutsus([...character.jutsus, jutsuName]);
+                    }}
                   />
                 </TabsContent>
 
-                <TabsContent value="taijutsu">
+                <TabsContent
+                  className="-mt-2 p-2 border-2 border-muted rounded"
+                  value="taijutsu"
+                >
                   <JutsuGroup
                     groupType="Taijutsu"
                     ability={n5eCharacter.taijutsuAbility}
                     attackBonus={n5eCharacter.taijutsuAttackBonus}
                     group={taijutsuQuery.getResultsGroupedByRank()}
                     saveDc={n5eCharacter.taijutsuDc}
+                    availableJutsusQuery={available.taijutsu()}
+                    onJutsuSelect={(jutsuName) => {
+                      saveJutsus([...character.jutsus, jutsuName]);
+                    }}
                   />
                 </TabsContent>
 
-                <TabsContent value="bukijutsu">
+                <TabsContent
+                  className="-mt-2 p-2 border-2 border-muted rounded"
+                  value="bukijutsu"
+                >
                   <JutsuGroup
                     groupType="Bukijutsu"
                     ability={n5eCharacter.bukijutsuAbility}
                     attackBonus={n5eCharacter.bukijutsuAttackBonus}
                     group={bukijutsuQuery.getResultsGroupedByRank()}
                     saveDc={n5eCharacter.bukijutsuDc}
+                    availableJutsusQuery={available.bukijutsu()}
+                    onJutsuSelect={(jutsuName) => {
+                      saveJutsus([...character.jutsus, jutsuName]);
+                    }}
                   />
                 </TabsContent>
               </Tabs>
@@ -572,10 +619,45 @@ export default function NewCharacterPage({
                 <div className="grid gap-2 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                   {currentFeats.getResults().map((feat) => {
                     return (
-                      <div key={feat.name} className="bg-white rounded-lg p-2">
-                        <h3 className="text-lg font-bold">{feat.name}</h3>
-                        <p>{feat.description}</p>
-                      </div>
+                      <Popover key={feat.name}>
+                        <PopoverTrigger className="text-lg font-bold text-left flex items-center justify-between border-b border-muted">
+                          <span>{feat.name}</span>
+
+                          <Button
+                            variant="link"
+                            className="text-red-500"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              e.preventDefault();
+
+                              saveFeats(
+                                character.feats.filter(
+                                  (featName) => featName !== feat.name,
+                                ),
+                              );
+                            }}
+                          >
+                            <Trash className="size-4" />
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverPortal>
+                          <PopoverContent align="start" className="pr-1">
+                            <PopoverArrow />
+
+                            <h3>{feat.name}</h3>
+                            <p className="text-sm font-bold">{feat.type}</p>
+
+                            <ScrollArea
+                              type="always"
+                              style={{
+                                height: "300px",
+                              }}
+                            >
+                              <p className="pr-2">{feat.description}</p>
+                            </ScrollArea>
+                          </PopoverContent>
+                        </PopoverPortal>
+                      </Popover>
                     );
                   })}
                 </div>
