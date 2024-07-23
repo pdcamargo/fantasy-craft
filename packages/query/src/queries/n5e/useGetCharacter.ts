@@ -13,7 +13,7 @@ export type GetCharacterQueryResponse = {
 };
 
 type UseGetCharacterQueryOptions = Omit<
-  UseQueryOptions<FetcherResponse<GetCharacterQueryResponse>>,
+  UseQueryOptions<N5eCharacter>,
   "queryFn" | "queryKey"
 > & {
   suspense?: boolean;
@@ -30,13 +30,17 @@ export const useGetCharacter = (
   return useQueryHook({
     queryKey: [GET_CHARACTER_QUERY_KEY, characterId],
     queryFn: async () => {
-      const data = await fetcher.get<GetCharacterQueryResponse>(
+      const [, { data }] = await fetcher.get<GetCharacterQueryResponse>(
         `/api/n5e/characters/${characterId}`,
       );
 
       return data;
     },
     refetchOnWindowFocus: false,
+    refetchInterval: false,
+    refetchIntervalInBackground: false,
+    refetchOnMount: false,
+    refetchOnReconnect: false,
     ...rest,
   });
 };

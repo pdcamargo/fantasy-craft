@@ -3,6 +3,7 @@ import {
   N5eCharacterWrapper,
   SkillsRecord,
 } from "../../utils/n5e-character-wrapper";
+import { observer } from "mobx-react-lite";
 
 export const skillArray = [
   {
@@ -131,95 +132,100 @@ export const SkillGroup: React.FC<{
   headingText?: string;
   editable?: boolean;
   onProficiencyChange?: (skill: SkillName, isProficient: boolean) => void;
-}> = ({
-  groupSkills,
-  skills,
-  ability,
-  headingText,
-  editable,
-  onProficiencyChange,
-}) => {
-  return (
-    <div className="relative">
-      <div className="relative -m-[20px]" role="table">
-        <h3 className="text-xs uppercase font-bold text-white mb-4 text-center">
-          {headingText ?? `${ability} Skills`}
-        </h3>
+}> = observer(
+  ({
+    groupSkills,
+    skills,
+    ability,
+    headingText,
+    editable,
+    onProficiencyChange,
+  }) => {
+    return (
+      <div className="relative">
+        <div className="relative -m-[20px]" role="table">
+          <h3 className="text-xs uppercase font-bold text-white mb-4 text-center">
+            {headingText ?? `${ability} Skills`}
+          </h3>
 
-        <div role="rowgroup" className="grid gap-1 grid-cols-1 xl:grid-cols-2">
-          {groupSkills.map((groupSkill) => {
-            let skill = skills[groupSkill.name];
+          <div
+            role="rowgroup"
+            className="grid gap-1 grid-cols-1 xl:grid-cols-2"
+          >
+            {groupSkills.map((groupSkill) => {
+              let skill = skills[groupSkill.name];
 
-            if (!skill) {
-              skill = {
-                customBonus: 0,
-                isProficient: false,
-                customAbility: undefined,
-                bonus: 0,
-              };
-            }
+              if (!skill) {
+                skill = {
+                  customBonus: 0,
+                  isProficient: false,
+                  customAbility: undefined,
+                  bonus: 0,
+                };
+              }
 
-            const ability = skill.customAbility || groupSkill.defaultAbility;
+              const ability = skill.customAbility || groupSkill.defaultAbility;
 
-            return (
-              <div
-                key={groupSkill.name}
-                className="flex items-center mb-[5px] text-[#b0b7bd]"
-                role="row"
-              >
-                <div className="flex px-[3px] items-center" role="cell">
-                  <span
-                    aria-label={
-                      skill.isProficient ? "Proficient" : "Not Proficient"
-                    }
+              return (
+                <div
+                  key={groupSkill.name}
+                  className="flex items-center mb-[5px] text-[#b0b7bd]"
+                  role="row"
+                >
+                  <div className="flex px-[3px] items-center" role="cell">
+                    <span
+                      aria-label={
+                        skill.isProficient ? "Proficient" : "Not Proficient"
+                      }
+                    >
+                      <div
+                        className={cn(
+                          "bg-[#333] border border-dotted border-[#838383] h-[10px] w-[10px] inline-flex rounded-full",
+                          {
+                            "bg-[#C53131]": skill.isProficient,
+                            "cursor-pointer": editable,
+                          },
+                        )}
+                        onClick={() => {
+                          if (editable) {
+                            onProficiencyChange?.(
+                              groupSkill.name,
+                              !skill.isProficient,
+                            );
+                          }
+                        }}
+                      />
+                    </span>
+                  </div>
+                  <div
+                    className="w-[35px] font-bold uppercase text-xs text-center"
+                    role="cell"
                   >
-                    <div
-                      className={cn(
-                        "bg-[#333] border border-dotted border-[#838383] h-[10px] w-[10px] inline-flex rounded-full",
-                        {
-                          "bg-[#C53131]": skill.isProficient,
-                          "cursor-pointer": editable,
-                        },
-                      )}
-                      onClick={() => {
-                        if (editable) {
-                          onProficiencyChange?.(
-                            groupSkill.name,
-                            !skill.isProficient,
-                          );
-                        }
-                      }}
-                    />
-                  </span>
-                </div>
-                <div
-                  className="w-[35px] font-bold uppercase text-xs text-center"
-                  role="cell"
-                >
-                  {ability.slice(0, 3)}
-                </div>
-                <div
-                  className="p-[5px_0] flex-[1_1] border-[rgba(197,49,49,0.4)] border-b text-[14px] text-nowrap whitespace-nowrap"
-                  role="cell"
-                >
-                  {groupSkill.name}
-                </div>
-                <div
-                  className="p-[3px] border-[rgba(197,49,49,0.4)] border-b text-[14px]"
-                  role="cell"
-                >
-                  <div className="h-[24px] w-[30px] text-[18px] border-[#C53131] border text-white flex items-center justify-center rounded">
-                    <small className="font-thin text-[60%]">
-                      {skill.bonus > 0 ? `+` : ""}
-                    </small>{" "}
-                    {skill.bonus}
+                    {ability.slice(0, 3)}
+                  </div>
+                  <div
+                    className="p-[5px_0] flex-[1_1] border-[rgba(197,49,49,0.4)] border-b text-[14px] text-nowrap whitespace-nowrap"
+                    role="cell"
+                  >
+                    {groupSkill.name}
+                  </div>
+                  <div
+                    className="p-[3px] border-[rgba(197,49,49,0.4)] border-b text-[14px]"
+                    role="cell"
+                  >
+                    <div className="h-[24px] w-[30px] text-[18px] border-[#C53131] border text-white flex items-center justify-center rounded">
+                      <small className="font-thin text-[60%]">
+                        {skill.bonus > 0 ? `+` : ""}
+                      </small>{" "}
+                      {skill.bonus}
+                    </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
       </div>
-    </div>
-  );
-};
+    );
+  },
+);

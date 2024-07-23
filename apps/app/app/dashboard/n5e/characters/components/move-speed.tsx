@@ -1,9 +1,10 @@
 import { cn } from "@craft/ui/utils";
+import { observer } from "mobx-react-lite";
 
 export const MoveSpeed: React.FC<{
   speed: number;
   className?: string;
-}> = ({ speed, className }) => {
+}> = observer(({ speed, className }) => {
   return (
     <div
       className={cn(
@@ -36,4 +37,4 @@ export const MoveSpeed: React.FC<{
       </div>
     </div>
   );
-};
+});

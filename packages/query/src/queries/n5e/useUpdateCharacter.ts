@@ -39,6 +39,60 @@ const classModSchema = z.object({
   level: z.number(),
 });
 
+const jutsuCastingSchema = z.object({
+  ability: z.string(),
+  customDCBonus: z.number(),
+  customAttackBonus: z.number(),
+});
+
+enum JutsuTypes {
+  Ninjutsu = "ninjutsu",
+  Genjutsu = "genjutsu",
+  Taijutsu = "taijutsu",
+  Bukijutsu = "bukijutsu",
+}
+
+const jutsuCastingRecordSchema = z.record(
+  z.nativeEnum(JutsuTypes),
+  jutsuCastingSchema,
+);
+
+const armorClassSchema = z.object({
+  ability: z.string(),
+  armorBonus: z.number(),
+  shieldBonus: z.number(),
+  customBonus: z.number(),
+});
+
+const proficienciesSchema = z.object({
+  armor: z.array(z.string()),
+  weapons: z.array(z.string()),
+  tools: z.array(z.string()),
+  kits: z.array(z.string()),
+});
+
+const bulkSchema = z.object({
+  customBonus: z.number(),
+  customMultiplier: z.number().default(1),
+});
+
+const infoSchema = z.object({
+  background: z.string(),
+  age: z.number(),
+  height: z.string(),
+  weight: z.string(),
+  size: z.string(),
+  gender: z.string(),
+  eyes: z.string(),
+  hair: z.string(),
+  skin: z.string(),
+  village: z.string(),
+  rank: z.string(),
+  isAnbu: z.boolean(),
+  isNukenin: z.boolean(),
+  titles: z.array(z.string()),
+});
+
 export const updateCharacterSchema = z.object({
   name: z.string().optional().nullable(),
   clan: z.string().optional().nullable(),
@@ -52,6 +106,15 @@ export const updateCharacterSchema = z.object({
   elementalAffinities: z.array(z.string()).optional(),
   jutsus: z.array(z.string()).optional(),
   feats: z.array(z.string()).optional(),
+  currentHp: z.number().optional(),
+  currentCp: z.number().optional(),
+  temporaryHp: z.number().optional(),
+  temporaryCp: z.number().optional(),
+  jutsuCasting: jutsuCastingRecordSchema.optional(),
+  armorClass: armorClassSchema.optional(),
+  proficiencies: proficienciesSchema.optional(),
+  bulk: bulkSchema.optional(),
+  info: infoSchema.optional(),
 });
 
 export type UpdateCharacterData = z.infer<typeof updateCharacterSchema>;
@@ -91,15 +154,6 @@ export const useUpdateCharacter = (characterId: string) => {
     mutationFn: async (data: UpdateCharacterData) => {
       return updateCharacterFunction(characterId, data, {
         queryClient: client,
-      });
-    },
-    onSuccess: () => {
-      client.invalidateQueries({
-        queryKey: [GET_CHARACTER_QUERY_KEY, characterId],
-      });
-
-      client.invalidateQueries({
-        queryKey: [ALL_CHARACTERS_QUERY_KEY],
       });
     },
   });

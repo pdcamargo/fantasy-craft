@@ -11,6 +11,230 @@
       "Misty Distortionist",
       "Siren",
       "Time Slipper"
+    ],
+    "proficiencies": {
+      "armor": ["Light"],
+      "weapons": ["Simple"],
+      "tools": ["Disguise Kit", "Poison Kit"],
+      "savingThrows": ["Constitution", "Wisdom", "Charisma"],
+      "skills": [
+        "Illusions",
+        "Deception",
+        "History",
+        "Insight",
+        "Intimidation",
+        "Investigation",
+        "Perception",
+        "Persuasion",
+        "Stealth"
+      ]
+    },
+    "jutsuCasting": {
+      "Ninjutsu": "Intelligence",
+      "Genjutsu": "Wisdom",
+      "Taijutsu": "Strength"
+    },
+    "features": [
+      {
+        "title": "Chakra Disruption",
+        "details": "Starting at 1st level, you have learned to restrain some of your enemies Chakra when they are affected by your Genjutsu. Once per rest, when a creature is affected by a Genjutsu that you cast, you can disrupt their chakra until the end of their next turn. When you do, the next jutsu they cast has its cost increased by an amount equal to the original cost of the Genjutsu used. If you would attempt to use this feature an additional time after your limit, you must spend 1 chakra die, allowing you to use this feature as normal. \n Beginning at 5th level, you can choose to instead completely disable a creatures ability to mold chakra. If the target creature would fail their saving throw, they lose the ability to mold Chakra when casting jutsu of a rank lower than the jutsu affecting them for the duration of the Genjutsu cast. \n You gain an additional use of either of this features effects at 7th and 14th levels.",
+        "requireLevel": 1
+      },
+      {
+        "title": "Actualization",
+        "details": "Also, at 1st level, Genjutsu you cast may use Charisma instead of Wisdom for Attack and Damage rolls, as well as Save DC calculation. Additionally, your talent and skill in the art of Genjutsu has granted you the ability to tap into a deep reserve of creativity called Actualization Die, represented as a D4. You have a number of Actualization Die equal to your proficiency bonus. You recover spent die on a short or long rest. \n When you cast a Genjutsu that would affect hostile creature(s), you may spend your Actualization die to do the following; \n - Spend any number of Actualization Die, dealing additional psychic damage equal to three times the result. \n - Spend up to 2 Actualization Die, add the result to any Wisdom or Charisma skill check. \n  - Spend up to 5 Actualization Die, reducing the target(s) save by -1 for each die spent. \n Your Actualization Die grows in power as you gain levels in this class. Increase Actualization Die size by 1 step, to a D6 at 9th, and a d8 at 17th level. \n Finally, you gain a 1d4 bonus on checks to Read the Enemy using the Illusion skill. You can make an Illusion check with either Wisdom or Charisma.",
+        "requireLevel": 1
+      },
+      {
+        "title": "Genjutsu Pledge",
+        "details": "Starting at 2nd level, the Genjutsu Specialist makes a pledge towards the illusions & Genjutsu they intend to craft. The pledge that you choose grants you features at 2nd, 6th, 10th, 14th & 18th levels",
+        "requireLevel": 2
+      },
+      {
+        "title": "Malleable Mirages",
+        "details": "Starting at 2nd level, you have learned how to manipulate fragments of reality itself imbuing you with unique capabilities that some might even consider unnatural. At 2nd level you learn two Mirages of your choice, found at the end of this Class. You learn one additional Mirage at 4th, 6th, 8th, 10th, 12th, 14th, 16th, 18th, & 20th levels. Additionally, when you gain a level in this class, you can choose one of the Mirages you know and replace it with another Mirage that you could learn at that level. A level prerequisite in a Malleable Mirage refers to Genjutsu Specialist Level, not character level.",
+        "requireLevel": 2
+      },
+      {
+        "title": "Genjutsu Inception",
+        "details": "Starting at 3rd level, you have learned to create a conceptual basis for how to manipulate the perception of reality for anyone who stands in your way. You follow one of these concepts detailed, at the end of the class.",
+        "requireLevel": 3
+      },
+      {
+        "title": "Ability Score Improvement/Feat",
+        "details": "When you reach 4th and again at 8th, 12th, 16th, and 19th, level, you can increase one ability score by +1 & a Feat of your choice that they qualify for. As normal you can’t increase an ability score above 20 using this feature.",
+        "requireLevel": 4
+      },
+      {
+        "title": "Real World Conversion",
+        "details": "Starting at 5th level, you have learned to infuse your creativity with enough chakra to make things beyond the bounds happen. By tapping into your reserves of Actualization die you are able to create a multitude of additional effects based on the needs of the moment. These moments are known as Conversions. Select one Conversion of your choice. You can select an additional Conversion beginning at 9th and 15th levels.",
+        "requireLevel": 5
+      },
+      {
+        "title": "Actualized Alteration",
+        "details": "When you would cast a Genjutsu that requires a saving throw, you may spend 1 Actualization dice. When you do, you may change the required saving throw to either Intelligence, Wisdom or Charisma. You can use this Conversion twice per long rest.",
+        "groupTo": "Real World Conversion"
+      },
+      {
+        "title": "Actualized Duplicity",
+        "details": "You can spend 1 Actualization dice as an action to create an illusory duplicate of yourself. This illusion is a perfect duplicate of yourself that lasts for 1 minute or until you lose your concentration (as if you were concentrating on a jutsu). The illusion appears in an unoccupied space that you can see within 30 feet of you. As a bonus action on your turn, you can move the duplicate up to 30 feet to a space you can see, but it must remain within 120 feet of you. \n For the duration, you share all sense with your duplicate and can cast Genjutsu as if you were in the duplicates space. Additionally, when both you and your illusion are within 5 feet of a creature that can see the illusion, you have advantage on attack rolls against the creature, given how distracting the illusion is to the target.",
+        "groupTo": "Real World Conversion"
+      },
+      {
+        "title": "Actualized Perception",
+        "details": "When a creature that would fail a saving throw, but not critically fail, as a result of a genjutsu you cast, you may spend up to 2 Actualization Die. When you do, roll the die reducing their save by half the result (Min 1.), potentially causing them to critically fail.",
+        "groupTo": "Real World Conversion"
+      },
+      {
+        "title": "Actualized Perfection [CHANGED]",
+        "details": "As a Bonus Action, you can spend 1 Actualization Die when you would cast a Genjutsu of at least C-Rank or lower. When you do, if the Genjutsu requires you to roll dice to deal damage, heal, increase/reduce damage reduction or provide temporary hit points. You add the actualization die to the roll, interpreting the results as normal.",
+        "groupTo": "Real World Conversion"
+      },
+      {
+        "title": "Actualized Power",
+        "details": "When you could cast a Genjutsu targeting a single creature that would inflict a condition of any type, and the target creature has resistance or immunity to the condition, you may spend 1 Actualization die to ignore that resistance or immunity for that jutsu’s casting.",
+        "groupTo": "Real World Conversion"
+      },
+      {
+        "title": "Keen Awareness",
+        "details": "For a Genjutsu Specialist, details are the foundations of constructing proper Genjutsu. At 5th level when you gain this feature, you gain the ability to accurately recall anything you’ve seen or heard within the last month. \n  Additionally, when you would succeed a Saving throw vs a Genjutsu cast by a hostile creature by 5 or more, you regain 1 spent Actualization Die. When you do, you can spend your reaction to cast 1 Genjutsu that you know with the casting time of 1 Action. \n Additionally, you reduce the downtime needed to create or learn Genjutsu by half.",
+        "requireLevel": 5
+      },
+      {
+        "title": "The Turn",
+        "details": "Beginning at 11th level, once per long rest, when a creature would succeed on their saving throw, but not critically succeed their saving throw against a Genjutsu you cast, you can force them to suffer the effects of a failure. \n Starting at 15th level you may use this ability once per short rest. \n Finally, beginning at 20th level, when you would use this feature they instead suffer the effects of a critical failure, if the jutsu cast has such a failure condition.",
+        "requireLevel": 11
+      },
+      {
+        "title": "Master of Illusion",
+        "details": "You have mastered most forms of Genjutsu. At 13th level, you immediately gain one of the following features. You gain a second one at 20th level. \n - **Greater Mastery**: Creatures who’s saving throw result is 2 or more, lower than your Save DC, is treated as if they Critically Failed. \n - **Higher Understanding**: Creature must beat your save DC by 10 or more to be treated as if they Critically succeeded on a Genjutsu you cast. \n - **Subdued Illusion**: The Genjutsu Specialists is able to increase the Illusion check DC made to identify his Genjutsu by 5. \n - **Genjutsu Flow**: The Genjutsu Specialist doubles the range of Genjutsu they cast. Genjutsu with “Touch” range now have a range of 30 feet.",
+        "requireLevel": 13
+      },
+      {
+        "title": "The Prestige",
+        "details": "Starting at 20th level, you have achieved the pinnacle of illusionary skill and potential. Once per rest, when you cast a genjutsu on a creature that would force them to make a saving throw of any type, they automatically critically fail the save.",
+        "requireLevel": 20
+      },
+      {
+        "title": "Elemental Manifestation",
+        "details": "You learn to intertwine the force of Nature Releases into your Genjutsu. Select a nature release from the following: Earth, Wind, Fire, Water or Lightning. You can now add Ninjutsu with the chosen nature release keyword to your known list. When you do the chosen Ninjutsu loses their Ninjutsu keyword, and it is replaced with the ***Genjutsu***, ***Tactile***, and ***Visual keywords***. The damage you deal with this jutsu can be either its original damage type or psychic damage. Beginning at 7th level you gain the Illusionary Chronicle Malleable Mirage. Finally, starting at 11th level when a hostile creature would fail a Saving throw vs a Genjutsu you cast with your chosen Nature Release by 5 or more, you regain 1 Spent ***Actualization Die***. You can only regain 1 ***Actualization die*** in this way per turn.",
+        "groupTo": "Genjutsu Inception"
+      },
+      {
+        "title": "Hallucinatory Instrument",
+        "details": "Your Illusions are the result of an instrument you have an affinity for. Select an Instrument you like of your description and design. You can, as a bonus action, when casting a Genjutsu with the Auditory keyword, that deals damage or inflicts a penalty on a hostile creature, use your instrument to change it range from whatever is listed, to ***Self (15- Foot Cone)*** or ***Self (10-Foot Radius Sphere)***. All creatures, excluding you, in the radius, are affected so long as they are not deafened. Starting at 7th level, you gain the Song of the End Malleable Mirage. \n Finally, beginning at 11th level when a hostile creature critically fails a saving throw from a Genjutsu you cast with the Auditory Keyword, you regain 1 spent ***Actualization Die***. You can only regain 1 ***Actualization Die*** in this way per turn.",
+        "groupTo": "Genjutsu Inception"
+      },
+      {
+        "title": "Illusionary Weapon",
+        "details": "You begin to shape your illusions into a weapon of pure psychosis. You can, as a Bonus action create an Illusionary Weapon in your empty hand. You can choose the form that this weapon takes each time you create it. You are proficient with it while you wield it and attacks made with the weapon use your Genjutsu attack bonus. If you create a ranged weapon, the maximum range for your weapon is 30 feet. This weapon deals Psychic damage and counts as a melee Genjutsu attack for purpose of triggering other Malleable Mirage effects. Your Illusionary weapon disappears if it is more than 5 feet away from you for one minute or more. It also disappears if you use this feature again, if you dismiss the weapon (no action required), your chakra point reach 0, you fall unconscious, or if you die. At 7th level, you gain the Vicious Illusion Malleable Mirage. Finally beginning at 11th level, when you would make a melee Genjutsu attack against a hostile creature and roll 10 or higher than the targets AC, you regain 1 spent ***Actualization Die***. You can only regain 1 ***Actualization Die*** in this way per turn.",
+        "groupTo": "Genjutsu Inception"
+      },
+      {
+        "title": "Phantasmal Force",
+        "details": "You learn to solidify your illusions into gouts, beams, daggers or any type of ranged attack you can envision of your choice. As an Action, unleash a beam of shifting Psionic of your design or description streaks towards a creature within range. Make a ranged genjutsu attack against one target no more than 60 feet away. On a hit, the target takes 1d10 Psychic damage. This Genjutsu attack is treated as if it is a Genjutsu with the Genjutsu and Tactile keywords for the purpose of interacting with features, feats and Jutsu. If you are unable to mold chakra, you cannot use this feature.\n **At Higher Levels**: This ability increases in its potency as you gain levels in this class. Beginning at 7th level, this ability fires up to two beams. This increases again to three beams at 13th and four beams at 16th levels. You can direct a beam at the same or different targets. Make a separate attack roll for each beam. Additionally, beginning at 7th level, you gain the Agonizing Thoughts Malleable Mirage. Finally, beginning at 11th level when you make a ranged Genjutsu attack against a hostile creature and roll 10 or higher than the targets AC, you regain 1 spent ***Actualization Die***. You can only regain 1 ***Actualization Die*** in this way per turn.",
+        "groupTo": "Genjutsu Inception"
+      },
+      {
+        "title": "Reality Marble",
+        "details": "The chakra cost of concentrating on genjutsu is reduced by an amount equal to its rank. (D-Rank: 1, C-Rank: 2, B-Rank: 3, A-Rank: 4, S-Rank: 5). \n While you are concentrating on a genjutsu, as an action you can select a new target for that genjutsu. New targets selected by this feature must make the original saving throw as if they were the original target of the genjutsu when it was originally cast. This feature does not extend the duration of the genjutsu you are concentrating on. \n Starting at 7th level, you gain the Persistent Genjutsu Malleable Mirage. Finally, beginning at 11th level, when 2 or more hostile creatures would fail a saving throw against a Genjutsu you cast or are concentrating on, you regain 1 ***Actualization Die***. The hostile creatures do not need to fail their saving throws at the same time, only fail their saving throws against the same Genjutsu that you have cast and are concentrating on, such as when you use this Inception feature. You can only regain 1 spent ***Actualization Die*** in this way per turn.",
+        "groupTo": "Genjutsu Inception"
+      },
+      {
+        "title": "Temporal Stopwatch",
+        "details": "Your Illusions are the result of a stopwatch you have made a distinct bond with. This stopwatch is mundane and can be in any form you choose, be it a wrist watch, a circular pocket watch a necklace. As a bonus action, when you would gain the benefit of a Genjutsu that would grant you a bonus to your to hit, skill checks, saving throws or AC, you can choose to activate your stop watch. When you do, at the beginning of each turn, roll 1d12, reducing this die by 1 step each time you would roll a 1, 2 or 3. \n (D12>D10>D8>D6>D4>0). While you have this die you are treated as displaced. Conditions that you would gain from hostile effects while you are displaced do not affect you until you are no longer displaced. Once you use this feature you cannot gain its benefits for 1 hour. Beginning at 7th level, you gain the Pause Malleable Mirage. Finally, beginning at 11th level when a hostile creature would fail a saving throw vs a Genjutsu you cast that would inflict a Penalty to their attack rolls, skill checks, saving throws, or their AC by 5 or more, you regain 1 ***Actualization Die***. You can only regain 1 ***Actualization Die*** in this way per turn.",
+        "groupTo": "Genjutsu Inception"
+      },
+      {
+        "title": "Accelerate",
+        "details": "\n**Prerequisite**: Temporal Stopwatch \n As an action, you can choose up to 3 willing creatures within 15 feet. For the next minute, each of the select creatures can use a bonus action to take the Dash Action. \n Additionally, they gain advantage on the next Dexterity saving throw they make, immediately ending this features effect. You can use this Malleable Mirage once per short rest.",
+        "groupTo": "Malleable Mirages"
+      },
+      {
+        "title": "Agnostic Mind",
+        "details": "You can understand and communicate in any language or dialect, so long as the creature you are communicating with speaks a language.",
+        "groupTo": "Malleable Mirages"
+      },
+      {
+        "title": "Agonizing Thoughts",
+        "details": "When you cast a Genjutsu that requires an attack roll, add your Genjutsu ability modifier to the damage it deals on a hit, if it doesn’t already.",
+        "groupTo": "Malleable Mirages"
+      },
+      {
+        "title": "Armor Of Psychosis",
+        "details": "Add your Genjutsu Ability Modifier instead of your Dexterity when calculating your Armor Class.",
+        "groupTo": "Malleable Mirages"
+      },
+      {
+        "title": "Ascendant Image",
+        "details": "You can, as an action, cast the ***Haze Clone*** Genjutsu at no cost as if you know the jutsu once per rest. If you have already reached this mirages use limit, you can choose to cast the jutsu this Mirage provides by spending 1 Chakra die.",
+        "groupTo": "Malleable Mirages"
+      },
+      {
+        "title": "Battle Ready Minds",
+        "details": "You can, as an action, cast ***Bless twice*** per rest at no cost. If you have already reached this mirages use limit, you can choose to cast the jutsu this Mirage provides by spending 1 Chakra die.",
+        "groupTo": "Malleable Mirages"
+      },
+      {
+        "title": "Beast Speech",
+        "details": "You can cast ***Animal Companion*** as a Bonus Action at no cost.",
+        "groupTo": "Malleable Mirages"
+      },
+      {
+        "title": "Beguiling Influence",
+        "details": "You gain proficiency in the Deception and Persuasion Skills. If you have proficiency in both of the aforementioned skills already, you instead gain expertise in one of the Skills.",
+        "groupTo": "Malleable Mirages"
+      },
+      {
+        "title": "Beneath the Boot",
+        "details": "\n**Prerequisite**: 9th level. \nYou can cast ***Psionics: Crush!***, as an Action, at no cost,once per long rest. When you do you can target up to 3 additional creatures. If you have already reached thismirages use limit, you can choose to cast the jutsu thisMirage provides by spending 2 Chakra die.",
+        "groupTo": "Malleable Mirages"
+      },
+      {
+        "title": "Berserk Thoughts",
+        "details": "\n**Prerequisite**: 9th level \nYou can cast ***Shadow Monsters*** as an action at no as if you know the jutsu, once per rest. When you do a creature who would make their saving throw as a result of injuring one of their allies, suffers a 1d4 penalty to their check. If you have already reached this mirages use limit, you can choose to cast the jutsu this Mirage provides by spending 1 Chakra die",
+        "groupTo": "Malleable Mirages"
+      },
+      {
+        "title": "Bewitching Whispers",
+        "details": "You can cast ***Charming Dissonance*** as an Action once per rest at no cost. If you have already reached this mirages use limit, you can choose to cast the jutsu this Mirage provides by spending 1 Chakra die.",
+        "groupTo": "Malleable Mirages"
+      },
+      {
+        "title": "Black Fangs",
+        "details": "You can cast ***Shadow Bite*** as an action at no cost as if you know the jutsu, at the highest rank you can cast, twice per rest. If you have already reached this mirages use limit, you can choose to cast the jutsu this Mirage provides by spending 1 Chakra die.",
+        "groupTo": "Malleable Mirages"
+      },
+      {
+        "title": "Blade Song",
+        "details": "\n**Prerequisite**: 9th level \nYou can cast Dancing Blades as an action at no cost as if you know the jutsu, once per rest. When you do, you gain an additional +2 illusionary copies of a weapon you are currently holding. If you have already reached this mirages use limit, you can choose to cast the jutsu this Mirage provides by spending 1 Chakra die.",
+        "groupTo": "Malleable Mirages"
+      },
+      {
+        "title": "Blinding Lights",
+        "details": "You can cast ***Color Spray*** as an action at no cost as if you know the jutsu, once per rest. If you have already reached this mirages use limit, you can choose to cast the jutsu this Mirage provides by spending 1 Chakra die.",
+        "groupTo": "Malleable Mirages"
+      },
+      {
+        "title": "Book of Stolen Secrets",
+        "details": "Whenever you are in conversation, you can take a scroll, book or anything similar in hand and ask a creature one question. The creature must make a Wisdom saving throw vs your genjutsu save DC if it is unwilling to answer. If it fails or it decides to respond truthfully, the most accurate answer the creature could possibly give is immediately written in the book or scroll. Once you do this you can’t do so again until you finish a short or long rest.",
+        "groupTo": "Malleable Mirages"
+      },
+      {
+        "title": "Chained Element",
+        "details": "\n**Prerequisite**: Elemental Manifestation \n When you would deal damage to a creature with one of your elemental jutsu granted from the Elemental Manifestation Inception, you can choose one other creature of your choice within the jutsu's range. They must make a Wisdom saving throw against your genjutsu save DC or take half as much damage as the original target. You can use this mirage twice per rest",
+        "groupTo": "Malleable Mirages"
+      },
+      {
+        "title": "Chained Mind",
+        "details": "\n**Prerequisite**: 9th Level \n You can cast Mind Spike as an action at no cost as if you know the jutsu, once per short rest. If you have already reached this mirages use limit, you can choose to cast the jutsu this Mirage provides by spending 1 Chakra die.",
+        "groupTo": "Malleable Mirages"
+      },
+      {
+        "title": "Chains Of Madness",
+        "details": "\n**Prerequisite**: 9th Level \n You can cast ***Tree Binding Death*** as an Action at no cost as if you know the jutsu, once per long rest. If you have already reached this mirages use limit, you can choose to cast the jutsu this Mirage provides by spending 2 Chakra die.",
+        "groupTo": "Malleable Mirages"
+      }
     ]
   },
   {
@@ -26,7 +250,43 @@
       "Vice Agent",
       "Void Walker",
       "Wolves Legacy"
-    ]
+    ],
+    "proficiencies": {
+      "armor": ["Light"],
+      "weapons": [
+        "All Simple Weapons",
+        "Broadsword",
+        "Iron Claw",
+        "Jitte",
+        "Katana",
+        "Odachi",
+        "Scythe",
+        "Battle Wire",
+        "Knuckle Blades",
+        "Chakram",
+        "Longbow",
+        "Fuma-Shuriken"
+      ],
+      "tools": ["Disguise Kit", "Forensics Kit", "Forgery Kit"],
+      "savingThrows": ["Dexterity", "Intelligence", "Wisdom"],
+      "skills": [
+        "Acrobatics",
+        "Athletics",
+        "Deception",
+        "Insight",
+        "Intimidation",
+        "Investigation",
+        "Perception",
+        "Stealth",
+        "Survival"
+      ]
+    },
+    "jutsuCasting": {
+      "Ninjutsu": "Intelligence",
+      "Genjutsu": "Wisdom",
+      "Taijutsu": "Strength"
+    },
+    "features": []
   },
   {
     "name": "Intelligence-Operative",
@@ -42,7 +302,31 @@
       "Operative Sensory",
       "Shadowhand",
       "Tactical Strategist"
-    ]
+    ],
+    "proficiencies": {
+      "armor": ["Light", "Medium"],
+      "weapons": ["Simple Weapons", "Fuma Shuriken", "Knuckle Blades"],
+      "tools": ["Pick four"],
+      "savingThrows": ["Dexterity", "Intelligence", "Charisma"],
+      "skills": [
+        "Investigation",
+        "Chakra Control",
+        "Crafting",
+        "Ninshou",
+        "Persuasion",
+        "Illusions",
+        "Insight",
+        "Intimidation",
+        "History",
+        "Perception",
+        "Martial Arts"
+      ]
+    },
+    "jutsuCasting": {
+      "Ninjutsu": "Intelligence",
+      "Genjutsu": "Wisdom",
+      "Taijutsu": "Strength"
+    }
   },
   {
     "name": "Medical-Nin",
@@ -55,7 +339,27 @@
       "Natural Medicine",
       "Shaman",
       "Transmuter"
-    ]
+    ],
+    "proficiencies": {
+      "armor": ["Light", "Medium"],
+      "weapons": ["All Simple Weapons"],
+      "tools": ["Medicine Kit", "Poison Kit"],
+      "savingThrows": ["Strength", "Wisdom", "Charisma"],
+      "skills": [
+        "Medicine",
+        "Chakra Control",
+        "History",
+        "Insight",
+        "Perception",
+        "Illusions",
+        "Ninshou"
+      ]
+    },
+    "jutsuCasting": {
+      "Ninjutsu": "Intelligence",
+      "Genjutsu": "Wisdom",
+      "Taijutsu": "Strength"
+    }
   },
   {
     "name": "Ninjutsu-Specialist",
@@ -73,7 +377,28 @@
       "The Professor",
       "Trace Talent",
       "Tsunami"
-    ]
+    ],
+    "proficiencies": {
+      "armor": ["Light"],
+      "weapons": ["All Simple Weapons"],
+      "tools": ["Alchemist Kits", "Hackers Kit"],
+      "savingThrows": ["Intelligence", "Wisdom", "Charisma"],
+      "skills": [
+        "Ninshou",
+        "Insight",
+        "Investigation",
+        "History",
+        "Stealth",
+        "Perception",
+        "Chakra Control"
+      ]
+    },
+    "jutsuCasting": {
+      "Ninjutsu": "Intelligence",
+      "Genjutsu": "Wisdom",
+      "Taijutsu": "Strength"
+    },
+    "features": []
   },
   {
     "name": "Scout-Nin",
@@ -89,7 +414,34 @@
       "Phantom Scout",
       "Tactical Scout",
       "Trickster Scout"
-    ]
+    ],
+    "proficiencies": {
+      "armor": ["Light", "Medium", "Heavy"],
+      "weapons": ["All Simple and Martial Weapons"],
+      "tools": ["Select Any two Tool kits"],
+      "savingThrows": ["Strength", "Constitution", "Intelligence"],
+      "skills": [
+        "Ninshou",
+        "Illusions",
+        "Martial Arts",
+        "Insight",
+        "Investigation",
+        "Nature",
+        "Acrobatics",
+        "Athletics",
+        "History",
+        "Stealth",
+        "Perception",
+        "Medicine",
+        "Chakra Control"
+      ]
+    },
+    "jutsuCasting": {
+      "Ninjutsu": "Intelligence",
+      "Genjutsu": "Wisdom",
+      "Taijutsu": "Strength"
+    },
+    "features": []
   },
   {
     "name": "Taijutsu-Specialist",
@@ -104,7 +456,39 @@
       "Ruin",
       "Stancer",
       "Talent & Focus"
-    ]
+    ],
+    "proficiencies": {
+      "armor": ["Light", "Medium"],
+      "weapons": [
+        "Simple weapons",
+        "Combat Bracers",
+        "Iron Claws",
+        "Nunchaku",
+        "Tonfa",
+        "Knuckle Blades",
+        "Battle Wire"
+      ],
+      "tools": ["Disguise Kit", "Trapper Kit"],
+      "savingThrows": ["Strength", "Dexterity", "Charisma"],
+      "skills": [
+        "Martial Arts",
+        "Acrobatics",
+        "Chakra Control",
+        "History",
+        "Insight",
+        "Investigation",
+        "Nature",
+        "Stealth",
+        "Perception",
+        "Medicine"
+      ]
+    },
+    "jutsuCasting": {
+      "Ninjutsu": "Intelligence",
+      "Genjutsu": "Wisdom",
+      "Taijutsu": "Strength"
+    },
+    "features": []
   },
   {
     "name": "Weapon-Specialist",
@@ -119,7 +503,36 @@
       "Ranger Form",
       "Samurai Form",
       "Slayer Form"
-    ]
+    ],
+    "proficiencies": {
+      "armor": ["Light", "Medium", "Heavy"],
+      "weapons": ["All Simple and Martial Weapons"],
+      "tools": [
+        "Trapper Kit",
+        "Poison Kit",
+        "Weaponsmith Kit",
+        "Armorsmith Kit"
+      ],
+      "savingThrows": ["Strength", "Dexterity", "Constitution"],
+      "skills": [
+        "Martial Arts",
+        "Acrobatics",
+        "Athletics",
+        "Crafting",
+        "History",
+        "Intimidation",
+        "Perception",
+        "Sleight of Hand",
+        "Stealth",
+        "Survival"
+      ]
+    },
+    "jutsuCasting": {
+      "Ninjutsu": "Intelligence",
+      "Genjutsu": "Wisdom",
+      "Taijutsu": "Strength"
+    },
+    "features": []
   },
   {
     "name": "Puppet-Master",
@@ -132,7 +545,39 @@
       "Purple Technique Juggernaut",
       "Red Technique Performer",
       "White Technique Weaver"
-    ]
+    ],
+    "proficiencies": {
+      "armor": ["Light", "Medium"],
+      "weapons": [
+        "Simple Weapons",
+        "Battle Wires",
+        "Hand Crossbows",
+        "Heavy Crossbows",
+        "Fuma-Shuriken"
+      ],
+      "tools": ["Armorsmith Kit", "Weaponsmith Kit"],
+      "savingThrows": ["Strength", "Constitution", "Intelligence"],
+      "skills": [
+        "Crafting",
+        "Chakra Control",
+        "Deception",
+        "History",
+        "Insight",
+        "Intimidation",
+        "Investigation",
+        "Ninshou",
+        "Perception",
+        "Nature",
+        "Sleight of Hand",
+        "Stealth"
+      ]
+    },
+    "jutsuCasting": {
+      "Ninjutsu": "Intelligence",
+      "Genjutsu": "Wisdom",
+      "Taijutsu": "Strength"
+    },
+    "features": []
   },
   {
     "name": "Cooking-Nin",
@@ -149,7 +594,33 @@
       "Sour Taste",
       "Show Cook",
       "Vendeur crème glacée"
-    ]
+    ],
+    "proficiencies": {
+      "armor": ["Light", "Medium"],
+      "weapons": ["Simple Weapons"],
+      "tools": ["Cooking Tools", "Poison Kit"],
+      "savingThrows": ["Constitution", "Intelligence", "Charisma"],
+      "skills": [
+        "Survival",
+        "Choose three from Athletics",
+        "Crafting",
+        "Deception",
+        "History",
+        "Insight",
+        "Intimidation",
+        "Investigation",
+        "Medicine",
+        "Nature",
+        "Perception",
+        "Sleight of Hand"
+      ]
+    },
+    "jutsuCasting": {
+      "Ninjutsu": "Intelligence",
+      "Genjutsu": "Wisdom",
+      "Taijutsu": "Strength"
+    },
+    "features": []
   },
   {
     "name": "Science-Nin",
@@ -162,6 +633,31 @@
       "Technobi",
       "Ninjaneer",
       "Mad-Scientist"
-    ]
+    ],
+    "proficiencies": {
+      "armor": ["Light", "Medium"],
+      "weapons": ["Simple Weapons", "All Scientific Ninja Tools"],
+      "tools": ["3 of your choice"],
+      "savingThrows": ["Dexterity", "Constitution", "Intelligence"],
+      "skills": [
+        "Ninshou",
+        "Insight",
+        "Investigation",
+        "Nature",
+        "Crafting",
+        "Athletics",
+        "History",
+        "Stealth",
+        "Perception",
+        "Medicine",
+        "Chakra Control"
+      ]
+    },
+    "jutsuCasting": {
+      "Ninjutsu": "Intelligence",
+      "Genjutsu": "Wisdom",
+      "Taijutsu": "Strength"
+    },
+    "features": []
   }
 ]

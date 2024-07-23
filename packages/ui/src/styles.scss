@@ -14,4 +14,15 @@
       }
     }
   }
+
+  [data-placeholder] {
+    // if no children
+    &:empty::before {
+      @apply absolute inset-0 flex items-center justify-start;
+      @apply text-gray-400 font-normal;
+      @apply pointer-events-none;
+
+      content: attr(data-placeholder);
+    }
+  }
 }

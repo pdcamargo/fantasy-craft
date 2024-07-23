@@ -77,6 +77,14 @@
     color: hsl(var(--foreground));
   }
 
+  pre {
+    @apply text-wrap font-sans m-0 p-0 flex flex-col items-start justify-start;
+
+    ul {
+      @apply flex flex-col list-disc list-inside my-2;
+    }
+  }
+
   ::-webkit-scrollbar {
     width: 6px;
   }
@@ -161,6 +169,23 @@
 
   [data-state="open"] .state-open-rotate {
     transform: rotate(90deg);
+  }
+}
+
+@layer components {
+  .dnd-tabs-trigger {
+    @apply uppercase border-b-4 data-inactive:text-gray-500 data-inactive:border-transparent data-active:border-red-500;
+
+    border-radius: 0 !important;
+    padding-inline: 0 !important;
+
+    &[data-state="active"] {
+      background-color: transparent !important;
+    }
+
+    &[data-state="inactive"] {
+      background-color: transparent !important;
+    }
   }
 }
 

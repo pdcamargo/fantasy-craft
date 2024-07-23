@@ -1,9 +1,10 @@
 import { cn } from "@craft/ui/utils";
+import { observer } from "mobx-react-lite";
 
 export const Proficiency: React.FC<{
   proficiency: number;
   className?: string;
-}> = ({ proficiency, className }) => {
+}> = observer(({ proficiency, className }) => {
   return (
     <div
       className={cn(
@@ -36,4 +37,4 @@ export const Proficiency: React.FC<{
       </div>
     </div>
   );
-};
+});

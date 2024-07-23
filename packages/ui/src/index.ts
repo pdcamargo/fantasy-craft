@@ -19,6 +19,7 @@ export * from "./input";
 export * from "./label";
 export * from "./loader";
 export * from "./menubar";
+export * from "./multi-select";
 export * from "./navbar";
 export * from "./navigation-menu";
 export * from "./popover";
@@ -33,4 +34,3 @@ export * from "./toast";
 export * from "./toggle";
 export * from "./toggle-group";
 export * from "./tooltip";
-

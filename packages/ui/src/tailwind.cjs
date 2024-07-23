@@ -10,6 +10,12 @@ module.exports = {
     ),
   ],
   theme: {
+    data: {
+      active: 'state~="active"',
+      inactive: 'state~="inactive"',
+      on: 'state~="on"',
+      off: 'state~="off"',
+    },
     extend: {
       boxShadow: {
         smooth: "0px 3px 4px 0px rgba(0, 0, 0, 0.03)",

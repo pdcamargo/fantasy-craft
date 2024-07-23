@@ -1,4 +1,5 @@
 import React, { useRef } from "react";
+import { cn } from "./utils";
 
 type BaseProps = Omit<
   React.HTMLProps<HTMLDivElement>,
@@ -6,6 +7,7 @@ type BaseProps = Omit<
 > & {
   as?: React.ElementType;
   editable?: boolean;
+  placeholder?: string;
 };
 
 type NumberProps = BaseProps & {
@@ -32,10 +34,14 @@ export const ContentEditable = React.forwardRef<
       editable = true,
       as: Component = "div",
       type = "string",
+      className,
+      placeholder,
+      children,
       ...props
     },
     ref,
   ) => {
+    const [isFocused, setIsFocused] = React.useState(false);
     const innerRef = useRef<HTMLElement>(null);
 
     const handleInput = (e: React.FormEvent<HTMLDivElement>) => {
@@ -57,27 +63,19 @@ export const ContentEditable = React.forwardRef<
       }
 
       const ipt = innerRef.current!;
-      const selection = window.getSelection();
-      const range = selection!.getRangeAt(0);
-      const preCursorRange = range.cloneRange();
-      preCursorRange.selectNodeContents(ipt);
-      preCursorRange.setEnd(range.startContainer, range.startOffset);
-      const cursorPosition = preCursorRange.toString().length;
-
       ipt.innerHTML = "";
       ipt.textContent = newValue;
 
       // @ts-expect-error -- typescript gets crazy with having two type definitions for onChange
       onChange?.(newValue);
 
-      const newRange = document.createRange();
-      const newNode = ipt.firstChild || ipt;
-      const newPosition = Math.min(cursorPosition, newNode.textContent!.length);
+      const range = document.createRange();
+      const selection = window.getSelection();
+      range.setStart(ipt, 1);
+      range.collapse(true);
 
-      newRange.setStart(newNode, newPosition);
-      newRange.setEnd(newNode, newPosition);
-      selection!.removeAllRanges();
-      selection!.addRange(newRange);
+      selection?.removeAllRanges();
+      selection?.addRange(range);
     };
 
     const handleBeforeInput = (e: React.FormEvent<HTMLDivElement>) => {
@@ -142,11 +140,24 @@ export const ContentEditable = React.forwardRef<
         }}
         contentEditable={editable}
         suppressContentEditableWarning
+        className={cn(
+          "relative",
+          {
+            // "text-gray-500 font-normal": !isFocused && !children,
+          },
+          className,
+        )}
         onInput={handleInput}
         onBeforeInput={handleBeforeInput}
         onKeyDown={handleKeyDown}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
+        data-placeholder={placeholder}
         {...props}
-      />
+      >
+        {children}
+        {/* {!children && !isFocused && placeholder && placeholder} */}
+      </Component>
     );
   },
 );

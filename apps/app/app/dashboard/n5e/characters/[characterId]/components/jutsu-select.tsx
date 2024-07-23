@@ -176,6 +176,8 @@ export const JutsuSelect = NiceModal.create(
                                 jutsu,
                                 onConfirm: () => {
                                   onJutsuSelect?.(value);
+
+                                  modal.hide();
                                 },
                               });
                             }}

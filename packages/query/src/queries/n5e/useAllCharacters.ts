@@ -91,6 +91,30 @@ export type N5eCharacter = {
     isNukenin: boolean;
     titles: string[];
   };
+  jutsuCasting: Record<
+    "ninjutsu" | "genjutsu" | "taijutsu" | "bukijutsu",
+    {
+      ability: AbilityName;
+      customDCBonus: number;
+      customAttackBonus: number;
+    }
+  >;
+  armorClass: {
+    ability: AbilityName;
+    armorBonus: number;
+    shieldBonus: number;
+    customBonus: number;
+  };
+  proficiencies: {
+    weapons: Array<string>;
+    armor: Array<string>;
+    tools: Array<string>;
+    kits: Array<string>;
+  };
+  bulk: {
+    customBonus: number;
+    customMultiplier: number;
+  };
   resistances: string[];
   immunities: string[];
   // JSON object with custom data from the user
@@ -118,4 +142,3 @@ export const useAllCharacters = (options?: AllCharactersQueryOptions) => {
     ...options,
   });
 };
-

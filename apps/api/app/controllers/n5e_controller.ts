@@ -85,6 +85,11 @@ export default class N5EController {
       skills: JSON.stringify(skills ?? []) as any,
       jutsus: JSON.stringify(data.jutsus ?? []) as any,
       feats: JSON.stringify(data.feats ?? []) as any,
+      jutsuCasting: JSON.stringify(data.jutsuCasting ?? {}) as any,
+      armorClass: JSON.stringify(data.armorClass ?? {}) as any,
+      proficiencies: JSON.stringify(data.proficiencies ?? {}) as any,
+      bulk: JSON.stringify(data.bulk ?? {}) as any,
+      info: JSON.stringify(data.info ?? {}) as any,
     }
 
     if (!classes) {
@@ -105,6 +110,26 @@ export default class N5EController {
 
     if (!data.classMod) {
       delete newVal.classMod
+    }
+
+    if (!data.jutsuCasting) {
+      delete newVal.jutsuCasting
+    }
+
+    if (!data.armorClass) {
+      delete newVal.armorClass
+    }
+
+    if (!data.proficiencies) {
+      delete newVal.proficiencies
+    }
+
+    if (!data.bulk) {
+      delete newVal.bulk
+    }
+
+    if (!data.info) {
+      delete newVal.info
     }
 
     character.merge(newVal)

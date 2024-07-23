@@ -1,31 +1,13 @@
 import { useMutation } from "@tanstack/react-query";
 import { useRef, useCallback, useEffect } from "react";
 
-function debounce(fn: Function, delay: number) {
-  let timeoutId: any | null = null;
-  function debouncedCallback(...args: any[]) {
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-    }
-    timeoutId = setTimeout(() => {
-      fn(...args);
-    }, delay);
-  }
+import debounce from "lodash/debounce";
 
-  debouncedCallback.cancel = () => {
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-    }
-  };
-
-  return debouncedCallback;
-}
-
-export const useDebouncedSave = (
-  saveFunction: (value: any) => Promise<any>,
+export const useDebouncedSave = <T = any>(
+  saveFunction: (value: T) => Promise<any>,
   delay: number = 300,
 ) => {
-  const latestValueRef = useRef<any | null>(null);
+  const latestValueRef = useRef<T | null>(null);
   const isSaving = useRef<boolean>(false);
 
   const mutation = useMutation({
@@ -41,7 +23,7 @@ export const useDebouncedSave = (
     },
   });
 
-  const saveValue = (value: any) => {
+  const saveValue = (value: T) => {
     if (isSaving.current) {
       latestValueRef.current = value;
     } else {
@@ -50,11 +32,28 @@ export const useDebouncedSave = (
     }
   };
 
-  const debouncedSave = useCallback(debounce(saveValue, delay), []);
+  const debouncedSave = useCallback(debounce(saveValue, delay), [
+    saveValue,
+    delay,
+  ]);
 
   useEffect(() => {
     return () => {
       debouncedSave.cancel();
+    };
+  }, [debouncedSave]);
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "hidden") {
+        debouncedSave.flush();
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, [debouncedSave]);
 

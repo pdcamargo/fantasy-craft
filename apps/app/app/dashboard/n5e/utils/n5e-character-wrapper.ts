@@ -3,6 +3,11 @@ import { N5eCharacter } from "@craft/query";
 import skills from "app/dashboard/n5e/data/skills.json";
 
 import { evaluate } from "mathjs";
+import { makeAutoObservable } from "mobx";
+import { JutsuDatabase } from "./jutsu-database";
+import { FeatDatabase } from "./feat-database";
+import { ClanDatabase, ClanFeature, ClanNames } from "./clan-database";
+import { ClassDatabase, ClassNames } from "./class-database";
 
 export type AbilityName =
   | "Strength"
@@ -76,8 +81,365 @@ export type SkillsRecord = Record<
   }
 >;
 
+type SaveFunction = {
+  (value: { data: Partial<N5eCharacter>; onSuccess?: () => void }): void;
+  cancel(): void;
+};
+
 export class N5eCharacterWrapper {
-  constructor(private readonly character: N5eCharacter) {}
+  constructor(
+    private character: N5eCharacter,
+    private saveFunction: SaveFunction,
+  ) {
+    makeAutoObservable(this, undefined, { autoBind: true });
+  }
+  // setters
+  saveName = (name: string) => {
+    this.character.name = name;
+
+    this.saveFunction({
+      data: this.character,
+    });
+  };
+
+  saveLevel = (level: number) => {
+    this.character.level = level;
+
+    this.saveFunction({
+      data: this.character,
+    });
+  };
+
+  saveClan = (clan: string) => {
+    this.character.clan = clan;
+
+    this.saveFunction({
+      data: this.character,
+    });
+  };
+
+  saveBackground = (background: string) => {
+    this.character.background = background;
+
+    this.saveFunction({
+      data: this.character,
+    });
+  };
+
+  saveClass = (classes: N5eCharacter["classes"]) => {
+    this.character.classes = classes;
+
+    this.saveFunction({
+      data: this.character,
+    });
+  };
+
+  saveClassMod = (classMod: N5eCharacter["classMod"]) => {
+    this.character.classMod = classMod;
+
+    this.saveFunction({
+      data: this.character,
+    });
+  };
+
+  saveElementalAffinities = (
+    elementalAffinities: N5eCharacter["elementalAffinities"],
+  ) => {
+    this.character.elementalAffinities = elementalAffinities;
+
+    this.saveFunction({
+      data: this.character,
+    });
+  };
+
+  saveAbility = (ability: AbilityName, value: number, customBonus?: number) => {
+    this.character.abilities[ability].value = value;
+
+    if (typeof customBonus === "number") {
+      this.character.abilities[ability].customBonus = customBonus;
+    }
+
+    this.saveFunction({
+      data: this.character,
+    });
+  };
+
+  saveAbilityCustomBonus = (ability: AbilityName, customBonus: number) => {
+    this.character.abilities[ability].customBonus = customBonus;
+
+    this.saveFunction({
+      data: this.character,
+    });
+  };
+
+  saveSavingThrow = (
+    ability: AbilityName,
+    isProficient: boolean,
+    customBonus?: number,
+  ) => {
+    this.character.savingThrows[ability].isProficient = isProficient;
+
+    if (typeof customBonus === "number") {
+      this.character.savingThrows[ability].customBonus = customBonus;
+    }
+
+    if (typeof this.character.savingThrows[ability].customBonus !== "number") {
+      this.character.savingThrows[ability].customBonus = 0;
+    }
+
+    this.saveFunction({
+      data: this.character,
+    });
+  };
+
+  saveSavingThrowCustomBonus = (ability: AbilityName, customBonus: number) => {
+    this.character.savingThrows[ability].customBonus = customBonus;
+
+    this.saveFunction({
+      data: this.character,
+    });
+  };
+
+  saveSavingThrowCustomAbility = (
+    ability: AbilityName,
+    customAbility: AbilityName,
+  ) => {
+    this.character.savingThrows[ability].customAbility = customAbility;
+
+    this.saveFunction({
+      data: this.character,
+    });
+  };
+
+  saveSkill = (
+    skill: SkillName,
+    isProficient: boolean,
+    customBonus?: number,
+    customAbility?: AbilityName,
+  ) => {
+    const skillObj = this.character.skills.find((s) => s.name === skill);
+
+    if (skillObj) {
+      skillObj.isProficient = isProficient;
+
+      if (typeof customBonus === "number") {
+        skillObj.customBonus = customBonus;
+      }
+
+      if (typeof skillObj.customBonus !== "number") {
+        skillObj.customBonus = 0;
+      }
+
+      skillObj.customAbility = customAbility;
+    } else {
+      this.character.skills.push({
+        name: skill,
+        isProficient,
+        customBonus: typeof customBonus !== "number" ? 0 : customBonus,
+        customAbility,
+      });
+    }
+
+    this.saveFunction({
+      data: this.character,
+    });
+  };
+
+  saveSkillCustomBonus = (skill: SkillName, customBonus: number) => {
+    const skillObj = this.character.skills.find((s) => s.name === skill);
+
+    if (skillObj) {
+      skillObj.customBonus = customBonus;
+    } else {
+      this.character.skills.push({
+        name: skill,
+        isProficient: false,
+        customBonus,
+      });
+    }
+
+    this.saveFunction({
+      data: this.character,
+    });
+  };
+
+  saveSkillCustomAbility = (skill: SkillName, customAbility: AbilityName) => {
+    const skillObj = this.character.skills.find((s) => s.name === skill);
+
+    if (skillObj) {
+      skillObj.customAbility = customAbility;
+    } else {
+      this.character.skills.push({
+        name: skill,
+        isProficient: false,
+        customAbility,
+      });
+    }
+
+    this.saveFunction({
+      data: this.character,
+    });
+  };
+
+  saveJutsu = (jutsuName: string) => {
+    this.character.jutsus.push(jutsuName);
+
+    this.character.jutsus = Array.from(new Set(this.character.jutsus));
+
+    this.saveFunction({
+      data: this.character,
+    });
+  };
+
+  saveFeat = (featName: string) => {
+    this.character.feats.push(featName);
+
+    this.character.feats = Array.from(new Set(this.character.feats));
+
+    this.saveFunction({
+      data: this.character,
+    });
+  };
+
+  removeFeat = (featName: string) => {
+    this.character.feats = this.character.feats.filter(
+      (feat) => feat !== featName,
+    );
+
+    this.saveFunction({
+      data: this.character,
+    });
+  };
+
+  saveCurrentHp = (currentHp: number) => {
+    this.character.currentHp = currentHp;
+
+    this.saveFunction({
+      data: this.character,
+    });
+  };
+
+  saveTemporaryHp = (temporaryHp: number) => {
+    this.character.temporaryHp = temporaryHp;
+
+    this.saveFunction({
+      data: this.character,
+    });
+  };
+
+  saveCurrentCp = (currentCp: number) => {
+    this.character.currentCp = currentCp;
+
+    this.saveFunction({
+      data: this.character,
+    });
+  };
+
+  saveTemporaryCp = (temporaryCp: number) => {
+    this.character.temporaryCp = temporaryCp;
+
+    this.saveFunction({
+      data: this.character,
+    });
+  };
+
+  saveArmorProficiencies = (armorProficiencies: string[]) => {
+    this.character.proficiencies.armor = armorProficiencies;
+
+    this.saveFunction({
+      data: this.character,
+    });
+  };
+
+  saveWeaponProficiencies = (weaponProficiencies: string[]) => {
+    this.character.proficiencies.weapons = weaponProficiencies;
+
+    this.saveFunction({
+      data: this.character,
+    });
+  };
+
+  saveToolProficiencies = (toolProficiencies: string[]) => {
+    this.character.proficiencies.tools = toolProficiencies;
+
+    this.saveFunction({
+      data: this.character,
+    });
+  };
+
+  saveKitProficiencies = (kitProficiencies: string[]) => {
+    this.character.proficiencies.kits = kitProficiencies;
+
+    this.saveFunction({
+      data: this.character,
+    });
+  };
+
+  saveBackstory = (backstory: string) => {
+    this.character.info.background = backstory;
+
+    this.saveFunction({
+      data: this.character,
+    });
+  };
+
+  // getters
+
+  public get name() {
+    return this.character.name;
+  }
+
+  public get available() {
+    return JutsuDatabase.getJutsuAvailableForCharacter(this);
+  }
+
+  public get current() {
+    return JutsuDatabase.createQueryableJutsuList(this.jutsus);
+  }
+
+  public get currentFeats() {
+    return FeatDatabase.createQueryableFeatList(this.feats);
+  }
+
+  public get ninjutsuQuery() {
+    return this.current.ninjutsu();
+  }
+
+  public get taijutsuQuery() {
+    return this.current.taijutsu();
+  }
+
+  public get genjutsuQuery() {
+    return this.current.genjutsu();
+  }
+
+  public get bukijutsuQuery() {
+    return this.current.bukijutsu();
+  }
+
+  public get jutsus() {
+    return this.character.jutsus;
+  }
+
+  public get feats() {
+    return this.character.feats;
+  }
+
+  public get level() {
+    return this.character.level;
+  }
+
+  public get classes() {
+    return this.character.classes;
+  }
+
+  public get classMod() {
+    return this.character.classMod;
+  }
+
+  public get background() {
+    return this.character.background;
+  }
 
   public get proficiencyBonus() {
     const { level } = this.character;
@@ -95,6 +457,24 @@ export class N5eCharacterWrapper {
     return this.character.clan;
   }
 
+  public get clanFeatures(): ClanFeature[] {
+    if (!this.clan) {
+      return [];
+    }
+
+    return ClanDatabase.getClanFeatures(this.clan as ClanNames, this.level);
+  }
+
+  public get classFeatures() {
+    if (!this.classes.length) {
+      return [];
+    }
+
+    const [firstClass] = this.classes;
+
+    return ClassDatabase.getClassFeatures(firstClass.name, this.level);
+  }
+
   public get elementalAffinities() {
     return this.character.elementalAffinities;
   }
@@ -103,11 +483,11 @@ export class N5eCharacterWrapper {
     const formula = `10 + abilityMod + floor(proficiency / 2) + armorBonus + shieldBonus + otherBonus`;
 
     return evaluate(formula, {
-      abilityMod: this.dexMod,
+      abilityMod: this.abilityMods[this.character.armorClass.ability],
       proficiency: this.proficiencyBonus,
-      armorBonus: 0,
-      shieldBonus: 0,
-      otherBonus: 0,
+      armorBonus: this.character.armorClass.armorBonus,
+      shieldBonus: this.character.armorClass.shieldBonus,
+      otherBonus: this.character.armorClass.customBonus,
     });
   }
 
@@ -285,60 +665,68 @@ export class N5eCharacterWrapper {
     return modifierFormula(this.cha);
   }
 
-  // TODO: custom ability
   public get strSave() {
+    const customAbility = this.character.savingThrows.Strength.customAbility;
+
     return savingThrowFormula({
-      ability: this.strMod,
+      ability: this.abilityMods[customAbility || "Strength"],
       isProficient: this.character.savingThrows.Strength.isProficient,
       proficiencyBonus: this.proficiencyBonus,
       otherBonus: this.character.savingThrows.Strength.customBonus || 0,
     });
   }
 
-  // TODO: custom ability
   public get dexSave() {
+    const customAbility = this.character.savingThrows.Dexterity.customAbility;
+
     return savingThrowFormula({
-      ability: this.dexMod,
+      ability: this.abilityMods[customAbility || "Dexterity"],
       isProficient: this.character.savingThrows.Dexterity.isProficient,
       proficiencyBonus: this.proficiencyBonus,
       otherBonus: this.character.savingThrows.Dexterity.customBonus || 0,
     });
   }
 
-  // TODO: custom ability
   public get conSave() {
+    const customAbility =
+      this.character.savingThrows.Constitution.customAbility;
+
     return savingThrowFormula({
-      ability: this.conMod,
+      ability: this.abilityMods[customAbility || "Constitution"],
       isProficient: this.character.savingThrows.Constitution.isProficient,
       proficiencyBonus: this.proficiencyBonus,
       otherBonus: this.character.savingThrows.Constitution.customBonus || 0,
     });
   }
 
-  // TODO: custom ability
   public get intSave() {
+    const customAbility =
+      this.character.savingThrows.Intelligence.customAbility;
+
     return savingThrowFormula({
-      ability: this.intMod,
+      ability: this.abilityMods[customAbility || "Intelligence"],
       isProficient: this.character.savingThrows.Intelligence.isProficient,
       proficiencyBonus: this.proficiencyBonus,
       otherBonus: this.character.savingThrows.Intelligence.customBonus || 0,
     });
   }
 
-  // TODO: custom ability
   public get wisSave() {
+    const customAbility = this.character.savingThrows.Wisdom.customAbility;
+
     return savingThrowFormula({
-      ability: this.wisMod,
+      ability: this.abilityMods[customAbility || "Wisdom"],
       isProficient: this.character.savingThrows.Wisdom.isProficient,
       proficiencyBonus: this.proficiencyBonus,
       otherBonus: this.character.savingThrows.Wisdom.customBonus || 0,
     });
   }
 
-  // TODO: custom ability
   public get chaSave() {
+    const customAbility = this.character.savingThrows.Charisma.customAbility;
+
     return savingThrowFormula({
-      ability: this.chaMod,
+      ability: this.abilityMods[customAbility || "Charisma"],
       isProficient: this.character.savingThrows.Charisma.isProficient,
       proficiencyBonus: this.proficiencyBonus,
       otherBonus: this.character.savingThrows.Charisma.customBonus || 0,
@@ -387,95 +775,202 @@ export class N5eCharacterWrapper {
     );
   }
 
-  // TODO: custom ability
   public get ninjutsuAbility() {
-    return "Intelligence" as AbilityName;
+    return this.character.jutsuCasting.ninjutsu.ability;
   }
 
-  // TODO: custom ability
   public get taijutsuAbility() {
-    return "Strength" as AbilityName;
+    return this.character.jutsuCasting.taijutsu.ability;
   }
 
-  // TODO: custom ability
   public get genjutsuAbility() {
-    return "Charisma" as AbilityName;
+    return this.character.jutsuCasting.genjutsu.ability;
   }
 
-  // TODO: custom ability
   public get bukijutsuAbility() {
-    return "Dexterity" as AbilityName;
+    return this.character.jutsuCasting.bukijutsu.ability;
   }
 
   public get ninjutsuAttackBonus() {
-    const formula = `proficiencyBonus + abilityMod`;
+    const formula = `proficiencyBonus + abilityMod + otherBonus`;
 
     return evaluate(formula, {
       proficiencyBonus: this.proficiencyBonus,
       abilityMod: this.abilityMods[this.ninjutsuAbility],
+      otherBonus: this.character.jutsuCasting.ninjutsu.customAttackBonus || 0,
     });
   }
 
   public get taijutsuAttackBonus() {
-    const formula = `proficiencyBonus + abilityMod`;
+    const formula = `proficiencyBonus + abilityMod + otherBonus`;
 
     return evaluate(formula, {
       proficiencyBonus: this.proficiencyBonus,
       abilityMod: this.abilityMods[this.taijutsuAbility],
+      otherBonus: this.character.jutsuCasting.taijutsu.customAttackBonus || 0,
     });
   }
 
   public get genjutsuAttackBonus() {
-    const formula = `proficiencyBonus + abilityMod`;
+    const formula = `proficiencyBonus + abilityMod + otherBonus`;
 
     return evaluate(formula, {
       proficiencyBonus: this.proficiencyBonus,
       abilityMod: this.abilityMods[this.genjutsuAbility],
+      otherBonus: this.character.jutsuCasting.genjutsu.customAttackBonus || 0,
     });
   }
 
   public get bukijutsuAttackBonus() {
-    const formula = `proficiencyBonus + abilityMod`;
+    const formula = `proficiencyBonus + abilityMod + otherBonus`;
 
     return evaluate(formula, {
       proficiencyBonus: this.proficiencyBonus,
       abilityMod: this.abilityMods[this.bukijutsuAbility],
+      otherBonus: this.character.jutsuCasting.bukijutsu.customAttackBonus || 0,
     });
   }
 
   public get ninjutsuDc() {
-    const formula = `8 + proficiencyBonus + abilityMod`;
+    const formula = `8 + proficiencyBonus + abilityMod + otherBonus`;
 
     return evaluate(formula, {
       proficiencyBonus: this.proficiencyBonus,
       abilityMod: this.abilityMods[this.ninjutsuAbility],
+      otherBonus: this.character.jutsuCasting.ninjutsu.customDCBonus || 0,
     });
   }
 
   public get taijutsuDc() {
-    const formula = `8 + proficiencyBonus + abilityMod`;
+    const formula = `8 + proficiencyBonus + abilityMod + otherBonus`;
 
     return evaluate(formula, {
       proficiencyBonus: this.proficiencyBonus,
       abilityMod: this.abilityMods[this.taijutsuAbility],
+      otherBonus: this.character.jutsuCasting.taijutsu.customDCBonus || 0,
     });
   }
 
   public get genjutsuDc() {
-    const formula = `8 + proficiencyBonus + abilityMod`;
+    const formula = `8 + proficiencyBonus + abilityMod + otherBonus`;
 
     return evaluate(formula, {
       proficiencyBonus: this.proficiencyBonus,
       abilityMod: this.abilityMods[this.genjutsuAbility],
+      otherBonus: this.character.jutsuCasting.genjutsu.customDCBonus || 0,
     });
   }
 
   public get bukijutsuDc() {
-    const formula = `8 + proficiencyBonus + abilityMod`;
+    const formula = `8 + proficiencyBonus + abilityMod + otherBonus`;
 
     return evaluate(formula, {
       proficiencyBonus: this.proficiencyBonus,
       abilityMod: this.abilityMods[this.bukijutsuAbility],
+      otherBonus: this.character.jutsuCasting.bukijutsu.customDCBonus || 0,
     });
+  }
+
+  public get jutsuAbilities() {
+    return {
+      Ninjutsu: this.ninjutsuAbility,
+      Taijutsu: this.taijutsuAbility,
+      Genjutsu: this.genjutsuAbility,
+      Bukijutsu: this.bukijutsuAbility,
+    };
+  }
+
+  public get jutsuAttackBonuses() {
+    return {
+      Ninjutsu: this.ninjutsuAttackBonus,
+      Taijutsu: this.taijutsuAttackBonus,
+      Genjutsu: this.genjutsuAttackBonus,
+      Bukijutsu: this.bukijutsuAttackBonus,
+    };
+  }
+
+  public get jutsuDcs() {
+    return {
+      Ninjutsu: this.ninjutsuDc,
+      Taijutsu: this.taijutsuDc,
+      Genjutsu: this.genjutsuDc,
+      Bukijutsu: this.bukijutsuDc,
+    };
+  }
+
+  public get jutsuQueries() {
+    return {
+      Ninjutsu: this.ninjutsuQuery,
+      Taijutsu: this.taijutsuQuery,
+      Genjutsu: this.genjutsuQuery,
+      Bukijutsu: this.bukijutsuQuery,
+    };
+  }
+
+  public get jutsusAvailable() {
+    return {
+      Ninjutsu: this.available.ninjutsu(),
+      Taijutsu: this.available.taijutsu(),
+      Genjutsu: this.available.genjutsu(),
+      Bukijutsu: this.available.bukijutsu(),
+    };
+  }
+
+  public get armorProficiencies() {
+    return this.character.proficiencies.armor;
+  }
+
+  public get weaponProficiencies() {
+    return this.character.proficiencies.weapons;
+  }
+
+  public get toolProficiencies() {
+    return this.character.proficiencies.tools;
+  }
+
+  public get kitProficiencies() {
+    return this.character.proficiencies.kits;
+  }
+
+  public get passiveSkills() {
+    const passiveSkillFormula = "10 + skillBonus + otherBonus";
+
+    return {
+      Perception: evaluate(passiveSkillFormula, {
+        skillBonus: this.skills.Perception.bonus,
+        otherBonus: 0,
+      }),
+      Investigation: evaluate(passiveSkillFormula, {
+        skillBonus: this.skills.Investigation.bonus,
+        otherBonus: 0,
+      }),
+      Insight: evaluate(passiveSkillFormula, {
+        skillBonus: this.skills.Insight.bonus,
+        otherBonus: 0,
+      }),
+      Stealth: evaluate(passiveSkillFormula, {
+        skillBonus: this.skills.Stealth.bonus,
+        otherBonus: 0,
+      }),
+    };
+  }
+
+  public get bulk() {
+    const formula = "(10 + (strengthMod * 2) + customBonus) * customMultiplier";
+
+    return evaluate(formula, {
+      strengthMod: this.strMod,
+      customBonus: this.character.bulk.customBonus,
+      customMultiplier: this.character.bulk.customMultiplier,
+    });
+  }
+
+  // TODO: calculate bulk based on items
+  public get currentBulk() {
+    return 0;
+  }
+
+  public get backstory() {
+    return this.character.info.background;
   }
 }

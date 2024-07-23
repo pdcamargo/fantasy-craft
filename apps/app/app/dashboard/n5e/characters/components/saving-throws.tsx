@@ -1,4 +1,5 @@
 import { cn } from "@craft/ui/utils";
+import { observer } from "mobx-react-lite";
 
 export const savesArray = [
   {
@@ -46,7 +47,7 @@ export const SavingThrow: React.FC<{
   editable?: boolean;
   onProficiencyChange?: (isProficient: boolean) => void;
   className?: string;
-}> = ({ save, className, editable, onProficiencyChange }) => {
+}> = observer(({ save, className, editable, onProficiencyChange }) => {
   return (
     <div
       className={cn(
@@ -93,42 +94,42 @@ export const SavingThrow: React.FC<{
       </div>
     </div>
   );
-};
+});
 
 export type SavingThrowsProps = {
   saves: SaveConfig;
 };
 
-export const SavingThrows: React.FC<SavingThrowsProps> = ({
-  saves,
-}: SavingThrowsProps) => {
-  return (
-    <div
-      className="w-[281px] p-[13px_20px] relative border-[20px]"
-      style={{
-        borderImage: "url(/fancy-box-2-bg.svg) 20 30 20 30 fill",
-      }}
-    >
-      <div className="relative -m-[20px]" role="table">
-        <h3
-          className="text-xs uppercase font-bold text-white mb-4 text-center"
-          role="row"
-        >
-          Saving Throws
-        </h3>
+export const SavingThrows: React.FC<SavingThrowsProps> = observer(
+  ({ saves }: SavingThrowsProps) => {
+    return (
+      <div
+        className="w-[281px] p-[13px_20px] relative border-[20px]"
+        style={{
+          borderImage: "url(/fancy-box-2-bg.svg) 20 30 20 30 fill",
+        }}
+      >
+        <div className="relative -m-[20px]" role="table">
+          <h3
+            className="text-xs uppercase font-bold text-white mb-4 text-center"
+            role="row"
+          >
+            Saving Throws
+          </h3>
 
-        <div className="flex flex-col" role="row">
-          {savesArray.map((defaultSave) => {
-            const save = saves.find((s) => s.name === defaultSave.name);
+          <div className="flex flex-col" role="row">
+            {savesArray.map((defaultSave) => {
+              const save = saves.find((s) => s.name === defaultSave.name);
 
-            if (!save) {
-              return null;
-            }
+              if (!save) {
+                return null;
+              }
 
-            return <SavingThrow key={save.name} save={save} />;
-          })}
+              return <SavingThrow key={save.name} save={save} />;
+            })}
+          </div>
         </div>
       </div>
-    </div>
-  );
-};
+    );
+  },
+);

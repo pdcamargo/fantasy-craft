@@ -1,9 +1,10 @@
 import { cn } from "@craft/ui/utils";
+import { observer } from "mobx-react-lite";
 
 export const Initiative: React.FC<{
   initiative: number;
   className?: string;
-}> = ({ initiative, className }) => {
+}> = observer(({ initiative, className }) => {
   return (
     <div
       className={cn(
@@ -36,4 +37,4 @@ export const Initiative: React.FC<{
       </div>
     </div>
   );
-};
+});

@@ -28,7 +28,6 @@ import {
 
 import NiceModal, { useModal } from "@ebay/nice-modal-react";
 import { Feat } from "app/dashboard/n5e/utils/feat-database";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import React from "react";
 
 export type FeatSelectProps = {
@@ -153,6 +152,8 @@ export const FeatSelect = NiceModal.create(
                                 feat,
                                 onConfirm: () => {
                                   onFeatSelect?.(value);
+
+                                  modal.hide();
                                 },
                               });
                             }}

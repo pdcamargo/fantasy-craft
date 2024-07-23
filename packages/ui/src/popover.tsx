@@ -55,6 +55,45 @@ const PopoverContent = React.forwardRef<
 ));
 PopoverContent.displayName = PopoverPrimitive.Content.displayName;
 
+const AdaptivePopover: React.FC<
+  React.ComponentPropsWithoutRef<typeof PopoverPrimitive.Root> & {
+    contentProps?: React.ComponentPropsWithoutRef<typeof PopoverContent>;
+    triggerProps?: React.ComponentPropsWithoutRef<typeof PopoverTrigger>;
+    trigger: React.ReactNode;
+  }
+> = ({ children, contentProps, triggerProps, trigger, ...props }) => {
+  const [triggerRef, setTriggerRef] = React.useState<HTMLElement | null>(null);
+
+  const contentWidth = React.useMemo(() => {
+    if (!triggerRef) return "300px";
+
+    return triggerRef.offsetWidth;
+  }, [triggerRef]);
+
+  return (
+    <Popover {...props}>
+      <PopoverTrigger
+        {...triggerProps}
+        ref={(el) => {
+          setTriggerRef(el);
+        }}
+      >
+        {trigger}
+      </PopoverTrigger>
+      <PopoverContent
+        {...contentProps}
+        style={{
+          width: contentWidth,
+        }}
+      >
+        <PopoverArrow />
+
+        {children}
+      </PopoverContent>
+    </Popover>
+  );
+};
+
 export {
   Popover,
   PopoverTrigger,
@@ -62,4 +101,5 @@ export {
   PopoverAnchor,
   PopoverPortal,
   PopoverArrow,
+  AdaptivePopover,
 };

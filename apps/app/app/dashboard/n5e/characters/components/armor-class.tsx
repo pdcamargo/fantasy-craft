@@ -1,9 +1,10 @@
 import { cn } from "@craft/ui/utils";
+import { observer } from "mobx-react-lite";
 
 export const ArmorClass: React.FC<{
   armorClass: number;
   className?: string;
-}> = ({ armorClass, className }) => {
+}> = observer(({ armorClass, className }) => {
   return (
     <div
       className={cn(
@@ -29,4 +30,4 @@ export const ArmorClass: React.FC<{
       </div>
     </div>
   );
-};
+});

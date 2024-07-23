@@ -6,6 +6,7 @@ import {
 } from "app/dashboard/n5e/utils/jutsu-database";
 import { FancyBox } from "../../components";
 import {
+  AdaptivePopover,
   Button,
   Collapsible,
   CollapsibleContent,
@@ -20,6 +21,7 @@ import {
 import { parseMarkdown } from "@craft/editorjs";
 import { ChevronRight } from "lucide-react";
 import { useJutsuSelect } from "./jutsu-select";
+import { observer } from "mobx-react-lite";
 
 export type JutsuListProps = {
   group: JutsuRankGroup;
@@ -39,78 +41,75 @@ const getJutsuBackgroundColor = (jutsu: Jutsu) => {
   return "#f5cbcc";
 };
 
-export const JutsuList: React.FC<JutsuListProps> = ({
-  group,
-  availableJutsusQuery,
-  onJutsuSelect,
-  groupType,
-}) => {
-  const entries = Object.entries(group);
-  const jutsuSelect = useJutsuSelect();
+export const JutsuList: React.FC<JutsuListProps> = observer(
+  ({ group, availableJutsusQuery, onJutsuSelect, groupType }) => {
+    const entries = Object.entries(group);
+    const jutsuSelect = useJutsuSelect();
 
-  return (
-    <div className="flex flex-col gap-7 mt-2">
-      <Tabs defaultValue="E-Rank">
-        <TabsList className="px-0 md:px-1">
-          <TabsScrollButton className="md:hidden" direction="left" />
+    return (
+      <div className="flex flex-col gap-7 mt-2">
+        <Tabs defaultValue="E-Rank" variant="underline">
+          <TabsList className="px-0 md:px-1">
+            <TabsScrollButton className="md:hidden" direction="left" />
 
+            {entries.map(([rank, jutsus]) => {
+              return (
+                <TabsTrigger key={rank} value={rank}>
+                  {rank} ({jutsus.length})
+                </TabsTrigger>
+              );
+            })}
+
+            <TabsScrollButton className="md:hidden" direction="right" />
+          </TabsList>
           {entries.map(([rank, jutsus]) => {
+            const availableForRank = availableJutsusQuery
+              .withRank(rank)
+              .withoutNames(...jutsus.map((j) => j.name))
+              .getResults();
+
             return (
-              <TabsTrigger key={rank} value={rank}>
-                {rank} ({jutsus.length})
-              </TabsTrigger>
-            );
-          })}
+              <TabsContent value={rank} key={rank}>
+                <Button
+                  variant="info"
+                  className="mb-4"
+                  onClick={() => {
+                    jutsuSelect.show({
+                      jutsus: availableForRank,
+                      heading: rank,
+                      onJutsuSelect: (jutsuName) => {
+                        onJutsuSelect?.(jutsuName);
+                      },
+                    });
+                  }}
+                >
+                  Add {groupType} {rank} jutsu
+                </Button>
 
-          <TabsScrollButton className="md:hidden" direction="right" />
-        </TabsList>
-        {entries.map(([rank, jutsus]) => {
-          const availableForRank = availableJutsusQuery
-            .withRank(rank)
-            .withoutNames(...jutsus.map((j) => j.name))
-            .getResults();
-
-          return (
-            <TabsContent value={rank} key={rank}>
-              <Button
-                variant="info"
-                className="mb-4"
-                onClick={() => {
-                  jutsuSelect.show({
-                    jutsus: availableForRank,
-                    heading: rank,
-                    onJutsuSelect: (jutsuName) => {
-                      onJutsuSelect?.(jutsuName);
-                    },
-                  });
-                }}
-              >
-                Add {groupType} {rank} jutsu
-              </Button>
-
-              <div className="grid grid-cols-1 xl:grid-cols-2 gap-y-3 gap-x-4 w-full">
-                {jutsus.map((jutsu) => {
-                  return (
-                    <Collapsible key={rank}>
-                      <CollapsibleTrigger
-                        className="w-full bg-white px-2 py-1 border-b border-black/30 flex items-center"
-                        style={{
-                          backgroundColor: getJutsuBackgroundColor(jutsu),
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                  {jutsus.map((jutsu) => {
+                    return (
+                      <AdaptivePopover
+                        key={jutsu.name}
+                        contentProps={{
+                          className: "max-h-[350px] overflow-y-auto",
                         }}
-                      >
-                        <ChevronRight className="state-open-rotate size-4 transition" />
-
-                        <span className="text-sm">{jutsu?.name}</span>
-
-                        <span className="text-sm font-bold ml-auto">
-                          {parseInt(jutsu?.cost ?? "", 10)}
-                        </span>
-                      </CollapsibleTrigger>
-                      <CollapsibleContent
-                        className="text-sm p-2 border-2"
-                        style={{
-                          borderColor: getJutsuBackgroundColor(jutsu),
+                        triggerProps={{
+                          className:
+                            "w-full bg-white px-2 py-1 border-b border-black/30 flex items-center",
+                          style: {
+                            backgroundColor: getJutsuBackgroundColor(jutsu),
+                          },
                         }}
+                        trigger={
+                          <>
+                            <span className="text-sm">{jutsu?.name}</span>
+
+                            <span className="text-sm font-bold ml-auto">
+                              {jutsu?.cost}
+                            </span>
+                          </>
+                        }
                       >
                         <div className="text-sm flex flex-col gap-2">
                           {jutsu.castingTime && (
@@ -143,20 +142,31 @@ export const JutsuList: React.FC<JutsuListProps> = ({
                         <Separator className="my-3" />
 
                         <pre
-                          className="text-sm text-wrap m-0 p-0 font-sans"
+                          className="text-sm"
                           dangerouslySetInnerHTML={{
                             __html: parseMarkdown(jutsu.description),
                           }}
                         />
-                      </CollapsibleContent>
-                    </Collapsible>
-                  );
-                })}
-              </div>
-            </TabsContent>
-          );
-        })}
-      </Tabs>
-    </div>
-  );
-};
+
+                        {jutsu.atHigherLevels && (
+                          <pre
+                            className="text-sm mt-2"
+                            dangerouslySetInnerHTML={{
+                              __html: parseMarkdown(
+                                `**At higher levels**: ${jutsu.atHigherLevels}`,
+                              ),
+                            }}
+                          />
+                        )}
+                      </AdaptivePopover>
+                    );
+                  })}
+                </div>
+              </TabsContent>
+            );
+          })}
+        </Tabs>
+      </div>
+    );
+  },
+);

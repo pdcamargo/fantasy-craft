@@ -125,10 +125,52 @@ export default class N5eCharacter extends BaseModel {
   declare movementSpeed: number
 
   @column()
+  declare bulk: {
+    customBonus: number
+    customMultiplier: number
+  }
+
+  @column()
   declare customData: Record<string, any>
 
   @column()
   declare customTabs: Record<string, string>
+
+  @column()
+  declare jutsuCasting: {
+    ninjutsu: {
+      ability: string
+      customBonus: number
+    }
+    genjutsu: {
+      ability: string
+      customBonus: number
+    }
+    taijutsu: {
+      ability: string
+      customBonus: number
+    }
+    bukijutsu: {
+      ability: string
+      customBonus: number
+    }
+  }
+
+  @column()
+  declare armorClass: {
+    ability: string
+    armorBonus: number
+    shieldBonus: number
+    customBonus: number
+  }
+
+  @column()
+  declare proficiencies: {
+    weapons: string[]
+    armor: string[]
+    tools: string[]
+    kits: string[]
+  }
 
   @hasOne(() => User)
   declare user: HasOne<typeof User>

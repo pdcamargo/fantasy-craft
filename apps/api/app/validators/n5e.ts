@@ -40,6 +40,51 @@ const classModSchema = vine.object({
   level: vine.number(),
 })
 
+const jutsuCasting = vine.object({
+  ability: vine.string(),
+  customDCBonus: vine.number(),
+  customAttackBonus: vine.number(),
+})
+
+const jutsuCastingRecord = vine.record(jutsuCasting)
+
+const armorClassSchema = vine.object({
+  ability: vine.string(),
+  armorBonus: vine.number(),
+  shieldBonus: vine.number(),
+  customBonus: vine.number(),
+})
+
+const proficienciesSchema = vine.object({
+  armor: vine.array(vine.string()),
+  weapons: vine.array(vine.string()),
+  tools: vine.array(vine.string()),
+  kits: vine.array(vine.string()),
+})
+
+const bulkSchema = vine.object({
+  customBonus: vine.number(),
+  customMultiplier: vine.number(),
+})
+
+const infoSchema = vine.object({
+  age: vine.number(),
+  height: vine.string(),
+  weight: vine.string(),
+  size: vine.string(),
+  gender: vine.string(),
+  eyes: vine.string(),
+  hair: vine.string(),
+  skin: vine.string(),
+  background: vine.string(),
+  avatar: vine.string(),
+  village: vine.string(),
+  rank: vine.string(),
+  isAnbu: vine.boolean(),
+  isNukenin: vine.boolean(),
+  titles: vine.array(vine.string()),
+})
+
 export const updateCharacterValidator = vine.compile(
   vine.object({
     name: vine.string().trim().optional(),
@@ -63,5 +108,14 @@ export const updateCharacterValidator = vine.compile(
     elementalAffinities: vine
       .array(vine.enum(['fire', 'water', 'earth', 'wind', 'lightning']))
       .optional(),
+    jutsuCasting: jutsuCastingRecord.optional(),
+    armorClass: armorClassSchema.clone().optional(),
+    currentHp: vine.number().optional(),
+    temporaryHp: vine.number().optional(),
+    currentCp: vine.number().optional(),
+    temporaryCp: vine.number().optional(),
+    proficiencies: proficienciesSchema.optional(),
+    bulk: bulkSchema.optional(),
+    info: infoSchema.optional(),
   })
 )
