@@ -158,7 +158,7 @@ const EditPage: React.FC<{
                   as="span"
                   type="number"
                   onChange={(newLevel) => {
-                    character.saveLevel(newLevel);
+                    character.saveLevel(+newLevel);
                   }}
                   min={1}
                   max={20}
