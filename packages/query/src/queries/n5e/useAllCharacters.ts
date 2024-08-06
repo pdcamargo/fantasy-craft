@@ -34,11 +34,15 @@ export type SkillName =
   | "Stealth"
   | "Survival";
 
-export type SkillSaveConfig<T> = {
+export type SaveConfig<T> = {
   name: T;
   isProficient: boolean;
   customBonus?: number;
   customAbility?: AbilityName;
+};
+
+export type SkillConfig<T> = SaveConfig<T> & {
+  mastery?: number;
 };
 
 export type CharacterClass = {
@@ -71,8 +75,8 @@ export type N5eCharacter = {
   feats: string[];
   jutsus: string[];
   abilities: Record<AbilityName, { value: number; customBonus?: number }>;
-  skills: Array<SkillSaveConfig<SkillName>>;
-  savingThrows: Record<AbilityName, Omit<SkillSaveConfig<AbilityName>, "name">>;
+  skills: Array<SkillConfig<SkillName>>;
+  savingThrows: Record<AbilityName, Omit<SaveConfig<AbilityName>, "name">>;
   elementalAffinities: ("fire" | "water" | "earth" | "wind" | "lightning")[];
   info: {
     age: number;

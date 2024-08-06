@@ -160,6 +160,7 @@ export const SkillGroup: React.FC<{
                 skill = {
                   customBonus: 0,
                   isProficient: false,
+                  mastery: 0,
                   customAbility: undefined,
                   bonus: 0,
                 };

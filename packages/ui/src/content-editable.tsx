@@ -59,7 +59,7 @@ export const ContentEditable = React.forwardRef<
           newValue = Math.min(props.max, parseInt(newValue, 10)).toString();
         }
       } else {
-        newValue = String(newValue.trim());
+        newValue = String(newValue);
       }
 
       const ipt = innerRef.current!;

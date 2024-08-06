@@ -11,9 +11,11 @@ const inputVariants = cva(
         default:
           "bg-primary text-primary-foreground shadow hover:bg-primary/90",
         simple: "bg-transparent shadow-none hover:bg-white/10",
+        transparent: "border border-input bg-transparent",
       },
       size: {
         default: "h-9 px-3 py-1",
+        sm: "h-7 px-2 py-1 text-xs",
       },
     },
     defaultVariants: {

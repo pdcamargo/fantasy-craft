@@ -75,6 +75,7 @@ export type SkillsRecord = Record<
   SkillName,
   {
     isProficient: boolean;
+    mastery?: number;
     customBonus?: number;
     customAbility?: AbilityName;
     bonus: number;
@@ -214,6 +215,7 @@ export class N5eCharacterWrapper {
   saveSkill = (
     skill: SkillName,
     isProficient: boolean,
+    mastery?: number,
     customBonus?: number,
     customAbility?: AbilityName,
   ) => {
@@ -221,6 +223,7 @@ export class N5eCharacterWrapper {
 
     if (skillObj) {
       skillObj.isProficient = isProficient;
+      skillObj.mastery = mastery;
 
       if (typeof customBonus === "number") {
         skillObj.customBonus = customBonus;
@@ -235,6 +238,7 @@ export class N5eCharacterWrapper {
       this.character.skills.push({
         name: skill,
         isProficient,
+        mastery: 0,
         customBonus: typeof customBonus !== "number" ? 0 : customBonus,
         customAbility,
       });
@@ -254,6 +258,7 @@ export class N5eCharacterWrapper {
       this.character.skills.push({
         name: skill,
         isProficient: false,
+        mastery: 0,
         customBonus,
       });
     }
@@ -272,7 +277,46 @@ export class N5eCharacterWrapper {
       this.character.skills.push({
         name: skill,
         isProficient: false,
+        mastery: 0,
         customAbility,
+      });
+    }
+
+    this.saveFunction({
+      data: this.character,
+    });
+  };
+
+  saveSkillProficiency = (skill: SkillName, isProficient: boolean) => {
+    const skillObj = this.character.skills.find((s) => s.name === skill);
+
+    if (skillObj) {
+      skillObj.isProficient = isProficient;
+    } else {
+      this.character.skills.push({
+        name: skill,
+        isProficient,
+        mastery: 0,
+        customBonus: 0,
+      });
+    }
+
+    this.saveFunction({
+      data: this.character,
+    });
+  };
+
+  saveSkillMastery = (skill: SkillName, mastery: number) => {
+    const skillObj = this.character.skills.find((s) => s.name === skill);
+
+    if (skillObj) {
+      skillObj.mastery = mastery;
+    } else {
+      this.character.skills.push({
+        name: skill,
+        isProficient: false,
+        mastery,
+        customBonus: 0,
       });
     }
 
@@ -638,6 +682,17 @@ export class N5eCharacterWrapper {
     };
   }
 
+  public get savesCustomAbilities() {
+    return {
+      Strength: this.character.savingThrows.Strength.customAbility,
+      Constitution: this.character.savingThrows.Constitution.customAbility,
+      Dexterity: this.character.savingThrows.Dexterity.customAbility,
+      Intelligence: this.character.savingThrows.Intelligence.customAbility,
+      Wisdom: this.character.savingThrows.Wisdom.customAbility,
+      Charisma: this.character.savingThrows.Charisma.customAbility,
+    };
+  }
+
   public get savesProficiencies() {
     return {
       Strength: this.character.savingThrows.Strength.isProficient,
@@ -749,11 +804,14 @@ export class N5eCharacterWrapper {
         ) || {
           name: skill.name,
           isProficient: false,
+          mastery: 0,
           customBonus: 0,
           customAbility: undefined,
         };
 
-        const skillBonusFormula = `abilityMod + (proficiencyBonus * ${skillObj.isProficient ? 1 : 0}) + customBonus`;
+        const proficiencyBonusMultiplier = skillObj.isProficient ? 1 : 0;
+
+        const skillBonusFormula = `abilityMod + (proficiencyBonus * ${proficiencyBonusMultiplier}) + customBonus + (mastery * 2)`;
 
         acc[skill.name as keyof typeof acc] = {
           isProficient: skillObj.isProficient,
@@ -766,7 +824,9 @@ export class N5eCharacterWrapper {
               ],
             proficiencyBonus: this.proficiencyBonus,
             customBonus: skillObj.customBonus,
+            mastery: skillObj.mastery || 0,
           }),
+          mastery: skillObj.mastery || 0,
         };
 
         return acc;
@@ -776,6 +836,7 @@ export class N5eCharacterWrapper {
         {
           isProficient: boolean;
           customBonus?: number;
+          mastery: number;
           customAbility?: AbilityName;
           bonus: number;
         }

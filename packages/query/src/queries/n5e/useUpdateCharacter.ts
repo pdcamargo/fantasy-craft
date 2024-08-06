@@ -1,9 +1,7 @@
 import { z } from "zod";
 
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { fetcher } from "../../fetcher";
-import { GET_CHARACTER_QUERY_KEY } from "./useGetCharacter";
-import { ALL_CHARACTERS_QUERY_KEY } from "./useAllCharacters";
 
 const classSchema = z.object({
   name: z.string(),
@@ -30,6 +28,7 @@ const savingThrowSchema = z.record(
 const skillSchema = z.object({
   name: z.string(),
   isProficient: z.boolean(),
+  mastery: z.number().optional().default(0),
   customBonus: z.number().optional(),
   customAbility: z.string().optional().nullable(),
 });
@@ -160,8 +159,6 @@ export const updateCharacterFunction = async (
   }
 };
 export const useUpdateCharacter = (characterId: string) => {
-  const client = useQueryClient();
-
   return useMutation({
     mutationFn: async (data: UpdateCharacterData) => {
       return updateCharacterFunction(characterId, data);

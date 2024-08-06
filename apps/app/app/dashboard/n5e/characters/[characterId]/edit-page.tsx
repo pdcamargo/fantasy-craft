@@ -38,35 +38,9 @@ import {
   ClassSelect,
   ClassModSelect,
   CharacterFeatures,
+  compactAbilities,
 } from "./components";
 import { JutsuGroup } from "./components/jutsu-group";
-
-const compactAbilities = [
-  {
-    skillsHeadingText: "Skills",
-    ability: "Strength",
-  },
-  {
-    skillsHeadingText: "Skills",
-    ability: "Constitution",
-  },
-  {
-    skillsHeadingText: "Skills",
-    ability: "Dexterity",
-  },
-  {
-    skillsHeadingText: "Skills",
-    ability: "Intelligence",
-  },
-  {
-    skillsHeadingText: "Skills",
-    ability: "Wisdom",
-  },
-  {
-    skillsHeadingText: "Skills",
-    ability: "Charisma",
-  },
-] as const;
 
 const jutsuGroups = [
   {
@@ -148,7 +122,7 @@ const EditPage: React.FC<{
     data: Partial<N5eCharacter>;
     onSuccess?: () => void;
   }>(({ data, onSuccess }) => {
-    return updateCharacter.mutateAsync(data, { onSuccess });
+    return updateCharacter.mutateAsync(data as any, { onSuccess });
   }, 3000);
 
   const [character] = useState(

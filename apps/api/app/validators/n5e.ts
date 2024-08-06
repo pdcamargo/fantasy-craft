@@ -31,6 +31,7 @@ const savingThrowSchema = vine.record(
 const skillSchema = vine.object({
   name: vine.string(),
   isProficient: vine.boolean(),
+  mastery: vine.number().min(0).max(3).optional(),
   customBonus: vine.number().optional(),
   customAbility: vine.string().optional(),
 })
