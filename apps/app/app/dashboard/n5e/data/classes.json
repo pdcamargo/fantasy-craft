@@ -286,7 +286,83 @@
       "Genjutsu": "Wisdom",
       "Taijutsu": "Strength"
     },
-    "features": []
+    "features": [
+      {
+        "title": "Swift Response",
+        "details": "Beginning at 1st level, you learn to react with swift and decisive action in combat. You ignore difficult terrain and you add your full proficiency bonus to initiative rolls instead of half.",
+        "requireLevel": 1
+      },
+      {
+        "title": "Lethal Precision",
+        "details": "Also, at 1st level, Select one between Taijutsu & Bukijutsu. You can cast the chosen Jutsu type using Dexterity in place of Strength for all calculations. You cannot switch this choice later.",
+        "requireLevel": 1
+      },
+      {
+        "title": "Lethal Attack",
+        "details": "Finally, at 1st level, you know how to exploit a foes distraction, drop in guard, and moment of hesitation. Once per turn, you can deal an extra 1d8 damage to one creature you hit with an attack if you have advantage on the attack roll or if another enemy of the target is within 5 feet of it, that enemy isn’t incapacitated, and you don’t have disadvantage on the attack roll.\n The amount of extra damage increases as you gain levels in this class, as shown in the lethal attack column of the Hunter-Nin Table.",
+        "requireLevel": 1
+      },
+      {
+        "title": "Cunning Action",
+        "details": "Beginning, at 2nd level, your quick thinking and agility allow you to move and act quickly. When you would attempt to Conceal an object, Hide or Sneak you gain a +1d4 bonus to your Dexterity (Stealth) check made to accomplish those tasks.\n Also, while sneaking you can move your full movement speed and you can choose to use your Dexterity (Stealth) check result from your Hide attempt instead of making another check each time you would sneak.\n Additionally, as a bonus action, you can take the Dash, Disengage, or Hide action.",
+        "requireLevel": 2
+      },
+      {
+        "title": "Hunters Patterns",
+        "details": "Also, at 2nd level you have begun to develop patterns from your mentors, heroes, enemies or even allies. These patterns manifest themselves in a multitude of ways. You begin with a single learned pattern. You develop an additional Pattern at 9th and 15th levels.",
+        "requireLevel": 2
+      },
+      {
+        "title": "Primary Target",
+        "details": "Finally, at 2nd level, you have experience researching, tracking, and hunting. You can effectively read and track any creature you come across. Once when rolling initiative, you can select any creature you can see within 120 feet and mark it as your Primary Target at no action cost. You can then spend a bonus action to mark another creature you can see within range. You can only have one creature marked as your Primary Target at a time.\n Creatures remain marked until they reach 0 Hp, or you mark another creature. While marked, you gain the following benefits; - You have Advantage on Wisdom checks made to track or search for your Primary Target so long as they are within the same countries borders as you. \n - You become aware of one of the following in regards to a marked creature. In order to gain additional knowledge, you must reapply Primary Target to the creature or subsequent turns; \n \t - One damage immunity they have and if it is the result of a feature, jutsu or trait. \n \t - One damage resistance they have and if it is the result of a feature, jutsu or trait. \n \t - Their current Damage reduction value.",
+        "requireLevel": 2
+      },
+      {
+        "title": "Hunter Creed",
+        "details": "Beginning at 3rd level you begin to follow a Creed of the Hunt, enabling you to shape your skillset further. Your Creed grants you features at 3rd, 7th, 10th, 14th and 17th levels.",
+        "requireLevel": 3
+      },
+      {
+        "title": "Hunters Exploits",
+        "details": "Also, at 3rd level you learn to exploit your skills to the betterment of your hunt. You learn two exploits, as detailed at the end of this class description. You learn an additional exploit at 10th and 17th level in this class. You can switch a learned exploit when you would complete a long rest.",
+        "requireLevel": 3
+      },
+      {
+        "title": "Ability Score Improvement/Feat",
+        "details": "When you reach 4th and again at 8th, 12th, 16th, and 19th, level, you can increase one ability score by +1 & a Feat of your choice that they qualify for. As normal you can’t increase an ability score above 20 using this feature.",
+        "requireLevel": 4
+      },
+      {
+        "title": "Uncanny Dodge",
+        "details": "Starting at 5th level, when a creature that you can see would deal damage to you, you can use your reaction to halve the triggering attack, jutsu or effect, damage against you.",
+        "requireLevel": 5
+      },
+      {
+        "title": "Expertise",
+        "details": "Also at 5th level, choose any one skill or tool kit that you have proficiency in. You gain expertise in the chosen skill or tool kit. When you would reach 15th level, you can select one more proficiencies (in skills or tools) to gain this benefit.",
+        "requireLevel": 5
+      },
+      {
+        "title": "Hunted Target",
+        "details": "Beginning at 6th level, a creature marked as your ***Primary Target***, who has 50% or less hit points, is counted as ***Hunted*** against you. \n ***Hunted***. A Hunted creature is one who is being stalked by you and is on their last leg. When a hunted creature would regain hit points, cleanse a condition, or cast a jutsu, they trigger an attack of opportunity from you. \n Beginning at 11th level, you gain a special reaction called Hunters Strike. This special reaction can be gained and used in addition to other special actions you gain and use. \n ***Hunters Strike***. This special reaction can only be used to make an attack of opportunity.",
+        "requireLevel": 6
+      },
+      {
+        "title": "Defensive Tactics",
+        "details": "Also beginning at 6th Level, you learn how to fight defensively against your targets, leading them into a false sense of security in confrontations against you. You gain one of the following features of your choice You gain a second choice at 11th level and a third choice at 17th level. - ***Escaping Danger***: Attacks of opportunity and attacks made as a result of a creatures reaction, against you are made at disadvantage. \n - ***Unbroken will***: You have advantage on saving throws to resist any Mental or Sensory Condition. \n - ***Hunter's Revenge*** [Changed V2]: When you are hit by a creature's attack, the next time you deal damage to that creature you can Lethal Attack ignoring its normal trigger requirements. \n - ***Evasion***: When you are subjected to an effect, that allows you to make a Dexterity saving throw to take only half damage, you instead take no damage if you succeed on a saving throw, and only half damage if you fail.",
+        "requireLevel": 6
+      },
+      {
+        "title": "Elusive",
+        "details": "Beginning at 13th Level, you are so evasive that attackers rarely gain the upper hand against you. No Attack roll has advantage against you while you aren’t incapacitated",
+        "requireLevel": 13
+      },
+      {
+        "title": "Assassinate",
+        "details": "At 20th level, you have mastered the art of Hunting, tracking, and assassinating targets. You can trigger Lethal attack, twice per turn.",
+        "requireLevel": 20
+      }
+    ]
   },
   {
     "name": "Intelligence-Operative",
@@ -398,7 +474,43 @@
       "Genjutsu": "Wisdom",
       "Taijutsu": "Strength"
     },
-    "features": []
+    "features": [
+      {
+        "title": "Chakra Recovery",
+        "details": "",
+        "requireLevel": 1
+      },
+      {
+        "title": "Refined Ninjutsu",
+        "details": "",
+        "requireLevel": 1
+      },
+      {
+        "title": "Ninjutsu Tradition",
+        "details": "",
+        "requireLevel": 2
+      },
+      {
+        "title": "Efficient Molding",
+        "details": "",
+        "requireLevel": 3
+      },
+      {
+        "title": "Ability Score Improvement/Feat",
+        "details": "",
+        "requireLevel": 4
+      },
+      {
+        "title": "Jutsu Breaker",
+        "details": "",
+        "requireLevel": 5
+      },
+      {
+        "title": "Ninjutsu Master",
+        "details": "",
+        "requireLevel": 20
+      }
+    ]
   },
   {
     "name": "Scout-Nin",
