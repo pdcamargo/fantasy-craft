@@ -456,7 +456,7 @@ export class N5eCharacterWrapper {
       return 6;
     }
 
-    const formula = `floor((level - 1) / 4) + 2`;
+    const formula = `floor((level - 1) / 3) + 3`;
 
     return evaluate(formula, { level });
   }
