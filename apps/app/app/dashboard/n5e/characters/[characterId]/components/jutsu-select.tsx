@@ -132,6 +132,8 @@ export const JutsuSelect = NiceModal.create(
 
     const jutsuTabs = Object.entries(groupedJutsus);
 
+    const hasAvailableJutsus = !!jutsus.length;
+
     return (
       <Dialog
         open={modal.visible}
@@ -149,48 +151,58 @@ export const JutsuSelect = NiceModal.create(
             <DialogHeader>
               <DialogTitle>Jutsu Select ({heading})</DialogTitle>
             </DialogHeader>
-            <Tabs>
-              <TabsList className="px-0">
-                <TabsScrollButton direction="left" />
+            {hasAvailableJutsus && (
+              <Tabs>
+                <TabsList className="px-0">
+                  <TabsScrollButton direction="left" />
 
-                {jutsuTabs.map(([type]) => (
-                  <TabsTrigger key={type} value={type}>
-                    {type.replace("Jutsu", "").trim()}
-                  </TabsTrigger>
+                  {jutsuTabs.map(([type]) => (
+                    <TabsTrigger key={type} value={type}>
+                      {type.replace("Jutsu", "").trim()}
+                    </TabsTrigger>
+                  ))}
+
+                  <TabsScrollButton direction="right" />
+                </TabsList>
+                {jutsuTabs.map(([type, jutsus], idx) => (
+                  <TabsContent key={idx} value={type}>
+                    <Command>
+                      <CommandInput placeholder="Search for a jutsu" />
+                      <CommandList>
+                        <CommandEmpty>No jutsus found</CommandEmpty>
+                        <CommandGroup>
+                          {jutsus?.map((jutsu) => (
+                            <CommandItem
+                              key={jutsu.name}
+                              onSelect={(value) => {
+                                confirmJutsuSelect.show({
+                                  jutsu,
+                                  onConfirm: () => {
+                                    onJutsuSelect?.(value);
+
+                                    modal.hide();
+                                  },
+                                });
+                              }}
+                            >
+                              {jutsu.name}
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                      </CommandList>
+                    </Command>
+                  </TabsContent>
                 ))}
+              </Tabs>
+            )}
 
-                <TabsScrollButton direction="right" />
-              </TabsList>
-              {jutsuTabs.map(([type, jutsus], idx) => (
-                <TabsContent key={idx} value={type}>
-                  <Command>
-                    <CommandInput placeholder="Search for a jutsu" />
-                    <CommandList>
-                      <CommandEmpty>No jutsus found</CommandEmpty>
-                      <CommandGroup>
-                        {jutsus?.map((jutsu) => (
-                          <CommandItem
-                            key={jutsu.name}
-                            onSelect={(value) => {
-                              confirmJutsuSelect.show({
-                                jutsu,
-                                onConfirm: () => {
-                                  onJutsuSelect?.(value);
-
-                                  modal.hide();
-                                },
-                              });
-                            }}
-                          >
-                            {jutsu.name}
-                          </CommandItem>
-                        ))}
-                      </CommandGroup>
-                    </CommandList>
-                  </Command>
-                </TabsContent>
-              ))}
-            </Tabs>
+            {!hasAvailableJutsus && (
+              <div className="flex flex-col gap-5 h-12 justify-center">
+                <h3 className="text-lg text-center">
+                  No jutsus available {heading ? `for ${heading}` : ""}
+                </h3>
+              </div>
+            )}
           </DialogContent>
         </DialogPortal>
       </Dialog>

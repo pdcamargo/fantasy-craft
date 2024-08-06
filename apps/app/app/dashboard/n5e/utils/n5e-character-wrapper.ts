@@ -401,6 +401,14 @@ export class N5eCharacterWrapper {
     return FeatDatabase.createQueryableFeatList(this.feats);
   }
 
+  public get availableFeats() {
+    if (!this.clan) {
+      return FeatDatabase.query.withoutNames(...this.feats).withoutClanFeats();
+    }
+
+    return FeatDatabase.query.withoutNames(...this.feats).withClan(this.clan);
+  }
+
   public get ninjutsuQuery() {
     return this.current.ninjutsu();
   }

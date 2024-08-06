@@ -4,6 +4,7 @@ import {
   SkillsRecord,
 } from "../../utils/n5e-character-wrapper";
 import { observer } from "mobx-react-lite";
+import { SheetCheckbox } from "./sheet-checkbox";
 
 export const skillArray = [
   {
@@ -178,21 +179,11 @@ export const SkillGroup: React.FC<{
                         skill.isProficient ? "Proficient" : "Not Proficient"
                       }
                     >
-                      <div
-                        className={cn(
-                          "bg-[#333] border border-dotted border-[#838383] h-[10px] w-[10px] inline-flex rounded-full",
-                          {
-                            "bg-[#C53131]": skill.isProficient,
-                            "cursor-pointer": editable,
-                          },
-                        )}
-                        onClick={() => {
-                          if (editable) {
-                            onProficiencyChange?.(
-                              groupSkill.name,
-                              !skill.isProficient,
-                            );
-                          }
+                      <SheetCheckbox
+                        checked={!!skill.isProficient}
+                        editable={editable}
+                        onCheckedChange={(newProficient) => {
+                          onProficiencyChange?.(groupSkill.name, newProficient);
                         }}
                       />
                     </span>

@@ -76,22 +76,39 @@ const bulkSchema = z.object({
   customMultiplier: z.number().default(1),
 });
 
-const infoSchema = z.object({
-  background: z.string(),
-  age: z.number(),
-  height: z.string(),
-  weight: z.string(),
-  size: z.string(),
-  gender: z.string(),
-  eyes: z.string(),
-  hair: z.string(),
-  skin: z.string(),
-  village: z.string(),
-  rank: z.string(),
-  isAnbu: z.boolean(),
-  isNukenin: z.boolean(),
-  titles: z.array(z.string()),
-});
+const infoSchema = z
+  .object({
+    background: z.string().nullable(),
+    height: z.string().nullable(),
+    weight: z.string().nullable(),
+    size: z.string().nullable(),
+    gender: z.string().nullable(),
+    eyes: z.string().nullable(),
+    hair: z.string().nullable(),
+    skin: z.string().nullable(),
+    village: z.string().nullable(),
+    rank: z.string().nullable(),
+    isAnbu: z.boolean().nullable(),
+    isNukenin: z.boolean().nullable(),
+    titles: z.array(z.string()).nullable(),
+    age: z.union([z.string(), z.number()]).nullable(),
+  })
+  .default({
+    background: "",
+    height: "",
+    weight: "",
+    size: "",
+    age: "",
+    eyes: "",
+    gender: "",
+    hair: "",
+    isAnbu: false,
+    isNukenin: false,
+    rank: "",
+    skin: "",
+    titles: [],
+    village: "",
+  });
 
 export const updateCharacterSchema = z.object({
   name: z.string().optional().nullable(),
@@ -126,35 +143,28 @@ export type UpdateCharacterMutationResponse = {
 export const updateCharacterFunction = async (
   characterId: string,
   data: UpdateCharacterData,
-  options: { queryClient: ReturnType<typeof useQueryClient> },
 ) => {
-  const finalData = updateCharacterSchema.parse(data);
+  try {
+    const finalData = updateCharacterSchema.parse(data);
 
-  const [response, result] = await fetcher.put<UpdateCharacterMutationResponse>(
-    `/api/n5e/characters/${characterId}`,
-    finalData,
-  );
+    const [response, result] =
+      await fetcher.put<UpdateCharacterMutationResponse>(
+        `/api/n5e/characters/${characterId}`,
+        finalData,
+      );
 
-  if (response.ok) {
-    options.queryClient.invalidateQueries({
-      queryKey: [characterId],
-    });
-
-    options.queryClient.invalidateQueries({
-      queryKey: [ALL_CHARACTERS_QUERY_KEY],
-    });
+    return result;
+  } catch (e) {
+    // @ts-expect-error -- TS has bad types for exception
+    console.error(e.message);
   }
-
-  return result;
 };
 export const useUpdateCharacter = (characterId: string) => {
   const client = useQueryClient();
 
   return useMutation({
     mutationFn: async (data: UpdateCharacterData) => {
-      return updateCharacterFunction(characterId, data, {
-        queryClient: client,
-      });
+      return updateCharacterFunction(characterId, data);
     },
   });
 };

@@ -51,6 +51,35 @@ class FeatQuery {
     return new FeatQuery(filteredData);
   }
 
+  withoutTypes(...types: string[]): FeatQuery {
+    const filteredData = this.data.filter((feat) =>
+      types.every((type) => feat.type.toLowerCase() !== type.toLowerCase()),
+    );
+    return new FeatQuery(filteredData);
+  }
+
+  withoutClanFeats(): FeatQuery {
+    return this.withoutTypes("Clan Feat");
+  }
+
+  withClan(clan: string, onlyClanFeats = false): FeatQuery {
+    const filteredData = this.data.filter((feat) => {
+      if (onlyClanFeats) {
+        return (
+          feat.preRequisite.toLowerCase().includes(clan.toLowerCase()) &&
+          feat.type === "Clan Feat"
+        );
+      }
+
+      return (
+        feat.preRequisite.toLowerCase().includes(clan.toLowerCase()) ||
+        feat.type !== "Clan Feat"
+      );
+    });
+
+    return new FeatQuery(filteredData);
+  }
+
   getResults(): Feat[] {
     return this.data;
   }

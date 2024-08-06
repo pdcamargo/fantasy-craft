@@ -100,7 +100,7 @@ export default function RootPage() {
     if (result) {
       setAuthToken(result.data.token);
 
-      router.push("/dashboard/dnd/books");
+      router.push("/dashboard/n5e/characters");
       toast.success(t("Login.onSuccess"));
     }
 
@@ -108,7 +108,7 @@ export default function RootPage() {
   };
 
   if (isLoggedIn) {
-    router.push("/dashboard/dnd/books");
+    router.push("/dashboard/n5e/characters");
 
     return null;
   }

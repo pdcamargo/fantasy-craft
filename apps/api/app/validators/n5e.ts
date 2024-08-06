@@ -67,23 +67,7 @@ const bulkSchema = vine.object({
   customMultiplier: vine.number(),
 })
 
-const infoSchema = vine.object({
-  age: vine.number(),
-  height: vine.string(),
-  weight: vine.string(),
-  size: vine.string(),
-  gender: vine.string(),
-  eyes: vine.string(),
-  hair: vine.string(),
-  skin: vine.string(),
-  background: vine.string(),
-  avatar: vine.string(),
-  village: vine.string(),
-  rank: vine.string(),
-  isAnbu: vine.boolean(),
-  isNukenin: vine.boolean(),
-  titles: vine.array(vine.string()),
-})
+const infoSchema = vine.object({}).allowUnknownProperties()
 
 export const updateCharacterValidator = vine.compile(
   vine.object({

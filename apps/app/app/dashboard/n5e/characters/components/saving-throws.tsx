@@ -1,5 +1,6 @@
 import { cn } from "@craft/ui/utils";
 import { observer } from "mobx-react-lite";
+import { SheetCheckbox } from "./sheet-checkbox";
 
 export const savesArray = [
   {
@@ -61,20 +62,11 @@ export const SavingThrow: React.FC<{
     >
       <div className="w-[30px] flex pl-[10px] items-center" role="cell">
         <span aria-label={save.isProficient ? "Proficient" : "Not Proficient"}>
-          <div
-            className={cn(
-              "bg-[#333] border border-dotted border-[#838383] h-[10px] w-[10px] inline-flex rounded-full",
-              {
-                "bg-[#C53131]": save.isProficient,
-                "cursor-pointer": editable,
-              },
-            )}
-            onClick={() => {
-              if (editable && onProficiencyChange) {
-                onProficiencyChange(!save.isProficient);
-              }
-            }}
-          ></div>
+          <SheetCheckbox
+            checked={!!save.isProficient}
+            editable={editable}
+            onCheckedChange={onProficiencyChange}
+          />
         </span>
       </div>
 

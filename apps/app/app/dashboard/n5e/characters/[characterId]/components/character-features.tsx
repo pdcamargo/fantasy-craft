@@ -2,30 +2,17 @@ import { parseMarkdown } from "@craft/editorjs";
 import {
   AdaptivePopover,
   Button,
-  Label,
-  Popover,
-  PopoverContent,
-  PopoverPortal,
-  PopoverTrigger,
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsScrollButton,
-  TabsTrigger,
   ToggleGroup,
   ToggleGroupItem,
 } from "@craft/ui";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@craft/ui/collapsible";
 import { cn } from "@craft/ui/utils";
 import { N5eCharacterWrapper } from "app/dashboard/n5e/utils/n5e-character-wrapper";
 import { Trash } from "lucide-react";
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
-import { JutsuGroup } from "./jutsu-group";
+import { useFeatSelect } from "./feat-select";
+
+import feats from "app/dashboard/n5e/data/feats.json";
 
 export const CharacterFeatures: React.FC<{
   character: N5eCharacterWrapper;
@@ -78,10 +65,25 @@ export const CharacterFeatures: React.FC<{
 
 const Feats: React.FC<{ character: N5eCharacterWrapper }> = observer(
   ({ character }) => {
+    const featSelect = useFeatSelect();
+
     return (
       <div className="h-fit">
-        <span className="text-white font-semibold text-xs uppercase">
-          Feats
+        <span className="text-white font-semibold text-xs uppercase flex items-center gap-2 mb-2">
+          Feats{" "}
+          <Button
+            size="xs"
+            onClick={() => {
+              featSelect.show({
+                feats: character.availableFeats.getResults(),
+                onFeatSelect: (feat) => {
+                  character.saveFeat(feat);
+                },
+              });
+            }}
+          >
+            +
+          </Button>
         </span>
         <div className="w-full h-fit flex-1 grid gap-2 grid-cols-1 grid-flow-row lg:grid-cols-2">
           {character.currentFeats.getResults().map((feat) => {

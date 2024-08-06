@@ -40,7 +40,6 @@ import {
   CharacterFeatures,
 } from "./components";
 import { JutsuGroup } from "./components/jutsu-group";
-import { useFeatSelect } from "./components/feat-select";
 
 const compactAbilities = [
   {
