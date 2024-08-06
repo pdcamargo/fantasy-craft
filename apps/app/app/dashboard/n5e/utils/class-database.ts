@@ -29,7 +29,7 @@ export class ClassDatabase {
       return [];
     }
 
-    const features = clazz.features as ClassFeature[];
+    const features = (clazz?.features || []) as ClassFeature[];
 
     const featuresForLevel = features.filter(
       (feature) => feature.requireLevel && feature.requireLevel <= charLevel,

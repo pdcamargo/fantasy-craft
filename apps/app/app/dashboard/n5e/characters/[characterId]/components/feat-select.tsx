@@ -106,9 +106,23 @@ export const FeatSelect = NiceModal.create(
 
     const confirmModal = useConfirmFeatSelect();
 
-    const groupedFeats = Object.groupBy(feats, (item) => item.type);
+    const groupedFeats = Object.groupBy(feats, (item) => item.type) as Record<
+      string,
+      Feat[]
+    >;
 
-    const featTabs = Object.entries(groupedFeats);
+    groupedFeats["All"] = feats;
+
+    const featTabs = Object.entries(groupedFeats).sort(([a], [b]) => {
+      // All should always be first, then general feats, then the rest
+      if (a === "All") return -1;
+
+      if (a === "General Feat") return -1;
+
+      if (b === "General Feat") return 1;
+
+      return a.localeCompare(b);
+    });
 
     return (
       <Dialog

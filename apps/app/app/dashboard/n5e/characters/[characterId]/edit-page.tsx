@@ -39,6 +39,7 @@ import {
   ClassModSelect,
   CharacterFeatures,
   compactAbilities,
+  useJutsuConfigSheet,
 } from "./components";
 import { JutsuGroup } from "./components/jutsu-group";
 
@@ -104,6 +105,7 @@ const Jutsus: React.FC<{ character: N5eCharacterWrapper }> = observer(
                 onJutsuSelect={(jutsuName) => {
                   character.saveJutsu(jutsuName);
                 }}
+                character={character}
               />
             </TabsContent>
           ))}

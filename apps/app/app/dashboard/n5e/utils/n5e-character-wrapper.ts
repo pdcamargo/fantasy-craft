@@ -4,7 +4,7 @@ import skills from "app/dashboard/n5e/data/skills.json";
 
 import { evaluate } from "mathjs";
 import { makeAutoObservable } from "mobx";
-import { JutsuDatabase } from "./jutsu-database";
+import { JutsuDatabase, JutsuGroupType } from "./jutsu-database";
 import { FeatDatabase } from "./feat-database";
 import { ClanDatabase, ClanFeature, ClanNames } from "./clan-database";
 import { ClassDatabase, ClassNames } from "./class-database";
@@ -426,6 +426,36 @@ export class N5eCharacterWrapper {
       data: this.character,
     });
   };
+
+  saveJutsuCustomAbility(jutsuType: JutsuGroupType, ability: AbilityName) {
+    this.character.jutsuCasting[
+      jutsuType.toLowerCase() as keyof typeof this.character.jutsuCasting
+    ].ability = ability;
+
+    this.saveFunction({
+      data: this.character,
+    });
+  }
+
+  saveJutsuCustomAttackBonus(jutsuType: JutsuGroupType, bonus: number) {
+    this.character.jutsuCasting[
+      jutsuType.toLowerCase() as keyof typeof this.character.jutsuCasting
+    ].customAttackBonus = bonus;
+
+    this.saveFunction({
+      data: this.character,
+    });
+  }
+
+  saveJutsuCustomDCBonus(jutsuType: JutsuGroupType, bonus: number) {
+    this.character.jutsuCasting[
+      jutsuType.toLowerCase() as keyof typeof this.character.jutsuCasting
+    ].customDCBonus = bonus;
+
+    this.saveFunction({
+      data: this.character,
+    });
+  }
 
   // getters
 
@@ -964,6 +994,24 @@ export class N5eCharacterWrapper {
       Taijutsu: this.taijutsuDc,
       Genjutsu: this.genjutsuDc,
       Bukijutsu: this.bukijutsuDc,
+    };
+  }
+
+  public get jutsuCustomDcBonuses() {
+    return {
+      Ninjutsu: this.character.jutsuCasting.ninjutsu.customDCBonus,
+      Taijutsu: this.character.jutsuCasting.taijutsu.customDCBonus,
+      Genjutsu: this.character.jutsuCasting.genjutsu.customDCBonus,
+      Bukijutsu: this.character.jutsuCasting.bukijutsu.customDCBonus,
+    };
+  }
+
+  public get jutsuCustomAttackBonuses() {
+    return {
+      Ninjutsu: this.character.jutsuCasting.ninjutsu.customAttackBonus,
+      Taijutsu: this.character.jutsuCasting.taijutsu.customAttackBonus,
+      Genjutsu: this.character.jutsuCasting.genjutsu.customAttackBonus,
+      Bukijutsu: this.character.jutsuCasting.bukijutsu.customAttackBonus,
     };
   }
 

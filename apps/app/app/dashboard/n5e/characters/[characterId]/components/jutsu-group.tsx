@@ -6,6 +6,16 @@ import {
   JutsuQuery,
   JutsuGroupType,
 } from "app/dashboard/n5e/utils/jutsu-database";
+import { useJutsuConfigSheet } from "./justu-config-sheet";
+import {
+  TooltipProvider,
+  Tooltip,
+  TooltipTrigger,
+  Button,
+  TooltipContent,
+} from "@craft/ui";
+import { Cog } from "lucide-react";
+import { N5eCharacterWrapper } from "app/dashboard/n5e/utils/n5e-character-wrapper";
 
 export type JutsuGroupProps = {
   saveDc: number;
@@ -15,6 +25,7 @@ export type JutsuGroupProps = {
   groupType: JutsuGroupType;
   availableJutsusQuery: JutsuQuery;
   onJutsuSelect?: (jutsuName: string) => void;
+  character: N5eCharacterWrapper;
 };
 
 const justuActionsDict = {
@@ -33,11 +44,43 @@ export const JutsuGroup: React.FC<JutsuGroupProps> = observer(
     groupType,
     availableJutsusQuery,
     onJutsuSelect,
+    character,
   }) => {
+    const justuConfig = useJutsuConfigSheet();
+
     return (
       <div>
         <div className="bg-gray-100 rounded-lg shadow-smooth-lg p-2 flex flex-col lg:flex-row items-center gap-2 justify-between">
-          <FancyBox className="w-full lg:w-[250px]">{groupType}</FancyBox>
+          <FancyBox className="w-full lg:w-[250px]">
+            {groupType}
+
+            <div className="absolute top-0 right-3">
+              <TooltipProvider delayDuration={80}>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      size="lg"
+                      variant="ghost"
+                      className="px-2 w-auto text-gray-400 hover:text-white hover:bg-transparent"
+                      onClick={() =>
+                        justuConfig.show({
+                          character,
+                          jutsuGroup: groupType,
+                        })
+                      }
+                    >
+                      <Cog className="size-6" />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p className="text-sm">
+                      Advanced configuration for {ability}
+                    </p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
+          </FancyBox>
 
           <FancyBox
             className="w-full lg:w-[200px]"

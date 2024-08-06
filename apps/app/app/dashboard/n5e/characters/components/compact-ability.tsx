@@ -1,4 +1,11 @@
-import { Button, Separator } from "@craft/ui";
+import {
+  Button,
+  Separator,
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@craft/ui";
 import { abilityScores, AbilityScore } from "./ability-score";
 import { SavingThrow, savesArray } from "./saving-throws";
 import { SkillGroup, SkillName, getSkillsForAbility } from "./skills";
@@ -40,20 +47,32 @@ export const CompactAbility: React.FC<CompactAbilityProps> = observer(
       >
         {editable && (
           <div className="absolute right-0 top-0">
-            <Button
-              size="lg"
-              className="px-4 w-auto"
-              onClick={() =>
-                abilityConfig.show({
-                  character,
-                  ability,
-                  groupSkills: skills as any,
-                  skills: character.skills,
-                })
-              }
-            >
-              <Cog className="size-6" />
-            </Button>
+            <TooltipProvider delayDuration={80}>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    size="lg"
+                    variant="ghost"
+                    className="px-2 w-auto text-gray-400 hover:text-white"
+                    onClick={() =>
+                      abilityConfig.show({
+                        character,
+                        ability,
+                        groupSkills: skills as any,
+                        skills: character.skills,
+                      })
+                    }
+                  >
+                    <Cog className="size-6" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p className="text-sm">
+                    Advanced configuration for {ability}
+                  </p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
         )}
 

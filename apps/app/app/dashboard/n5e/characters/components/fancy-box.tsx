@@ -29,8 +29,8 @@ export const FancyBox: React.FC<{
           </div>
         )}
 
-        <div className="text-[#b0b7bd] text-[30px] font-medium relative flex items-center justify-center w-full">
-          <span className="h-[34px] w-[60px] relative inline-flex justify-center items-center text-white rounded mt-1">
+        <div className="text-[#b0b7bd] text-[30px] font-medium flex items-center justify-center w-full">
+          <span className="h-[34px] w-[60px] inline-flex justify-center items-center text-white rounded mt-1">
             {children}
           </span>
         </div>
