@@ -44,7 +44,7 @@ export default class DndBooksController {
     const user = auth.getUserOrFail()
 
     const id = request.param('id')
-    let book = await Book.query()
+    const book = await Book.query()
       // check for both slug and public_id
       .where((query) => {
         query.where('slug', id).orWhere('public_id', id)

@@ -21,6 +21,13 @@ router
   })
   .middleware(middleware.auth())
 
+router.get('/world/:slug', '#controllers/worlds_controller.publicFind')
+router
+  .group(() => {
+    router.post('/world', '#controllers/worlds_controller.create')
+  })
+  .middleware(middleware.auth())
+
 router.get('/dnd/books/:id/public', '#controllers/dnd_books_controller.publicFind')
 router.get('/dnd/books/:id/pdf', '#controllers/dnd_books_controller.pdf')
 
