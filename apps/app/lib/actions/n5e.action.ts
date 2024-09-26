@@ -167,6 +167,7 @@ export const updateN5eCharacter = authActionClient
         id,
         userId: user.id,
       },
+      // @ts-expect-error --  info is a valid object
       data: {
         ...info,
       },
