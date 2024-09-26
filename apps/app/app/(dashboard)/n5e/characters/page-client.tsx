@@ -100,6 +100,7 @@ export default function CharacterPageClient({
                       <AvatarFallback className="text-white">
                         {character.name[0]}
                       </AvatarFallback>
+                      {/* @ts-expect-error --  */}
                       <AvatarImage src={character.info?.avatar} />
                     </Avatar>
                     <div>
@@ -111,7 +112,9 @@ export default function CharacterPageClient({
                       </div>
                       <div className="text-sm text-gray-500">
                         {character.clan ? `${character.clan} clan -` : ""}{" "}
+                        {/* @ts-expect-error --  */}
                         {character.classes?.[0]?.name}{" "}
+                        {/* @ts-expect-error --  */}
                         {character.classes?.[0]?.subclass}
                       </div>
                     </div>

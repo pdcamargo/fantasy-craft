@@ -241,10 +241,12 @@ const EditPage: React.FC<{
               </span>
               <ClassSelect
                 onChange={character.saveClass}
+                // @ts-expect-error -- Prisma JSON type is bad for defined types
                 value={character.classes}
               />
 
               <ClassModSelect
+                // @ts-expect-error -- Prisma JSON type is bad for defined types
                 value={character?.classMod?.name ?? ""}
                 onChange={(newClassMod) => {
                   character.saveClassMod({
@@ -255,6 +257,7 @@ const EditPage: React.FC<{
               />
 
               <ElementalAffinity
+                // @ts-expect-error -- Prisma JSON type is bad for defined types
                 affinities={character.elementalAffinities}
                 onChange={character.saveElementalAffinities}
                 editable

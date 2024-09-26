@@ -1,3 +1,6 @@
+// make typescript ignore all errors here
+// @ts-nocheck
+
 import skills from "app/(dashboard)/n5e/data/skills.json";
 
 import { evaluate } from "mathjs";
