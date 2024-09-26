@@ -136,12 +136,12 @@ const DashboardMenu = () => {
                     {[
                       {
                         title: t("Navbar.dnd.myBooks"),
-                        href: "/dashboard/dnd/books",
+                        href: "/dnd/books",
                         description: t("Navbar.dnd.myBooksDescription"),
                       },
                       {
                         title: t("Navbar.dnd.newBook"),
-                        href: "/dashboard/dnd/books/new",
+                        href: "/dnd/books/new",
                         description: t("Navbar.dnd.newBookDescription"),
                       },
                     ].map((component) => (
@@ -165,12 +165,12 @@ const DashboardMenu = () => {
                     {[
                       {
                         title: t("Navbar.n5e.myCharacters"),
-                        href: "/dashboard/n5e/characters",
+                        href: "/n5e/characters",
                         description: t("Navbar.n5e.myCharactersDescription"),
                       },
                       {
                         title: t("Navbar.n5e.newCharacter"),
-                        href: "/dashboard/n5e/characters/new",
+                        href: "/n5e/characters/new",
                         description: t("Navbar.n5e.newCharacterDescription"),
                       },
                     ].map((component) => (

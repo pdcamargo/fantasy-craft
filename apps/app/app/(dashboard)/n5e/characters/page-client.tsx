@@ -56,7 +56,7 @@ export default function CharacterPageClient({
                     {
                       onSuccess: (response) => {
                         router.push(
-                          `/dashboard/n5e/characters/${response?.data?.publicId}`,
+                          `/n5e/characters/${response?.data?.publicId}`,
                         );
 
                         toast.success("Character created successfully", {
@@ -89,7 +89,7 @@ export default function CharacterPageClient({
               return (
                 <Link
                   key={character.id}
-                  href={`/dashboard/n5e/characters/${character.id}`}
+                  href={`/n5e/characters/${character.id}`}
                 >
                   <div
                     className={cn(

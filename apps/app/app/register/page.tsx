@@ -110,7 +110,7 @@ export default function RegisterPage() {
     if (result) {
       setAuthToken(result.data.token);
 
-      router.push("/dashboard/dnd/books");
+      router.push("/dnd/books");
       toast.success(t("Register.onSuccess"));
     }
 

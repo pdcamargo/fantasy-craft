@@ -23,7 +23,7 @@ export const createN5eCharacter = authActionClient
       },
     });
 
-    revalidatePath("/dashboard/n5e/characters");
+    revalidatePath("/n5e/characters");
 
     return character;
   });

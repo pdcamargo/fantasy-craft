@@ -21,12 +21,12 @@ export default function NewCharacterPage() {
       },
       {
         onSuccess: (charData) => {
-          router.replace(`/dashboard/n5e/characters/${charData.data.id}`);
+          router.replace(`/n5e/characters/${charData.data.id}`);
         },
         onError: () => {
           toast.error("Error while creating your character");
 
-          router.replace("/dashboard/n5e/characters");
+          router.replace("/n5e/characters");
         },
       },
     ),

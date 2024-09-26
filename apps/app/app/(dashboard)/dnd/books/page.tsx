@@ -43,15 +43,15 @@ export default function BooksPage() {
           items={[
             {
               label: t("General.dashboard"),
-              href: "/dashboard",
+              href: "/",
             },
             {
               label: t("General.dungeonsAndDragons"),
-              href: "/dashboard/dnd",
+              href: "/dnd",
             },
             {
               label: t("General.books"),
-              href: "/dashboard/dnd/books",
+              href: "/dnd/books",
             },
           ]}
         />
@@ -65,7 +65,7 @@ export default function BooksPage() {
             {books.map((book) => (
               <Link
                 key={book.id}
-                href={`/dashboard/dnd/books/${book.id}`}
+                href={`/dnd/books/${book.id}`}
                 className="inline-block"
                 dangerouslySetInnerHTML={{
                   __html: renderFirstPage(book.content.blocks, book.theme),
@@ -75,7 +75,7 @@ export default function BooksPage() {
             ))}
 
             {books.length === 0 && (
-              <Link href="/dashboard/dnd/books/new" prefetch>
+              <Link href="/dnd/books/new" prefetch>
                 <div className="page miniature">
                   <h1
                     className="wide text-center"
