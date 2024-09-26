@@ -9,15 +9,8 @@ module.exports = {
       env: {
         NODE_ENV: "production",
         API_URL: "https://api.fantasycraft.io",
-      },
-    },
-    {
-      name: "api",
-      script: "npm",
-      args: "start",
-      cwd: "./apps/api",
-      env: {
-        NODE_ENV: "production",
+        NEXTAUTH_URL: "https://fantasycraft.io",
+        NEXTAUTH_SECRET: "secret",
       },
     },
   ],
