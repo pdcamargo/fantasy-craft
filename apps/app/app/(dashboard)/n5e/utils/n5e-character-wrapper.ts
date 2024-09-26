@@ -736,12 +736,10 @@ export class N5eCharacterWrapper {
       MONSTRUOS RESERVES: Uzumaki Clan Feat, 2 per lvl
      */
 
-    const formula =
-      "(((chakraDie / 2) + conMod + otherBonusPerLevel) * level) + otherBonus";
-
     let perLevel = 0;
     let flatBonus = 0;
 
+    // Bonus adjustments
     if (this.feats.includes("Endurance, Latent")) {
       perLevel += 1;
     }
@@ -770,13 +768,16 @@ export class N5eCharacterWrapper {
       flatBonus += this.character.cp.flatBonus;
     }
 
-    return evaluate(formula, {
-      chakraDie: this.chakraDie,
-      conMod: this.conMod,
-      level: this.character.level,
-      otherBonusPerLevel: perLevel,
-      otherBonus: flatBonus,
-    });
+    // Handle level 1 full die and half die for remaining levels
+    const firstLevelCp = this.chakraDie + this.conMod + perLevel;
+    const remainingLevelsCp =
+      (this.chakraDie / 2 + 1 + this.conMod + perLevel) *
+      Math.max(0, this.character.level - 1);
+
+    // Total CP calculation
+    const totalCp = firstLevelCp + remainingLevelsCp + flatBonus;
+
+    return totalCp;
   }
 
   public get movementSpeed() {
