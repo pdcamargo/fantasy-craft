@@ -140,8 +140,9 @@ export const ContentEditable = React.forwardRef<
         }}
         contentEditable={editable}
         suppressContentEditableWarning
+        spellCheck={false}
         className={cn(
-          "relative",
+          "relative border-b border-dashed border-b-white/75 focus:outline-none focus:border-b-red-500",
           {
             // "text-gray-500 font-normal": !isFocused && !children,
           },
