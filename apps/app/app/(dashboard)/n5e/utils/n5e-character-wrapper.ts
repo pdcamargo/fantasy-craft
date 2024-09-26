@@ -768,13 +768,12 @@ export class N5eCharacterWrapper {
       flatBonus += this.character.cp.flatBonus;
     }
 
-    // Handle level 1 full die and half die for remaining levels
     const firstLevelCp = this.chakraDie + this.conMod + perLevel;
+
     const remainingLevelsCp =
       (this.chakraDie / 2 + 1 + this.conMod + perLevel) *
       Math.max(0, this.character.level - 1);
 
-    // Total CP calculation
     const totalCp = firstLevelCp + remainingLevelsCp + flatBonus;
 
     return totalCp;
