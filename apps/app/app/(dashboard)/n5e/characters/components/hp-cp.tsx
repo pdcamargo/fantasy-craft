@@ -1,6 +1,17 @@
-import { ContentEditable, Separator } from "@craft/ui";
+import {
+  Button,
+  ContentEditable,
+  Separator,
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@craft/ui";
 import { cn } from "@craft/ui/utils";
+import { Cog } from "lucide-react";
 import { observer } from "mobx-react-lite";
+import { useHPCPConfigSheet } from "../[characterId]/components";
+import { N5eCharacterWrapper } from "../../utils/n5e-character-wrapper";
 
 export type ValueConfig = {
   current: number;
@@ -10,6 +21,7 @@ export type ValueConfig = {
 };
 
 export const HPCP: React.FC<{
+  character: N5eCharacterWrapper;
   hp: ValueConfig;
   cp: ValueConfig;
   className?: string;
@@ -28,7 +40,10 @@ export const HPCP: React.FC<{
     onChangeTempCp,
     onChangeTempHp,
     className,
+    character,
   }) => {
+    const hpcpConfigSheet = useHPCPConfigSheet();
+
     return (
       <div
         className={cn("relative w-[317px] h-[90px] border-[20px]", className)}
@@ -39,7 +54,7 @@ export const HPCP: React.FC<{
         <div className="w-[-webkit-fill-available] h-[inherit] m-[-20px] relative px-2 py-1 flex items-center">
           <div className="w-[50%] h-[inherit] flex flex-col items-center justify-center">
             <span className="text-[#b0b7bd] text-[11px] uppercase font-[700] mt-[-10px]">
-              Hit Points ({hp.die})
+              Hit Point ({hp.die})
             </span>
 
             <div className="text-[#b0b7bd] text-[30px] font-medium relative flex items-center justify-center w-full">
@@ -94,7 +109,7 @@ export const HPCP: React.FC<{
 
           <div className="w-[50%] h-[inherit] flex flex-col items-center justify-center">
             <span className="text-[#b0b7bd] text-[11px] uppercase font-[700] mt-[-10px]">
-              Chakra Points ({cp.die})
+              Chakra ({cp.die})
             </span>
 
             <div className="text-[#b0b7bd] text-[30px] font-medium relative flex items-center justify-center w-full">
@@ -145,6 +160,34 @@ export const HPCP: React.FC<{
             </div>
           </div>
         </div>
+
+        {editable && (
+          <div className="absolute -top-5 -right-3">
+            <TooltipProvider delayDuration={80}>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    size="lg"
+                    variant="ghost"
+                    className="px-2 w-auto text-gray-400 hover:text-white"
+                    onClick={() =>
+                      hpcpConfigSheet.show({
+                        character,
+                      })
+                    }
+                  >
+                    <Cog className="size-5" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p className="text-sm">
+                    Advanced configuration for Hit Points and Chakra Points
+                  </p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
+        )}
       </div>
     );
   },

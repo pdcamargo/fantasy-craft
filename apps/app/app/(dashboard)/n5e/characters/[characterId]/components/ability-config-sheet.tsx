@@ -111,7 +111,7 @@ export const AbilityConfigSheet = NiceModal.create(
                 <Input
                   variant="transparent"
                   type="number"
-                  value={0}
+                  value={character.abilityCustomBonuses[ability] ?? 0}
                   onChange={(e) => {
                     const newBonus = e.currentTarget.valueAsNumber;
 
@@ -130,7 +130,12 @@ export const AbilityConfigSheet = NiceModal.create(
                       character.savesCustomAbilities[ability] ??
                       defaultSaveAttribute
                     }
-                    onValueChange={() => {}}
+                    onValueChange={(e) => {
+                      character.saveSavingThrowCustomAbility(
+                        ability,
+                        e as AbilityName,
+                      );
+                    }}
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="Select a save" />
@@ -159,8 +164,13 @@ export const AbilityConfigSheet = NiceModal.create(
                   <Input
                     variant="transparent"
                     type="number"
-                    value={0}
-                    onChange={() => {}}
+                    value={character.savesCustomBonuses[ability]}
+                    onChange={(e) => {
+                      character.saveSavingThrowCustomBonus(
+                        ability,
+                        e.currentTarget.valueAsNumber,
+                      );
+                    }}
                   />
                 </Label>
               </div>

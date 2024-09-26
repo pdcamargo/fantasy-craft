@@ -8,6 +8,8 @@ import { Locales } from "@craft/translation";
 import { getFeatureFlags } from "./feature-flags";
 import NextAuthProvider from "./auth-provider";
 
+import "nprogress/nprogress.css";
+
 const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",

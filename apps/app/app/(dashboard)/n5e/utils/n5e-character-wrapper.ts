@@ -1,5 +1,4 @@
 // make typescript ignore all errors here
-// @ts-nocheck
 
 import skills from "app/(dashboard)/n5e/data/skills.json";
 
@@ -9,7 +8,7 @@ import { JutsuDatabase, JutsuGroupType } from "./jutsu-database";
 import { FeatDatabase } from "./feat-database";
 import { ClanDatabase, ClanFeature, ClanNames } from "./clan-database";
 import { ClassDatabase, ClassNames } from "./class-database";
-import { N5eCharacters } from "@prisma/client";
+import { N5eCharacter } from "@lib/models/n5e-character";
 
 export type AbilityName =
   | "Strength"
@@ -85,13 +84,13 @@ export type SkillsRecord = Record<
 >;
 
 type SaveFunction = (value: {
-  data: Partial<N5eCharacters>;
+  data: Partial<N5eCharacter>;
   onSuccess?: () => void;
 }) => void;
 
 export class N5eCharacterWrapper {
   constructor(
-    private character: N5eCharacters,
+    private character: N5eCharacter,
     private saveFunction: SaveFunction,
   ) {
     makeAutoObservable(this, undefined, { autoBind: true });
@@ -129,7 +128,7 @@ export class N5eCharacterWrapper {
     });
   };
 
-  saveClass = (classes: N5eCharacters["classes"]) => {
+  saveClass = (classes: N5eCharacter["classes"]) => {
     this.character.classes = classes;
 
     this.saveFunction({
@@ -137,7 +136,7 @@ export class N5eCharacterWrapper {
     });
   };
 
-  saveClassMod = (classMod: N5eCharacters["classMod"]) => {
+  saveClassMod = (classMod: N5eCharacter["classMod"]) => {
     this.character.classMod = classMod;
 
     this.saveFunction({
@@ -146,7 +145,7 @@ export class N5eCharacterWrapper {
   };
 
   saveElementalAffinities = (
-    elementalAffinities: N5eCharacters["elementalAffinities"],
+    elementalAffinities: N5eCharacter["elementalAffinities"],
   ) => {
     this.character.elementalAffinities = elementalAffinities;
 
@@ -345,6 +344,8 @@ export class N5eCharacterWrapper {
     this.saveFunction({
       data: this.character,
     });
+
+    console.log(this.character);
   };
 
   removeFeat = (featName: string) => {
@@ -383,6 +384,66 @@ export class N5eCharacterWrapper {
 
   saveTemporaryCp = (temporaryCp: number) => {
     this.character.temporaryCp = temporaryCp;
+
+    this.saveFunction({
+      data: this.character,
+    });
+  };
+
+  saveHpFlatBonus = (flatBonus: number) => {
+    if (!this.character.hp) {
+      this.character.hp = {
+        flatBonus,
+        perLevelBonus: 0,
+      };
+    } else {
+      this.character.hp.flatBonus = flatBonus;
+    }
+
+    this.saveFunction({
+      data: this.character,
+    });
+  };
+
+  saveHpPerLevelBonus = (perLevelBonus: number) => {
+    if (!this.character.hp) {
+      this.character.hp = {
+        flatBonus: 0,
+        perLevelBonus,
+      };
+    } else {
+      this.character.hp.perLevelBonus = perLevelBonus;
+    }
+
+    this.saveFunction({
+      data: this.character,
+    });
+  };
+
+  saveCpFlatBonus = (flatBonus: number) => {
+    if (!this.character.cp) {
+      this.character.cp = {
+        flatBonus,
+        perLevelBonus: 0,
+      };
+    } else {
+      this.character.cp.flatBonus = flatBonus;
+    }
+
+    this.saveFunction({
+      data: this.character,
+    });
+  };
+
+  saveCpPerLevelBonus = (perLevelBonus: number) => {
+    if (!this.character.cp) {
+      this.character.cp = {
+        flatBonus: 0,
+        perLevelBonus,
+      };
+    } else {
+      this.character.cp.perLevelBonus = perLevelBonus;
+    }
 
     this.saveFunction({
       data: this.character,
@@ -593,6 +654,14 @@ export class N5eCharacterWrapper {
     return hitDie;
   }
 
+  public get hpConfig() {
+    return this.character.hp;
+  }
+
+  public get cpConfig() {
+    return this.character.cp;
+  }
+
   public get currentHp() {
     return this.character.currentHp;
   }
@@ -602,15 +671,51 @@ export class N5eCharacterWrapper {
   }
 
   public get maxHp() {
+    /**
+     * Hp
+
+      DURABLE: Feat, 2 por lvl
+      SENJU: Clan, 2 per lvl
+      TAILESS TAILED BEAST: Hoshikage Clan Feat, 1 per lvl
+      Hashirama's Legacy: Senju Clan Fea, 1 per lvl
+     */
+
     const formula =
       "((hitDie + conMod + otherBonusPerLevel) * level) + otherBonus";
+
+    let perLevel = 0;
+    let flatBonus = 0;
+
+    if (this.feats.includes("Tailless Tailed Beasts")) {
+      perLevel += 1;
+    }
+
+    if (this.feats.includes("Durable")) {
+      perLevel += 2;
+    }
+
+    if (this.feats.includes("Hashirama's Legacy")) {
+      perLevel += 1;
+    }
+
+    if (this.clan.toLowerCase().includes("senju")) {
+      perLevel += 2;
+    }
+
+    if (this.character.hp?.perLevelBonus) {
+      perLevel += this.character.hp.perLevelBonus;
+    }
+
+    if (this.character.hp?.flatBonus) {
+      flatBonus += this.character.hp.flatBonus;
+    }
 
     return evaluate(formula, {
       hitDie: this.hitDie,
       conMod: this.conMod,
       level: this.character.level,
-      otherBonusPerLevel: 0,
-      otherBonus: 0,
+      otherBonusPerLevel: perLevel,
+      otherBonus: flatBonus,
     });
   }
 
@@ -623,15 +728,54 @@ export class N5eCharacterWrapper {
   }
 
   public get maxCp() {
+    /**
+     * ENDURANCE, LATENT: Feat, 1 por lvl
+      ENDURANCE, REALIZED: Feat, 1 por lvl
+      UZUMAKI: Clan: 2 per lvl
+      TAILESS TAILED BEAST: Hoshikage Clan Feat, 1 per lvl
+      MONSTRUOS RESERVES: Uzumaki Clan Feat, 2 per lvl
+     */
+
     const formula =
       "(((chakraDie / 2) + conMod + otherBonusPerLevel) * level) + otherBonus";
+
+    let perLevel = 0;
+    let flatBonus = 0;
+
+    if (this.feats.includes("Endurance, Latent")) {
+      perLevel += 1;
+    }
+
+    if (this.feats.includes("Endurance, Realized")) {
+      perLevel += 1;
+    }
+
+    if (this.feats.includes("Tailless Tailed Beasts")) {
+      perLevel += 1;
+    }
+
+    if (this.clan.toLowerCase().includes("uzumaki")) {
+      perLevel += 2;
+    }
+
+    if (this.feats.includes("Monstrous Reserves")) {
+      perLevel += 2;
+    }
+
+    if (this.character.cp?.perLevelBonus) {
+      perLevel += this.character.cp.perLevelBonus;
+    }
+
+    if (this.character.cp?.flatBonus) {
+      flatBonus += this.character.cp.flatBonus;
+    }
 
     return evaluate(formula, {
       chakraDie: this.chakraDie,
       conMod: this.conMod,
       level: this.character.level,
-      otherBonusPerLevel: 0,
-      otherBonus: 0,
+      otherBonusPerLevel: perLevel,
+      otherBonus: flatBonus,
     });
   }
 
@@ -714,6 +858,17 @@ export class N5eCharacterWrapper {
     };
   }
 
+  public get savesCustomBonuses() {
+    return {
+      Strength: this.character.savingThrows.Strength.customBonus,
+      Constitution: this.character.savingThrows.Constitution.customBonus,
+      Dexterity: this.character.savingThrows.Dexterity.customBonus,
+      Intelligence: this.character.savingThrows.Intelligence.customBonus,
+      Wisdom: this.character.savingThrows.Wisdom.customBonus,
+      Charisma: this.character.savingThrows.Charisma.customBonus,
+    };
+  }
+
   public get savesCustomAbilities() {
     return {
       Strength: this.character.savingThrows.Strength.customAbility,
@@ -733,6 +888,17 @@ export class N5eCharacterWrapper {
       Intelligence: this.character.savingThrows.Intelligence.isProficient,
       Wisdom: this.character.savingThrows.Wisdom.isProficient,
       Charisma: this.character.savingThrows.Charisma.isProficient,
+    };
+  }
+
+  public get abilityCustomBonuses() {
+    return {
+      Strength: this.character.abilities.Strength.customBonus,
+      Constitution: this.character.abilities.Constitution.customBonus,
+      Dexterity: this.character.abilities.Dexterity.customBonus,
+      Intelligence: this.character.abilities.Intelligence.customBonus,
+      Wisdom: this.character.abilities.Wisdom.customBonus,
+      Charisma: this.character.abilities.Charisma.customBonus,
     };
   }
 

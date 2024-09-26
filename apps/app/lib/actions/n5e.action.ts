@@ -134,6 +134,16 @@ const infoSchema = z
     village: "",
   });
 
+const hpcpConfigSchema = z
+  .object({
+    flatBonus: z.number().optional(),
+    perLevelBonus: z.number().optional(),
+  })
+  .default({
+    flatBonus: 0,
+    perLevelBonus: 0,
+  });
+
 const updateCharacterSchema = z.object({
   name: z.string().optional().nullable(),
   clan: z.string().optional().nullable(),
@@ -156,12 +166,16 @@ const updateCharacterSchema = z.object({
   proficiencies: proficienciesSchema.optional(),
   bulk: bulkSchema.optional(),
   info: infoSchema.optional(),
+  hp: hpcpConfigSchema.optional(),
+  cp: hpcpConfigSchema.optional(),
 });
 
 export const updateN5eCharacter = authActionClient
   .schema(z.object({ id: z.number() }).merge(updateCharacterSchema))
   .metadata({ actionName: "updateN5eCharacter" })
   .action(async ({ ctx: { user }, parsedInput: { id, ...info } }) => {
+    console.log(info.feats);
+
     const character = await database.n5eCharacters.update({
       where: {
         id,

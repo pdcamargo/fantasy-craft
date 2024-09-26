@@ -1,5 +1,7 @@
 "use client";
 
+import "reflect-metadata";
+
 import { useDebouncedSave } from "@craft/ui/hooks";
 import { N5eCharacterWrapper } from "../../utils/n5e-character-wrapper";
 import { useEffect, useState } from "react";
@@ -43,11 +45,12 @@ import {
 } from "./components";
 import { useRelativeTime } from "@craft/ui/hooks";
 import { JutsuGroup } from "./components/jutsu-group";
-import { N5eCharacters } from "@prisma/client";
 import { useMutation } from "@tanstack/react-query";
 import { updateN5eCharacter } from "@lib/actions/n5e.action";
 import { toJS } from "mobx";
 import PuffLoader from "react-spinners/PuffLoader";
+import { N5eCharacter } from "@lib/models/n5e-character";
+import { N5eCharacters } from "@prisma/client";
 
 const jutsuGroups = [
   {
@@ -135,7 +138,7 @@ const EditPage: React.FC<{
   const relativeTime = useRelativeTime(new Date(lastUpdate));
 
   const saveCharacter = useDebouncedSave<{
-    data: Partial<N5eCharacters>;
+    data: Partial<N5eCharacter>;
     onSuccess?: () => void;
   }>(({ data, onSuccess }) => {
     return updateCharacter.mutateAsync(toJS(data) as any, {
@@ -148,7 +151,7 @@ const EditPage: React.FC<{
   }, 3000);
 
   const [character] = useState(
-    () => new N5eCharacterWrapper(serverCharacter, saveCharacter),
+    () => new N5eCharacterWrapper(serverCharacter as any, saveCharacter),
   );
 
   useEffect(() => {
@@ -241,12 +244,10 @@ const EditPage: React.FC<{
               </span>
               <ClassSelect
                 onChange={character.saveClass}
-                // @ts-expect-error -- Prisma JSON type is bad for defined types
                 value={character.classes}
               />
 
               <ClassModSelect
-                // @ts-expect-error -- Prisma JSON type is bad for defined types
                 value={character?.classMod?.name ?? ""}
                 onChange={(newClassMod) => {
                   character.saveClassMod({
@@ -257,7 +258,6 @@ const EditPage: React.FC<{
               />
 
               <ElementalAffinity
-                // @ts-expect-error -- Prisma JSON type is bad for defined types
                 affinities={character.elementalAffinities}
                 onChange={character.saveElementalAffinities}
                 editable
@@ -271,7 +271,8 @@ const EditPage: React.FC<{
 
             <div className="flex justify-start gap-5 flex-col w-full md:w-[unset] lg:flex-row xl:ml-auto lg:items-center lg:justify-start flex-1">
               <HPCP
-                className="w-full md:w-[317px] md:min-w-[317px]"
+                character={character}
+                className="w-full md:w-[350px] md:min-w-[350px]"
                 editable
                 hp={{
                   current: character.currentHp,

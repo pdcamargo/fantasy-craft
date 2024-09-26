@@ -2,16 +2,18 @@
 
 import { Locales } from "@craft/translation";
 import { AbstractIntlMessages, NextIntlClientProvider } from "next-intl";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import NiceModal from "@ebay/nice-modal-react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@craft/ui";
+import NProgress from "nprogress";
 
 import dayjs from "dayjs";
 import "dayjs/locale/en";
 import "dayjs/locale/pt-br";
 
 import { FeatureFlags } from "./feature-flags";
+import { usePathname, useSearchParams } from "next/navigation";
 
 type ContextType = {
   locale: Locales;
@@ -55,6 +57,8 @@ export const AppProvider: React.FC<{
   const [locale, setLocale] = useState<Locales>(defaultLocale || "en");
   const [timeZone, setTimeZone] = useState<string>(defaultTimeZone || "UTC");
   const [queryClient] = useState(() => new QueryClient());
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   if (locale === "pt-BR") {
     dayjs.locale("pt-br");
@@ -62,24 +66,41 @@ export const AppProvider: React.FC<{
     dayjs.locale("en");
   }
 
-  return (
-    <NiceModal.Provider>
-      <AppContext.Provider
-        value={{ locale, setLocale, timeZone, setTimeZone, featureFlags }}
-      >
-        <NextIntlClientProvider
-          messages={messages}
-          timeZone={timeZone}
-          locale={locale}
-        >
-          <QueryClientProvider client={queryClient}>
-            {children}
+  useEffect(() => {
+    const handleStart = () => {
+      NProgress.start();
+    };
+    const handleStop = () => {
+      NProgress.done();
+    };
 
-            <Toaster />
-          </QueryClientProvider>
-        </NextIntlClientProvider>
-      </AppContext.Provider>
-    </NiceModal.Provider>
+    handleStop();
+
+    return () => {
+      handleStart();
+    };
+  }, [pathname, searchParams]);
+
+  return (
+    <>
+      <NiceModal.Provider>
+        <AppContext.Provider
+          value={{ locale, setLocale, timeZone, setTimeZone, featureFlags }}
+        >
+          <NextIntlClientProvider
+            messages={messages}
+            timeZone={timeZone}
+            locale={locale}
+          >
+            <QueryClientProvider client={queryClient}>
+              {children}
+
+              <Toaster />
+            </QueryClientProvider>
+          </NextIntlClientProvider>
+        </AppContext.Provider>
+      </NiceModal.Provider>
+    </>
   );
 };
 

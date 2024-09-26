@@ -1,4 +1,5 @@
 import { z } from "zod";
+
 import database from "../prisma";
 import { createSafeQuery, createSafeQueryWithAuth } from "./safe-query";
 

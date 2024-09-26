@@ -13,6 +13,7 @@ import {
 import { cn } from "@craft/ui/utils";
 import { faker } from "@faker-js/faker";
 import { createN5eCharacter } from "@lib/actions/n5e.action";
+import { N5eCharacter } from "@lib/models/n5e-character";
 import { N5eCharacters } from "@prisma/client";
 import { useMutation } from "@tanstack/react-query";
 import {
@@ -24,12 +25,16 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export default function CharacterPageClient({
-  characters,
+  characters: serverCharacters,
 }: {
   characters: N5eCharacters[];
 }) {
   const { t } = useTranslation();
   const router = useRouter();
+
+  const characters = serverCharacters.map((character) =>
+    N5eCharacter.fromPlainObject(character),
+  );
 
   const { mutateAsync: createCharacter, isPending: isCreatingCharacter } =
     useMutation({
@@ -100,7 +105,6 @@ export default function CharacterPageClient({
                       <AvatarFallback className="text-white">
                         {character.name[0]}
                       </AvatarFallback>
-                      {/* @ts-expect-error --  */}
                       <AvatarImage src={character.info?.avatar} />
                     </Avatar>
                     <div>
@@ -112,9 +116,7 @@ export default function CharacterPageClient({
                       </div>
                       <div className="text-sm text-gray-500">
                         {character.clan ? `${character.clan} clan -` : ""}{" "}
-                        {/* @ts-expect-error --  */}
                         {character.classes?.[0]?.name}{" "}
-                        {/* @ts-expect-error --  */}
                         {character.classes?.[0]?.subclass}
                       </div>
                     </div>

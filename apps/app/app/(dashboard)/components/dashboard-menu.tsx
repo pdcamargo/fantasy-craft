@@ -39,7 +39,7 @@ const ListItem = React.forwardRef<
   return (
     <li>
       <NavigationMenuLink asChild>
-        {/* @ts-expect-error */}
+        {/* @ts-expect-error -- typescript is complaining about the HREF type */}
         <Link
           ref={ref}
           className={cn(
