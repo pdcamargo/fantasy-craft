@@ -143,9 +143,7 @@ export const ContentEditable = React.forwardRef<
         spellCheck={false}
         className={cn(
           "relative border-b border-dashed border-b-white/75 focus:outline-none focus:border-b-red-500",
-          {
-            // "text-gray-500 font-normal": !isFocused && !children,
-          },
+          {},
           className,
         )}
         onInput={handleInput}
