@@ -39,6 +39,8 @@ model N5eCharacters {
   ryo                 Int       @default(0)
   feats               Json      @default("[]")
   jutsus              Json      @default("[]")
+  hp                  Json      @default("{\"flatBonus\": 0, \"perLevelBonus\": 0}")
+  cp                  Json      @default("{\"flatBonus\": 0, \"perLevelBonus\": 0}")
   abilities           Json      @default("{\"Wisdom\": {\"value\": 10, \"customBonus\": 0}, \"Charisma\": {\"value\": 10, \"customBonus\": 0}, \"Strength\": {\"value\": 10, \"customBonus\": 0}, \"Dexterity\": {\"value\": 10, \"customBonus\": 0}, \"Constitution\": {\"value\": 10, \"customBonus\": 0}, \"Intelligence\": {\"value\": 10, \"customBonus\": 0}}")
   skills              Json      @default("[]")
   savingThrows        Json      @default("{\"Wisdom\": {\"customBonus\": 0, \"isProficient\": false}, \"Charisma\": {\"customBonus\": 0, \"isProficient\": false}, \"Strength\": {\"customBonus\": 0, \"isProficient\": false}, \"Dexterity\": {\"customBonus\": 0, \"isProficient\": false}, \"Constitution\": {\"customBonus\": 0, \"isProficient\": false}, \"Intelligence\": {\"customBonus\": 0, \"isProficient\": false}}") @map("saving_throws")
