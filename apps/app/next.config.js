@@ -9,10 +9,10 @@ const nextConfig = {
   transpilePackages: ["@craft/ui", "@craft/translation", "@craft/query"],
   async rewrites() {
     return [
-      {
-        source: "/api/:path*",
-        destination: `${API_URL}/:path*`,
-      },
+      // {
+      //   source: "/api/:path*",
+      //   destination: `${API_URL}/:path*`,
+      // },
     ];
   },
 };

@@ -1,0 +1,150 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Book {
+  id          Int       @id @default(autoincrement())
+  userId      Int?      @map("user_id")
+  title       String    @db.VarChar(255)
+  description String
+  author      String    @db.VarChar(255)
+  isPublished Boolean   @default(false) @map("is_published")
+  content     Json      @db.Json
+  createdAt   DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt   DateTime? @map("updated_at") @db.Timestamptz(6)
+  slug        String    @db.VarChar(255)
+  publicId    String    @unique(map: "books_public_id_unique") @default("10b7ee0f-5a4c-4514-a9d8-941a03865928") @map("public_id") @db.VarChar(255)
+  theme       String    @default("default") @db.VarChar(255)
+  user        User?     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "books_user_id_foreign")
+
+  @@map("books")
+}
+
+model N5eCharacters {
+  id                  Int       @id @default(autoincrement())
+  userId              Int?      @map("user_id")
+  name                String    @default("") @db.VarChar(255)
+  classes             Json      @default("[]")
+  classMod            Json?     @map("class_mod")
+  clan                String    @default("") @db.VarChar(255)
+  background          String    @default("") @db.VarChar(255)
+  alignment           String    @default("") @db.VarChar(255)
+  level               Int       @default(1)
+  experience          Int       @default(0)
+  ryo                 Int       @default(0)
+  feats               Json      @default("[]")
+  jutsus              Json      @default("[]")
+  abilities           Json      @default("{\"Wisdom\": {\"value\": 10, \"customBonus\": 0}, \"Charisma\": {\"value\": 10, \"customBonus\": 0}, \"Strength\": {\"value\": 10, \"customBonus\": 0}, \"Dexterity\": {\"value\": 10, \"customBonus\": 0}, \"Constitution\": {\"value\": 10, \"customBonus\": 0}, \"Intelligence\": {\"value\": 10, \"customBonus\": 0}}")
+  skills              Json      @default("[]")
+  savingThrows        Json      @default("{\"Wisdom\": {\"customBonus\": 0, \"isProficient\": false}, \"Charisma\": {\"customBonus\": 0, \"isProficient\": false}, \"Strength\": {\"customBonus\": 0, \"isProficient\": false}, \"Dexterity\": {\"customBonus\": 0, \"isProficient\": false}, \"Constitution\": {\"customBonus\": 0, \"isProficient\": false}, \"Intelligence\": {\"customBonus\": 0, \"isProficient\": false}}") @map("saving_throws")
+  elementalAffinities String[]  @default([]) @map("elemental_affinities")
+  info                Json      @default("{\"age\": \"\", \"eyes\": \"\", \"hair\": \"\", \"rank\": \"Genin\", \"size\": \"\", \"skin\": \"\", \"avatar\": \"\", \"gender\": \"\", \"height\": \"\", \"isAnbu\": false, \"titles\": [], \"weight\": \"\", \"village\": \"\", \"isNukenin\": false, \"background\": \"\"}")
+  resistances         String[]  @default([])
+  immunities          String[]  @default([])
+  customData          Json      @default("{}") @map("custom_data")
+  customTabs          Json      @default("{}") @map("custom_tabs") @db.Json
+  createdAt           DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt           DateTime? @map("updated_at") @db.Timestamptz(6)
+  publicId            String    @unique(map: "n5e_characters_public_id_unique") @default("22cb90e5-e9bb-4f7c-86d4-5b64ed9bb93d") @map("public_id") @db.VarChar(255)
+  isPublic            Boolean   @default(true) @map("is_public")
+  currentHp           Int       @default(0) @map("current_hp")
+  temporaryHp         Int       @default(0) @map("temporary_hp")
+  currentCp           Int       @default(0) @map("current_cp")
+  temporaryCp         Int       @default(0) @map("temporary_cp")
+  movementSpeed       Int       @default(30) @map("movement_speed")
+  jutsuCasting        Json      @default("{\"genjutsu\": {\"ability\": \"Charisma\", \"customDCBonus\": 0, \"customAttackBonus\": 0}, \"ninjutsu\": {\"ability\": \"Intelligence\", \"customDCBonus\": 0, \"customAttackBonus\": 0}, \"taijutsu\": {\"ability\": \"Strength\", \"customDCBonus\": 0, \"customAttackBonus\": 0}, \"bukijutsu\": {\"ability\": \"Dexterity\", \"customDCBonus\": 0, \"customAttackBonus\": 0}}") @map("jutsu_casting")
+  armorClass          Json      @default("{\"ability\": \"Dexterity\", \"armorBonus\": 0, \"customBonus\": 0, \"shieldBonus\": 0}") @map("armor_class")
+  proficiencies       Json      @default("{\"kits\": [], \"armor\": [], \"tools\": [], \"weapons\": []}")
+  bulk                Json      @default("{\"customBonus\": 0, \"customMultiplier\": 1}")
+  user                User?     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "n5e_characters_user_id_foreign")
+
+  @@map("n5e_characters")
+}
+
+model User {
+  id            Int             @id @default(autoincrement())
+  fullName      String?         @map("full_name") @db.VarChar(255)
+  email         String          @unique(map: "users_email_unique") @db.VarChar(254)
+  username      String          @unique(map: "users_username_unique") @db.VarChar(254)
+  password      String          @db.VarChar(255)
+  createdAt     DateTime        @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt     DateTime?       @map("updated_at") @db.Timestamptz(6)
+  books         Book[]
+  characters    N5eCharacters[]
+  worlds        World[]
+  gotCharacters GotCharacter[]
+
+  @@map("users")
+}
+
+model World {
+  id            Int                  @id @default(autoincrement())
+  publicId      String               @unique(map: "worlds_public_id_unique") @map("public_id") @db.VarChar(255)
+  slug          String               @db.VarChar(255)
+  name          String               @db.VarChar(255)
+  description   String?
+  tags          String[]             @default([])
+  isPublic      Boolean              @default(false) @map("is_public")
+  userId        Int                  @map("user_id")
+  createdAt     DateTime             @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt     DateTime?            @map("updated_at") @db.Timestamptz(6)
+  user          User                 @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "worlds_user_id_foreign")
+  characters    WorldCharacter[]
+  organizations WorldsOrganization[]
+
+  @@map("worlds")
+}
+
+model WorldCharacter {
+  id      Int @id @default(autoincrement())
+  worldId Int @map("world_id")
+
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime? @map("updated_at") @db.Timestamptz(6)
+
+  world World @relation(fields: [worldId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "worlds_characters_world_id_foreign")
+
+  @@map("worlds_characters")
+}
+
+model WorldsOrganization {
+  id        Int      @id @default(autoincrement())
+  title     String
+  subtitle  String
+  content   String
+  worldId   Int      @map("world_id")
+  slug      String   @unique
+  isPublic  Boolean  @map("is_public")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  world World @relation(fields: [worldId], references: [id])
+
+  @@map("world_organizations")
+}
+
+model GotCharacter {
+  id        Int    @id @default(autoincrement())
+  publicId  String @unique(map: "got_characters_public_id_unique") @map("public_id") @db.VarChar(255)
+  userId    Int?   @map("user_id")
+  name      String @default("") @db.VarChar(255)
+  gender    String @default("") @db.VarChar(255)
+  house     String @default("") @db.VarChar(255)
+  age       Int    @default(0)
+  abilities Json   @default("{\"agility\":{\"rating\":2,\"specialties\":[]},\"animalHandling\":{\"rating\":2,\"specialties\":[]},\"athletics\":{\"rating\":2,\"specialties\":[]},\"awareness\":{\"rating\":2,\"specialties\":[]},\"cunning\":{\"rating\":2,\"specialties\":[]},\"endurance\":{\"rating\":2,\"specialties\":[]},\"fighting\":{\"rating\":2,\"specialties\":[]},\"healing\":{\"rating\":2,\"specialties\":[]},\"language\":{\"rating\":2,\"specialties\":[]},\"knowledge\":{\"rating\":2,\"specialties\":[]},\"marksmanship\":{\"rating\":2,\"specialties\":[]},\"persuasion\":{\"rating\":2,\"specialties\":[]},\"status\":{\"rating\":2,\"specialties\":[]},\"stealth\":{\"rating\":2,\"specialties\":[]},\"survival\":{\"rating\":2,\"specialties\":[]},\"thievery\":{\"rating\":2,\"specialties\":[]},\"warfare\":{\"rating\":2,\"specialties\":[]},\"will\":{\"rating\":2,\"specialties\":[]}}") @db.JsonB
+
+  user User? @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "got_characters_user_id_foreign")
+
+  @@map("got_characters")
+}
+
+model runs {
+  id         Int       @id @default(autoincrement())
+  created_at DateTime? @db.Timestamptz(6)
+  updated_at DateTime? @db.Timestamptz(6)
+}

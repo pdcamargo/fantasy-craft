@@ -1,13 +1,12 @@
 import "./global.scss";
 
-import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
-
 import { Inter as FontSans } from "next/font/google";
 import { Roboto } from "next/font/google";
 import { AppProvider } from "./providers";
 import { Locales } from "@craft/translation";
 import { getFeatureFlags } from "./feature-flags";
+import NextAuthProvider from "./auth-provider";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -48,13 +47,15 @@ export default async function RootLayout({
       <body
         className={`min-h-screen bg-background font-sans antialiased ${fontSans.variable} ${fontRoboto.variable}`}
       >
-        <AppProvider
-          messages={messages}
-          defaultLocale={locale as Locales}
-          featureFlags={featureFlags}
-        >
-          {children}
-        </AppProvider>
+        <NextAuthProvider>
+          <AppProvider
+            messages={messages}
+            defaultLocale={locale as Locales}
+            featureFlags={featureFlags}
+          >
+            {children}
+          </AppProvider>
+        </NextAuthProvider>
       </body>
     </html>
   );

@@ -1,6 +1,141 @@
 {
   "General": {
     "hello": "Hello",
-    "world": "World"
+    "world": "World",
+    "create": "Create",
+    "books": "Books",
+    "dashboard": "Dashboard",
+    "dungeonsAndDragons": "Dungeons & Dragons",
+    "naruto5e": "Naruto 5e",
+    "characters": "Characters"
+  },
+  "Login": {
+    "pageTitle": "Login - Fantasy Craft",
+    "header": "Sign in",
+    "subheader": "And craft your fantasy",
+    "username": "Username",
+    "password": "Password",
+    "usernameHint": "Can be your username or email",
+    "forgotPassword": "Forgot password?",
+    "login": "Login",
+    "loggingIn": "Logging in...",
+    "loginWithGoogle": "Login with Google",
+    "loginWithDiscord": "Login with Discord",
+    "register": "Need an account? Register",
+    "or": "or",
+    "validation": {
+      "usernameRequired": "Username is required",
+      "passwordRequired": "Password is required",
+      "usernameMin": "Username must have at least 3 characters",
+      "passwordMin": "Password must have at least 6 characters"
+    },
+    "onSuccess": "Logged in successfully",
+    "onError": "Invalid username or password"
+  },
+  "Register": {
+    "pageTitle": "Register - Fantasy Craft",
+    "header": "Create your account",
+    "subheader": "And craft your fantasy",
+    "username": "Username",
+    "email": "Email",
+    "password": "Password",
+    "fullName": "Name",
+    "confirmPassword": "Confirm password",
+    "register": "Register",
+    "registering": "Registering...",
+    "registerWithGoogle": "Register with Google",
+    "registerWithDiscord": "Register with Discord",
+    "login": "Already have an account? Log in",
+    "or": "or",
+    "validation": {
+      "usernameRequired": "Username is required",
+      "emailRequired": "Email is required",
+      "passwordRequired": "Password is required",
+      "passwordConfirmationRequired": "Password confirmation is required",
+      "confirmPasswordRequired": "Confirm password is required",
+      "usernameMin": "Username must have at least 3 characters",
+      "passwordMin": "Password must have at least 6 characters",
+      "confirmPasswordMatch": "Passwords do not match",
+      "emailInvalid": "Invalid email",
+      "fullNameRequired": "Name is required"
+    },
+    "onSuccess": "Registered successfully",
+    "onError": "An error occurred while registering",
+    "emailAlreadyExists": "Email already exists",
+    "usernameAlreadyExists": "Username already exists"
+  },
+  "EditorJs": {
+    "toolNames": {
+      "Text": "Paragraph",
+      "Italic": "Italic",
+      "Bold": "Bold",
+      "Link": "Link",
+      "Quote": "Quote",
+      "Heading": "Heading",
+      "Image": "Image",
+      "WaterColorImage": "Watercolor Image",
+      "PageDelimiter": "Page Delimiter",
+      "BreakColumn": "Break Column",
+      "DndSpell": "DnD Spell",
+      "Note": "Note",
+      "Lorem": "Lorem Ipsum",
+      "List": "List",
+      "FrontCover": "Book Cover"
+    },
+    "ui": {
+      "blockTunes": {
+        "toggler": {
+          "ClickToTune": "Click to tune",
+          "OrDragToMove": "or drag to move"
+        }
+      },
+      "inlineToolbar": {
+        "converter": {
+          "ConvertTo": "Convert to"
+        }
+      },
+      "toolbar": {
+        "toolbox": {
+          "Add": "Add"
+        }
+      },
+      "popover": {
+        "Filter": "Filter",
+        "NothingFound": "Nothing found",
+        "ConvertTo": "Convert to"
+      }
+    },
+    "blockTunes": {
+      "Delete": "Delete block",
+      "MoveUp": "Move up",
+      "MoveDown": "Move down"
+    },
+    "tools": {
+      "link": {
+        "AddLink": "Add a link"
+      },
+      "stub": {
+        "CannotBeDisplayedCorrectly": "The block cannot be displayed correctly."
+      }
+    }
+  },
+  "BookEditor": {
+    "pageTitle": "{title} - Fantasy Craft",
+    "saved": "Saved",
+    "newBook": "new Book"
+  },
+  "Navbar": {
+    "dnd": {
+      "myBooks": "My Books",
+      "myBooksDescription": "See all your books",
+      "newBook": "Create new book",
+      "newBookDescription": "Create a new book"
+    },
+    "n5e": {
+      "myCharacters": "My Characters",
+      "myCharactersDescription": "See all your characters",
+      "newCharacter": "Create new character",
+      "newCharacterDescription": "Create a new character"
+    }
   }
 }

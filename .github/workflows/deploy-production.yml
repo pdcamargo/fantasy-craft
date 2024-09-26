@@ -25,6 +25,5 @@ jobs:
             cd /root/dev/fantasy-craft
             git pull origin main
             pnpm install
-            pnpm turbo build --filter=api --filter=app
-            pm2 restart api
+            pnpm turbo build --filter=app
             pm2 restart app

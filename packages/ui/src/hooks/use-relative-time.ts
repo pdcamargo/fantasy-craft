@@ -8,7 +8,10 @@ export function useRelativeTime(
   date?: string | Date | null,
   intervalMs: number = 60000,
 ) {
-  const [timeAgo, setTimeAgo] = useState("");
+  const [timeAgo, setTimeAgo] = useState(() => {
+    if (!date) return "";
+    return dayjs(date).fromNow();
+  });
 
   useEffect(() => {
     if (!date) {

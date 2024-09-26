@@ -1,3 +1,5 @@
+"use client";
+
 export * from "./alert-dialog";
 export * from "./alert";
 export * from "./avatar";
