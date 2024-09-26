@@ -1,4 +1,8 @@
+"use client";
+
 import { DashboardMenu } from "./components";
+
+import "reflect-metadata";
 
 export default async function DashboardLayout({
   children,
