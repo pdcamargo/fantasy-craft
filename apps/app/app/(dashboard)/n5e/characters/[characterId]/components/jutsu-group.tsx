@@ -5,7 +5,7 @@ import {
   JutsuRankGroup,
   JutsuQuery,
   JutsuGroupType,
-} from "app/dashboard/n5e/utils/jutsu-database";
+} from "app/(dashboard)/n5e/utils/jutsu-database";
 import { useJutsuConfigSheet } from "./justu-config-sheet";
 import {
   TooltipProvider,
@@ -15,7 +15,7 @@ import {
   TooltipContent,
 } from "@craft/ui";
 import { Cog } from "lucide-react";
-import { N5eCharacterWrapper } from "app/dashboard/n5e/utils/n5e-character-wrapper";
+import { N5eCharacterWrapper } from "app/(dashboard)/n5e/utils/n5e-character-wrapper";
 
 export type JutsuGroupProps = {
   saveDc: number;

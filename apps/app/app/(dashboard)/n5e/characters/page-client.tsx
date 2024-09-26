@@ -19,7 +19,7 @@ import {
   DashboardToolbar,
   DashboradPageInfo,
   DashboardContent,
-} from "app/dashboard/components";
+} from "app/(dashboard)/components";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 

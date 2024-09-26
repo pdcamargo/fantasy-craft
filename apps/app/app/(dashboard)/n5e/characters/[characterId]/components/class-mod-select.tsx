@@ -7,7 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@craft/ui/select";
-import classMod from "app/dashboard/n5e/data/class-mods.json";
+import classMod from "app/(dashboard)/n5e/data/class-mods.json";
 
 export const ClassModSelect: React.FC<{
   value: string;

@@ -6,13 +6,13 @@ import {
   ToggleGroupItem,
 } from "@craft/ui";
 import { cn } from "@craft/ui/utils";
-import { N5eCharacterWrapper } from "app/dashboard/n5e/utils/n5e-character-wrapper";
+import { N5eCharacterWrapper } from "app/(dashboard)/n5e/utils/n5e-character-wrapper";
 import { Trash } from "lucide-react";
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
 import { useFeatSelect } from "./feat-select";
 
-import feats from "app/dashboard/n5e/data/feats.json";
+import feats from "app/(dashboard)/n5e/data/feats.json";
 
 export const CharacterFeatures: React.FC<{
   character: N5eCharacterWrapper;

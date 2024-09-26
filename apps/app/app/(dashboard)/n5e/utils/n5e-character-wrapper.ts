@@ -1,4 +1,4 @@
-import skills from "app/dashboard/n5e/data/skills.json";
+import skills from "app/(dashboard)/n5e/data/skills.json";
 
 import { evaluate } from "mathjs";
 import { makeAutoObservable } from "mobx";

@@ -22,7 +22,7 @@ import {
   DashboardToolbar,
   DashboradPageInfo,
   DashboardContent,
-} from "app/dashboard/components";
+} from "app/(dashboard)/components";
 import {
   ElementalAffinity,
   HPCP,

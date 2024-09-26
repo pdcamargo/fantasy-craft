@@ -9,7 +9,7 @@ import {
   DashboardBreadcrumb,
   DashboradPageInfo,
   DashboardContent,
-} from "app/dashboard/components";
+} from "app/(dashboard)/components";
 import Link from "next/link";
 
 import { CopyPlus } from "lucide-react";

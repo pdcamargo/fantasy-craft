@@ -3,7 +3,7 @@ import {
   JutsuGroupType,
   JutsuQuery,
   JutsuRankGroup,
-} from "app/dashboard/n5e/utils/jutsu-database";
+} from "app/(dashboard)/n5e/utils/jutsu-database";
 import { FancyBox } from "../../components";
 import {
   AdaptivePopover,

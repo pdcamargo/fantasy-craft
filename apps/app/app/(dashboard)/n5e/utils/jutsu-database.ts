@@ -1,4 +1,4 @@
-import jutsus from "app/dashboard/n5e/data/jutsus.json";
+import jutsus from "app/(dashboard)/n5e/data/jutsus.json";
 import {
   ElementalAffinity,
   N5eCharacterWrapper,

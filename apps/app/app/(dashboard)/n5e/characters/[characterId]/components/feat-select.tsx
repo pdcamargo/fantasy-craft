@@ -27,7 +27,7 @@ import {
 } from "@craft/ui";
 
 import NiceModal, { useModal } from "@ebay/nice-modal-react";
-import { Feat } from "app/dashboard/n5e/utils/feat-database";
+import { Feat } from "app/(dashboard)/n5e/utils/feat-database";
 import React from "react";
 
 export type FeatSelectProps = {

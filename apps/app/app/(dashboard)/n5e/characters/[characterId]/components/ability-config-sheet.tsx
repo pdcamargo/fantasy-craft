@@ -24,7 +24,7 @@ import NiceModal, { useModal } from "@ebay/nice-modal-react";
 import {
   N5eCharacterWrapper,
   SkillsRecord,
-} from "app/dashboard/n5e/utils/n5e-character-wrapper";
+} from "app/(dashboard)/n5e/utils/n5e-character-wrapper";
 import { savesArray, SheetCheckbox, skillArray } from "../../components";
 import { observer } from "mobx-react-lite";
 

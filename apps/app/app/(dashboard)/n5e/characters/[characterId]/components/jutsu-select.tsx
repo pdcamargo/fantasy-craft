@@ -26,7 +26,7 @@ import {
   CommandList,
 } from "@craft/ui/command";
 import NiceModal, { useModal } from "@ebay/nice-modal-react";
-import { Jutsu } from "app/dashboard/n5e/utils/jutsu-database";
+import { Jutsu } from "app/(dashboard)/n5e/utils/jutsu-database";
 
 const ConfirmJutsuSelect = NiceModal.create(
   ({ jutsu, onConfirm }: { jutsu: Jutsu; onConfirm: () => void }) => {

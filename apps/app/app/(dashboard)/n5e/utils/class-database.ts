@@ -1,4 +1,4 @@
-import classes from "app/dashboard/n5e/data/classes.json";
+import classes from "app/(dashboard)/n5e/data/classes.json";
 
 export type ClassNames = (typeof classes)[number]["name"];
 export type Class = (typeof classes)[number];

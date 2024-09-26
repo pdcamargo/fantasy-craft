@@ -1,4 +1,4 @@
-import feats from "app/dashboard/n5e/data/feats.json";
+import feats from "app/(dashboard)/n5e/data/feats.json";
 
 export type Feat = (typeof feats)[number];
 

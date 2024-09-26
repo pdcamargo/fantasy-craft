@@ -9,7 +9,7 @@ import {
 import { abilityScores, AbilityScore } from "./ability-score";
 import { SavingThrow, savesArray } from "./saving-throws";
 import { SkillGroup, SkillName, getSkillsForAbility } from "./skills";
-import { N5eCharacterWrapper } from "app/dashboard/n5e/utils/n5e-character-wrapper";
+import { N5eCharacterWrapper } from "app/(dashboard)/n5e/utils/n5e-character-wrapper";
 import { observer } from "mobx-react-lite";
 
 import { Cog } from "lucide-react";

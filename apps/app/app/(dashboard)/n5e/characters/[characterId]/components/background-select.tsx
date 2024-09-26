@@ -7,7 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@craft/ui/select";
-import backgrounds from "app/dashboard/n5e/data/backgrounds.json";
+import backgrounds from "app/(dashboard)/n5e/data/backgrounds.json";
 
 export const BackgroundSelect: React.FC<{
   value: string;

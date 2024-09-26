@@ -7,7 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@craft/ui/select";
-import classes from "app/dashboard/n5e/data/classes.json";
+import classes from "app/(dashboard)/n5e/data/classes.json";
 import { useState } from "react";
 
 export const ClassSelect: React.FC<{

@@ -1,4 +1,4 @@
-import clanFeatures from "app/dashboard/n5e/data/clan-features.json";
+import clanFeatures from "app/(dashboard)/n5e/data/clan-features.json";
 
 export type ClanNames = keyof typeof clanFeatures;
 export type Clan = typeof clanFeatures;

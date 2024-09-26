@@ -7,7 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@craft/ui/select";
-import clans from "app/dashboard/n5e/data/clans.json";
+import clans from "app/(dashboard)/n5e/data/clans.json";
 
 export const ClanSelect: React.FC<{
   value: string;
