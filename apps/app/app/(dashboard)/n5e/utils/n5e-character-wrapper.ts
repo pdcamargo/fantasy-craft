@@ -520,6 +520,39 @@ export class N5eCharacterWrapper {
     });
   }
 
+  saveArmorClassCustomBonus(bonus: number) {
+    if (!this.character.armorClass) {
+      this.character.armorClass = {
+        ability: "Dexterity",
+        armorBonus: 0,
+        shieldBonus: 0,
+        customBonus: 0,
+      };
+    } else {
+      this.character.armorClass.customBonus = bonus;
+    }
+
+    this.saveFunction({
+      data: this.character,
+    });
+  }
+
+  saveInitiativeBonus(bonus: number) {
+    this.character.initiativeBonus = bonus;
+
+    this.saveFunction({
+      data: this.character,
+    });
+  }
+
+  saveMovementSpeed(speed: number) {
+    this.character.movementSpeed = speed;
+
+    this.saveFunction({
+      data: this.character,
+    });
+  }
+
   // getters
 
   public get name() {
@@ -624,15 +657,19 @@ export class N5eCharacterWrapper {
     return this.character.elementalAffinities;
   }
 
+  public get armorClassCustomBonus() {
+    return this.character.armorClass?.customBonus || 0;
+  }
+
   public get armorClass() {
     const formula = `10 + abilityMod + floor(proficiency / 2) + armorBonus + shieldBonus + otherBonus`;
 
-    return evaluate(formula, {
+    return +evaluate(formula, {
       abilityMod: this.abilityMods[this.character.armorClass.ability],
       proficiency: this.proficiencyBonus,
       armorBonus: this.character.armorClass.armorBonus,
       shieldBonus: this.character.armorClass.shieldBonus,
-      otherBonus: this.character.armorClass.customBonus,
+      otherBonus: this.armorClassCustomBonus,
     });
   }
 
@@ -781,6 +818,14 @@ export class N5eCharacterWrapper {
 
   public get movementSpeed() {
     return this.character.movementSpeed;
+  }
+
+  public get initiativeBonus() {
+    return this.character.initiativeBonus;
+  }
+
+  public get initiative() {
+    return this.dexMod + this.initiativeBonus;
   }
 
   public get str() {

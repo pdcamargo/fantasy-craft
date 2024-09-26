@@ -9,3 +9,4 @@ export * from "./feat-select";
 export * from "./jutsu-select";
 export * from "./jutsu-list";
 export * from "./hpcp-sheet";
+export * from "./other-config-sheet";

@@ -168,14 +168,14 @@ const updateCharacterSchema = z.object({
   info: infoSchema.optional(),
   hp: hpcpConfigSchema.optional(),
   cp: hpcpConfigSchema.optional(),
+  movementSpeed: z.number().optional(),
+  initiativeBonus: z.number().optional(),
 });
 
 export const updateN5eCharacter = authActionClient
   .schema(z.object({ id: z.number() }).merge(updateCharacterSchema))
   .metadata({ actionName: "updateN5eCharacter" })
   .action(async ({ ctx: { user }, parsedInput: { id, ...info } }) => {
-    console.log(info.feats);
-
     const character = await database.n5eCharacters.update({
       where: {
         id,

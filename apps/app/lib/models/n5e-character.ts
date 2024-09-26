@@ -177,6 +177,8 @@ export class N5eCharacter {
 
   movementSpeed: number;
 
+  initiativeBonus: number;
+
   @Type(() => HPCPConfig)
   hp?: HPCPConfig;
 

@@ -19,6 +19,11 @@ import {
   TabsContent,
   MultiSelect,
   Loader,
+  Tooltip,
+  Button,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
 } from "@craft/ui";
 import {
   DashboardToolbar,
@@ -42,6 +47,7 @@ import {
   CharacterFeatures,
   compactAbilities,
   useJutsuConfigSheet,
+  useOtherConfigSheet,
 } from "./components";
 import { useRelativeTime } from "@craft/ui/hooks";
 import { JutsuGroup } from "./components/jutsu-group";
@@ -51,6 +57,7 @@ import { toJS } from "mobx";
 import PuffLoader from "react-spinners/PuffLoader";
 import { N5eCharacter } from "@lib/models/n5e-character";
 import { N5eCharacters } from "@prisma/client";
+import { Cog } from "lucide-react";
 
 const jutsuGroups = [
   {
@@ -153,6 +160,8 @@ const EditPage: React.FC<{
   const [character] = useState(
     () => new N5eCharacterWrapper(serverCharacter as any, saveCharacter),
   );
+
+  const otherConfigSheet = useOtherConfigSheet();
 
   useEffect(() => {
     const handleBeforeUnload = (event: BeforeUnloadEvent) => {
@@ -311,14 +320,38 @@ const EditPage: React.FC<{
                 />
 
                 <Initiative
-                  initiative={character.dexMod}
+                  initiative={character.initiative}
                   className="mx-auto self-center lg:self-[unset] lg:mx-[unset]"
                 />
 
                 <MoveSpeed
-                  speed={30}
+                  speed={character.movementSpeed}
                   className="mx-auto self-center lg:self-[unset] lg:mx-[unset]"
                 />
+
+                <TooltipProvider delayDuration={80}>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        size="lg"
+                        variant="ghost"
+                        className="px-2 w-auto text-red-600 hover:text-red-500"
+                        onClick={() => {
+                          otherConfigSheet.show({
+                            character,
+                          });
+                        }}
+                      >
+                        <Cog className="size-7" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent side="right">
+                      <p className="text-sm">
+                        Configure armor class, initiative and speed
+                      </p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
               </div>
             </div>
           </div>
