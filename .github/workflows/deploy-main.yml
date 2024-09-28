@@ -29,33 +29,34 @@ jobs:
 
       - name: Build app
         run: pnpm turbo run build --filter=app
+        if: success()
 
-      - name: Upload deploy artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: app
-          path: apps/app/.next
-
-      - name: SSH Server Deploy
-        uses: kostya-ten/ssh-server-deploy@v4
+      - name: Deploy
+        uses: appleboy/ssh-action@v0.1.10
+        if: success()
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
-          API_URL: https://api.fantasycraft.io
-          NEXTAUTH_URL: https://fantasycraft.io
-          PRISMA_SCHEMA_DISABLE_ADVISORY_LOCK: true
         with:
           host: 89.116.51.219
-          port: 22
           username: root
-          private_key: ${{ secrets.SSH_PRIVATE_KEY }}
-          scp_source: apps/app
-          scp_target: /root/dev/fantasy-craft
-          after_script: |
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          command_timeout: 30m
+          script: |
             export NVM_DIR=~/.nvm
             source ~/.nvm/nvm.sh
 
             # Navigate to the project directory
             cd /root/dev/fantasy-craft
 
-            pm2 start npm --name "app" -- start --cwd . --env NODE_ENV=production --env NEXTAUTH_URL=https://fantasycraft.io --env PRISMA_SCHEMA_DISABLE_ADVISORY_LOCK=true
+            # Pull the latest changes from the repository
+            git pull origin main
+
+            pnpm install
+
+            pnpm turbo build --filter=app
+
+            pm2 start ecosystem.config.js --env production
+
+            echo "Deployment successful"
