@@ -6,7 +6,7 @@ const API_URL = process.env.API_URL || "http://localhost:3333";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  transpilePackages: ["@craft/ui", "@craft/translation", "@craft/query"],
+  transpilePackages: ["@craft/ui", "@craft/translation"],
   async rewrites() {
     return [
       // {

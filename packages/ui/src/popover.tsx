@@ -30,7 +30,7 @@ const PopoverContent = React.forwardRef<
           "w-72",
           "rounded-md",
           "border",
-          "border-gray-200",
+          "border-gray-500",
           "text-[#17191e]",
           "bg-[#fff]",
           "p-4",

@@ -1,7 +1,5 @@
 "use client";
 
-import { useCurrentUserQuery } from "@craft/query";
-
 import {
   Separator,
   Skeleton,
@@ -60,7 +58,6 @@ const ListItem = React.forwardRef<
 
 const DashboardMenu = () => {
   const { t } = useTranslation();
-  const currentUserQuery = useCurrentUserQuery();
 
   return (
     <Navbar isBordered>
@@ -191,7 +188,8 @@ const DashboardMenu = () => {
 
         <NavbarContent justify="end">
           <NavbarItem>
-            {currentUserQuery.isLoading && (
+            {/* TODO: current user */}
+            {/* {currentUserQuery.isLoading && (
               <Skeleton className="w-10 h-10" roundedFull />
             )}
             {!currentUserQuery.isLoading && (
@@ -202,7 +200,7 @@ const DashboardMenu = () => {
                 />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
-            )}
+            )} */}
           </NavbarItem>
         </NavbarContent>
       </NavbarHeader>

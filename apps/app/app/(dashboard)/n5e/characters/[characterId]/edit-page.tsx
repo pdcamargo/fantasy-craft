@@ -24,6 +24,23 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
+  ToggleGroup,
+  ToggleGroupItem,
+  Table,
+  TableCaption,
+  TableHeader,
+  TableRow,
+  TableHead,
+  TableCell,
+  TableBody,
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuPortal,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
 } from "@craft/ui";
 import {
   DashboardToolbar,
@@ -48,6 +65,7 @@ import {
   compactAbilities,
   useJutsuConfigSheet,
   useOtherConfigSheet,
+  useAddWeaponSheet,
 } from "./components";
 import { useRelativeTime } from "@craft/ui/hooks";
 import { JutsuGroup } from "./components/jutsu-group";
@@ -57,7 +75,7 @@ import { toJS } from "mobx";
 import PuffLoader from "react-spinners/PuffLoader";
 import { N5eCharacter } from "@lib/models/n5e-character";
 import { N5eCharacters } from "@prisma/client";
-import { Cog } from "lucide-react";
+import { Cog, EllipsisVertical } from "lucide-react";
 
 const jutsuGroups = [
   {
@@ -89,54 +107,152 @@ const jutsuGroups = [
 const Jutsus: React.FC<{ character: N5eCharacterWrapper }> = observer(
   ({ character }) => {
     return (
-      <div className="flex-1 w-full">
-        <Tabs defaultValue="Ninjutsu">
-          <TabsList className="px-0 md:px-1">
-            <TabsScrollButton className="md:hidden" direction="left" />
+      <>
+        <span className="text-white font-semibold text-xs uppercase">
+          Jutsus
+        </span>
+        <div className="flex-1 w-full">
+          <Tabs defaultValue="Ninjutsu">
+            <TabsList className="px-0 md:px-1">
+              <TabsScrollButton className="md:hidden" direction="left" />
+
+              {jutsuGroups.map((group) => (
+                <TabsTrigger value={group.type} key={group.type}>
+                  {group.type} ({character.jutsuQueries[group.type].queryLength}
+                  )
+                </TabsTrigger>
+              ))}
+
+              <TabsScrollButton className="md:hidden" direction="right" />
+            </TabsList>
 
             {jutsuGroups.map((group) => (
-              <TabsTrigger value={group.type} key={group.type}>
-                {group.type} ({character.jutsuQueries[group.type].queryLength})
-              </TabsTrigger>
+              <TabsContent
+                className="-mt-2 p-2 border-2 border-muted rounded"
+                value={group.type}
+                key={group.type}
+              >
+                <JutsuGroup
+                  groupType={group.type}
+                  ability={character.jutsuAbilities[group.type]}
+                  attackBonus={character.jutsuAttackBonuses[group.type]}
+                  group={character.jutsuQueries[
+                    group.type
+                  ].getResultsGroupedByRank()}
+                  saveDc={character.jutsuDcs[group.type]}
+                  availableJutsusQuery={character.jutsusAvailable[group.type]}
+                  onJutsuSelect={(jutsuName) => {
+                    character.saveJutsu(jutsuName);
+                  }}
+                  character={character}
+                />
+              </TabsContent>
             ))}
-
-            <TabsScrollButton className="md:hidden" direction="right" />
-          </TabsList>
-
-          {jutsuGroups.map((group) => (
-            <TabsContent
-              className="-mt-2 p-2 border-2 border-muted rounded"
-              value={group.type}
-              key={group.type}
-            >
-              <JutsuGroup
-                groupType={group.type}
-                ability={character.jutsuAbilities[group.type]}
-                attackBonus={character.jutsuAttackBonuses[group.type]}
-                group={character.jutsuQueries[
-                  group.type
-                ].getResultsGroupedByRank()}
-                saveDc={character.jutsuDcs[group.type]}
-                availableJutsusQuery={character.jutsusAvailable[group.type]}
-                onJutsuSelect={(jutsuName) => {
-                  character.saveJutsu(jutsuName);
-                }}
-                character={character}
-              />
-            </TabsContent>
-          ))}
-        </Tabs>
-      </div>
+          </Tabs>
+        </div>
+      </>
     );
-  },
+  }
+);
+
+const Attacks: React.FC<{ character: N5eCharacterWrapper }> = observer(
+  ({ character }) => {
+    const addWeaponSheet = useAddWeaponSheet();
+
+    return (
+      <>
+        <span className="text-white font-semibold text-xs uppercase">
+          Weapons/Attacks{" "}
+          <Button
+            variant="red"
+            size="xs"
+            onClick={() => addWeaponSheet.show({ character })}
+          >
+            +
+          </Button>
+        </span>
+        {/* <Table className="flex-1 w-full p-2 border-2 border-muted rounded mb-3"> */}
+        <Table className="p-2 border-2 border-muted rounded mb-3">
+          <TableCaption>A list of your weapons/attacks.</TableCaption>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Name</TableHead>
+              <TableHead>Damage</TableHead>
+              <TableHead>Type</TableHead>
+              <TableHead>Ability</TableHead>
+              <TableHead>Custom Attack Bonus</TableHead>
+              <TableHead>Properties</TableHead>
+              <TableHead>Edit</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody className="text-white">
+            {character.weapons.map((weapon, idx) => (
+              <TableRow key={weapon.name}>
+                <TableCell>{weapon.name}</TableCell>
+                <TableCell>{weapon.damage}</TableCell>
+                <TableCell>{weapon.type}</TableCell>
+                <TableCell>{weapon.ability}</TableCell>
+                <TableCell>{weapon.customAttackBonus}</TableCell>
+                <TableCell>{weapon.properties.join(", ")}</TableCell>
+                <TableCell>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button size="xs">
+                        <EllipsisVertical />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuPortal>
+                      <DropdownMenuContent>
+                        <DropdownMenuLabel>
+                          Edit Weapon/Attack
+                        </DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem
+                          onClick={() =>
+                            addWeaponSheet.show({
+                              character,
+                              weapon: {
+                                ...weapon,
+                                index: idx,
+                              },
+                            })
+                          }
+                        >
+                          Update
+                          <DropdownMenuShortcut>E</DropdownMenuShortcut>
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem
+                          onClick={() => {
+                            character.removeWeapon(idx);
+                          }}
+                        >
+                          Delete
+                          <DropdownMenuShortcut>Del</DropdownMenuShortcut>
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenuPortal>
+                  </DropdownMenu>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </>
+    );
+  }
 );
 
 const EditPage: React.FC<{
   character: N5eCharacters;
 }> = ({ character: serverCharacter }) => {
   const [lastUpdate, setLastUpdate] = useState<Date>(
-    new Date(serverCharacter.updatedAt ?? Date.now()),
+    new Date(serverCharacter.updatedAt ?? Date.now())
   );
+
+  const [jutsusAndAttacks, setJutsusAndAttacks] = useState<
+    "all" | "attacks" | "jutsus"
+  >("all");
 
   const updateCharacter = useMutation({
     mutationFn: updateN5eCharacter,
@@ -158,7 +274,7 @@ const EditPage: React.FC<{
   }, 3000);
 
   const [character] = useState(
-    () => new N5eCharacterWrapper(serverCharacter as any, saveCharacter),
+    () => new N5eCharacterWrapper(serverCharacter as any, saveCharacter)
   );
 
   const otherConfigSheet = useOtherConfigSheet();
@@ -467,7 +583,7 @@ const EditPage: React.FC<{
                               </div>
                             </div>
                           </div>
-                        ),
+                        )
                       )}
                     </div>
                   </div>
@@ -565,11 +681,13 @@ const EditPage: React.FC<{
                   borderImage: "url(/fancy-box-2-bg.svg) 60 60 60 60 fill",
                 }}
               >
-                <Tabs defaultValue="jutsus" variant="underline">
+                <Tabs defaultValue="jutsusAndAttacks" variant="underline">
                   <TabsList className="px-0 md:px-1">
                     <TabsScrollButton className="md:hidden" direction="left" />
 
-                    <TabsTrigger value="jutsus">Jutsus</TabsTrigger>
+                    <TabsTrigger value="jutsusAndAttacks">
+                      Jutsus & Attacks
+                    </TabsTrigger>
                     <TabsTrigger value="features">
                       Features & Traits
                     </TabsTrigger>
@@ -579,10 +697,44 @@ const EditPage: React.FC<{
                   </TabsList>
 
                   <TabsContent
-                    value="jutsus"
+                    value="jutsusAndAttacks"
                     className="overflow-y-auto h-[calc(600px-36px)]"
                   >
-                    <Jutsus character={character} />
+                    <div className="mb-2">
+                      <ToggleGroup
+                        size="sm"
+                        type="single"
+                        value={jutsusAndAttacks}
+                        onValueChange={(newDisplay) => {
+                          if (!newDisplay) return;
+
+                          setJutsusAndAttacks(
+                            newDisplay as typeof jutsusAndAttacks
+                          );
+                        }}
+                        className="justify-start"
+                      >
+                        <ToggleGroupItem className="uppercase" value="all">
+                          All
+                        </ToggleGroupItem>
+                        <ToggleGroupItem className="uppercase" value="attacks">
+                          Attacks
+                        </ToggleGroupItem>
+                        <ToggleGroupItem className="uppercase" value="jutsus">
+                          Jutsus
+                        </ToggleGroupItem>
+                      </ToggleGroup>
+                    </div>
+
+                    {(jutsusAndAttacks === "all" ||
+                      jutsusAndAttacks === "attacks") && (
+                      <Attacks character={character} />
+                    )}
+
+                    {(jutsusAndAttacks === "all" ||
+                      jutsusAndAttacks === "jutsus") && (
+                      <Jutsus character={character} />
+                    )}
                   </TabsContent>
 
                   <TabsContent

@@ -6,8 +6,6 @@ import { Note } from "@craft/ui/editorjs/note";
 import { FrontCover } from "@craft/ui/editorjs/front-cover";
 import { Lorem } from "@craft/ui/editorjs/inline/lorem";
 
-import { fetcher } from "@craft/query";
-
 export const asyncEditorTools = {
   paragraph: {
     class: () => import("@editorjs/paragraph").then((mod) => mod.default),
@@ -60,15 +58,15 @@ export const asyncEditorTools = {
           const formData = new FormData();
           formData.append("image", url);
 
-          const [_, result] = await fetcher.post<{ link: string }>(
-            "/api/upload",
-            formData,
-          );
+          // const [_, result] = await fetcher.post<{ link: string }>(
+          //   "/api/upload",
+          //   formData,
+          // );
 
           return {
             success: true,
             file: {
-              url: result.link,
+              url: url,
             },
           };
         },

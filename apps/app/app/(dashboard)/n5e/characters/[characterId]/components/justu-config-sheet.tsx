@@ -1,4 +1,3 @@
-import { AbilityName, N5eCharacter } from "@craft/query";
 import { useTranslation } from "@craft/translation";
 import {
   Input,
@@ -24,6 +23,7 @@ import NiceModal, { useModal } from "@ebay/nice-modal-react";
 import { N5eCharacterWrapper } from "app/(dashboard)/n5e/utils/n5e-character-wrapper";
 import { savesArray, SheetCheckbox, skillArray } from "../../components";
 import { observer } from "mobx-react-lite";
+import { AbilityName } from "@lib/models/n5e-character";
 
 export type JutsuConfigSheetProps = {
   character: N5eCharacterWrapper;

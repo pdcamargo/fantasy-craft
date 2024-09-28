@@ -60,6 +60,7 @@ model N5eCharacters {
   temporaryCp         Int       @default(0) @map("temporary_cp")
   movementSpeed       Int       @default(30) @map("movement_speed")
   initiativeBonus     Int       @default(0) @map("initiative_bonus")
+  weapons             Json      @default("[]")
   jutsuCasting        Json      @default("{\"genjutsu\": {\"ability\": \"Charisma\", \"customDCBonus\": 0, \"customAttackBonus\": 0}, \"ninjutsu\": {\"ability\": \"Intelligence\", \"customDCBonus\": 0, \"customAttackBonus\": 0}, \"taijutsu\": {\"ability\": \"Strength\", \"customDCBonus\": 0, \"customAttackBonus\": 0}, \"bukijutsu\": {\"ability\": \"Dexterity\", \"customDCBonus\": 0, \"customAttackBonus\": 0}}") @map("jutsu_casting")
   armorClass          Json      @default("{\"ability\": \"Dexterity\", \"armorBonus\": 0, \"customBonus\": 0, \"shieldBonus\": 0}") @map("armor_class")
   proficiencies       Json      @default("{\"kits\": [], \"armor\": [], \"tools\": [], \"weapons\": []}")

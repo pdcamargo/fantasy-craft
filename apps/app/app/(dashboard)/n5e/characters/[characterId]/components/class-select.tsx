@@ -1,4 +1,3 @@
-import { N5eCharacter } from "@craft/query";
 import {
   Select,
   SelectContent,
@@ -7,6 +6,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@craft/ui/select";
+import { N5eCharacter } from "@lib/models/n5e-character";
 import classes from "app/(dashboard)/n5e/data/classes.json";
 import { useState } from "react";
 

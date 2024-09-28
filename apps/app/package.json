@@ -12,7 +12,6 @@
   },
   "dependencies": {
     "@craft/editorjs": "workspace:*",
-    "@craft/query": "workspace:*",
     "@craft/translation": "workspace:*",
     "@craft/ui": "workspace:*",
     "@craft/utils": "workspace:*",
@@ -78,3 +77,4 @@
     "node": "18.20.4"
   }
 }
+

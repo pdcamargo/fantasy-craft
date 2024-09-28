@@ -2,20 +2,40 @@ import { X } from "lucide-react";
 import { cn } from "./utils";
 import React from "react";
 import { Badge } from "./badge";
+import { cva, VariantProps } from "class-variance-authority";
 
+const multiSelectVariants = cva(
+  "flex items-start justify-start w-full font-thin text-[15px] text-white cursor-text border-b min-h-[30px]",
+  {
+    variants: {
+      variant: {
+        default: "border-red-600 px-0 py-1",
+        transparent:
+          "border border-input bg-transparent rounded-md min-h-9 px-3 py-1 shadow-sm",
+      },
+      size: { default: "" },
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "default",
+    },
+  },
+);
 type MultiSelectProps = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
   "value" | "onChange"
 > & {
   value: string[];
   onChange: (value: string[]) => void;
-};
+} & VariantProps<typeof multiSelectVariants>;
 
 const MultiSelect = ({
   className,
   value,
   onChange,
   onKeyDown,
+  variant,
+  size,
   ...inputProps
 }: MultiSelectProps) => {
   const inputRef = React.useRef<HTMLInputElement>(null);
@@ -44,10 +64,7 @@ const MultiSelect = ({
 
   return (
     <div
-      className={cn(
-        "flex items-start justify-start w-full border-b border-red-600 px-0 py-1 min-h-[30px] font-thin text-[15px] text-white cursor-text",
-        className,
-      )}
+      className={cn(multiSelectVariants({ className, variant }))}
       onClick={(e) => {
         if (e.target === e.currentTarget) {
           inputRef.current?.focus();

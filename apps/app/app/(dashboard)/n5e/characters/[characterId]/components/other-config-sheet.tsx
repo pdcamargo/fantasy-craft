@@ -1,4 +1,3 @@
-import { AbilityName, N5eCharacter } from "@craft/query";
 import { useTranslation } from "@craft/translation";
 import { Input, Label, Separator } from "@craft/ui";
 import {

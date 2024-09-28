@@ -91,7 +91,7 @@ type SaveFunction = (value: {
 export class N5eCharacterWrapper {
   constructor(
     private character: N5eCharacter,
-    private saveFunction: SaveFunction,
+    private saveFunction: SaveFunction
   ) {
     makeAutoObservable(this, undefined, { autoBind: true });
   }
@@ -145,7 +145,7 @@ export class N5eCharacterWrapper {
   };
 
   saveElementalAffinities = (
-    elementalAffinities: N5eCharacter["elementalAffinities"],
+    elementalAffinities: N5eCharacter["elementalAffinities"]
   ) => {
     this.character.elementalAffinities = elementalAffinities;
 
@@ -177,7 +177,7 @@ export class N5eCharacterWrapper {
   saveSavingThrow = (
     ability: AbilityName,
     isProficient: boolean,
-    customBonus?: number,
+    customBonus?: number
   ) => {
     this.character.savingThrows[ability].isProficient = isProficient;
 
@@ -204,7 +204,7 @@ export class N5eCharacterWrapper {
 
   saveSavingThrowCustomAbility = (
     ability: AbilityName,
-    customAbility: AbilityName,
+    customAbility: AbilityName
   ) => {
     this.character.savingThrows[ability].customAbility = customAbility;
 
@@ -218,7 +218,7 @@ export class N5eCharacterWrapper {
     isProficient: boolean,
     mastery?: number,
     customBonus?: number,
-    customAbility?: AbilityName,
+    customAbility?: AbilityName
   ) => {
     const skillObj = this.character.skills.find((s) => s.name === skill);
 
@@ -350,7 +350,7 @@ export class N5eCharacterWrapper {
 
   removeFeat = (featName: string) => {
     this.character.feats = this.character.feats.filter(
-      (feat) => feat !== featName,
+      (feat) => feat !== featName
     );
 
     this.saveFunction({
@@ -553,6 +553,41 @@ export class N5eCharacterWrapper {
     });
   }
 
+  addWeapon(weapon: N5eCharacter["weapons"][0]) {
+    if (!this.character.weapons) {
+      this.character.weapons = [];
+    }
+
+    this.character.weapons.push(weapon);
+
+    this.saveFunction({
+      data: this.character,
+    });
+  }
+
+  updateWeapon(index: number, newWeapon: Partial<N5eCharacter["weapons"][0]>) {
+    if (!this.character.weapons) {
+      this.character.weapons = [];
+    }
+
+    this.character.weapons[index] = {
+      ...this.character.weapons[index],
+      ...newWeapon,
+    };
+
+    this.saveFunction({
+      data: this.character,
+    });
+  }
+
+  removeWeapon(index: number) {
+    this.character.weapons.splice(index, 1);
+
+    this.saveFunction({
+      data: this.character,
+    });
+  }
+
   // getters
 
   public get name() {
@@ -676,7 +711,7 @@ export class N5eCharacterWrapper {
   public get chakraDie() {
     const chakraDie = this.character.classes.reduce(
       (acc, klass) => acc + klass.chakraDie,
-      0,
+      0
     );
 
     return chakraDie;
@@ -685,7 +720,7 @@ export class N5eCharacterWrapper {
   public get hitDie() {
     const hitDie = this.character.classes.reduce(
       (acc, klass) => acc + klass.hitDie,
-      0,
+      0
     );
 
     return hitDie;
@@ -816,6 +851,10 @@ export class N5eCharacterWrapper {
     return totalCp;
   }
 
+  public get weapons() {
+    return this.character.weapons || [];
+  }
+
   public get movementSpeed() {
     return this.character.movementSpeed;
   }
@@ -825,7 +864,9 @@ export class N5eCharacterWrapper {
   }
 
   public get initiative() {
-    return this.dexMod + this.initiativeBonus;
+    return (
+      this.dexMod + this.initiativeBonus + Math.floor(this.proficiencyBonus / 2)
+    );
   }
 
   public get str() {
@@ -1043,7 +1084,7 @@ export class N5eCharacterWrapper {
     return skills.reduce(
       (acc, skill) => {
         const skillObj = this.character.skills.find(
-          (s) => s.name === skill.name,
+          (s) => s.name === skill.name
         ) || {
           name: skill.name,
           isProficient: false,
@@ -1083,7 +1124,7 @@ export class N5eCharacterWrapper {
           customAbility?: AbilityName;
           bonus: number;
         }
-      >,
+      >
     );
   }
 

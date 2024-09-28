@@ -68,7 +68,7 @@ export const CompactAbility: React.FC<CompactAbilityProps> = observer(
                 </TooltipTrigger>
                 <TooltipContent>
                   <p className="text-sm">
-                    Advanced configuration for {ability}
+                    Advanced configuration for {skillsHeadingText}
                   </p>
                 </TooltipContent>
               </Tooltip>

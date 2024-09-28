@@ -116,6 +116,15 @@ export class HPCPConfig {
   perLevelBonus: number;
 }
 
+export class Weapon {
+  name: string;
+  ability: AbilityName;
+  customAttackBonus: number;
+  type: string;
+  damage: string;
+  properties: string[];
+}
+
 export class N5eCharacter {
   id: number;
 
@@ -178,6 +187,9 @@ export class N5eCharacter {
   movementSpeed: number;
 
   initiativeBonus: number;
+
+  @Type(() => Weapon)
+  weapons: Weapon[];
 
   @Type(() => HPCPConfig)
   hp?: HPCPConfig;

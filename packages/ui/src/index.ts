@@ -31,6 +31,7 @@ export * from "./select";
 export * from "./separator";
 export * from "./sheet";
 export * from "./skeleton";
+export * from "./table";
 export * from "./tabs";
 export * from "./toast";
 export * from "./toggle";

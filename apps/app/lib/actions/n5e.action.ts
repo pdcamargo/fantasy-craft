@@ -144,6 +144,24 @@ const hpcpConfigSchema = z
     perLevelBonus: 0,
   });
 
+const weaponSchema = z
+  .object({
+    name: z.string(),
+    ability: z.string(),
+    customAttackBonus: z.number(),
+    type: z.string(),
+    damage: z.string(),
+    properties: z.array(z.string()),
+  })
+  .default({
+    name: "",
+    ability: "Strength",
+    customAttackBonus: 0,
+    type: "Slash",
+    damage: "",
+    properties: [],
+  });
+
 const updateCharacterSchema = z.object({
   name: z.string().optional().nullable(),
   clan: z.string().optional().nullable(),
@@ -170,6 +188,7 @@ const updateCharacterSchema = z.object({
   cp: hpcpConfigSchema.optional(),
   movementSpeed: z.number().optional(),
   initiativeBonus: z.number().optional(),
+  weapons: z.array(weaponSchema).optional(),
 });
 
 export const updateN5eCharacter = authActionClient

@@ -1,7 +1,6 @@
 "use client";
 
 import { blocksHTMLToPageHTML, blocksToHTML } from "@craft/editorjs";
-import { useAllBooks } from "@craft/query";
 import { useTranslation } from "@craft/translation";
 import { Card, CardContent } from "@craft/ui/card";
 import {
@@ -24,8 +23,10 @@ const renderFirstPage = (blocks: any[], theme = "") => {
   return html;
 };
 
+// TODO: fix any type and use actions
 export default function BooksPage() {
-  const { data, isLoading } = useAllBooks();
+  //TODO: get all books
+  const { data, isLoading } = { data: undefined, isLoading: false } as any;
   const { t } = useTranslation();
 
   if (!data) {
@@ -62,7 +63,7 @@ export default function BooksPage() {
       <DashboardContent>
         <Card variant="white" className="flex-1">
           <CardContent className="pt-6">
-            {books.map((book) => (
+            {books.map((book: any) => (
               <Link
                 key={book.id}
                 href={`/dnd/books/${book.id}`}

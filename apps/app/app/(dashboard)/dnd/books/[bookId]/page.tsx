@@ -1,6 +1,5 @@
 "use client";
 
-import { useGetBook, useUpdateBook } from "@craft/query";
 import { Card, CardContent, Skeleton } from "@craft/ui";
 import { BookEditor } from "../../../components/book-editor";
 import { produce } from "immer";
@@ -8,6 +7,7 @@ import { useDebouncedCallback } from "use-debounce";
 import { useLayoutEffect, useState } from "react";
 import { useTranslation } from "@craft/translation";
 
+// TODO: fix any type and use actons
 export default function DndBooksBookIdPage({
   params,
 }: {
@@ -19,8 +19,9 @@ export default function DndBooksBookIdPage({
   const [lastTimeSaved, setLastTimeSaved] = useState<Date | undefined>(
     undefined,
   );
-  const { data, isLoading } = useGetBook(params.bookId);
-  const updateBookMutation = useUpdateBook(params.bookId);
+  // TODO: get book by id and update book
+  const { data, isLoading } = { data: undefined, isLoading: false } as any;
+  const updateBookMutation = { isPending: false, mutateAsync: () => {} } as any;
 
   const mudateBook = useDebouncedCallback(
     (data) => {
@@ -97,7 +98,7 @@ export default function DndBooksBookIdPage({
         onBlocksChange={(blocks) => {
           if (!updateBookMutation.isPending) {
             mudateBook(
-              produce(response.data, (draft) => {
+              produce(response.data, (draft: any) => {
                 draft.content.blocks = blocks;
               }),
             );

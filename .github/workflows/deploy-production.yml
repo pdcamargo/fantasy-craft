@@ -25,8 +25,35 @@ jobs:
           script: |
             export NVM_DIR=~/.nvm
             source ~/.nvm/nvm.sh
+
+            # Navigate to the project directory
             cd /root/dev/fantasy-craft
+
+            # Backup the current app build
+            cp -r apps/app/.next ../backup_next
+            cp -r apps/app/node_modules ../backup_node_modules
+
+            # Pull the latest changes from the repository
             git pull origin main
-            pnpm install
-            pnpm turbo build --filter=app
-            pm2 start ecosystem.config.js --env production
+
+            #pnpm install
+            #pnpm turbo build --filter=app
+            #pm2 start ecosystem.config.js --env production
+
+            # Attempt to build only the affected app
+            if pnpm install && pnpm turbo run build --filter=app; then
+              echo "Build successful, proceeding with deployment"
+
+              pm2 reload ecosystem.config.js --env production
+
+              echo "Deployment successful"
+            else
+              echo "Build failed, rolling back to previous version"
+
+              # Restore backup if the build fails
+              cp -r ../backup_node_modules apps/app/node_modules
+              cp -r ../backup_next apps/app/.next
+
+              echo "Rollback successful, restarting the app"
+              pm2 reload ecosystem.config.js --env production
+            fi
