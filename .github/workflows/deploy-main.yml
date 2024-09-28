@@ -1,0 +1,52 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build app
+        run: pnpm turbo run build --filter=app
+
+      - name: Upload deploy artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app
+          path: apps/app/.next
+
+      - name: SSH Server Deploy
+        uses: kostya-ten/ssh-server-deploy@v4
+        with:
+          host: 89.116.51.219
+          port: 22
+          username: root
+          private_key: ${{ secrets.SSH_PRIVATE_KEY }}
+          scp_source: apps/app/.next
+          scp_target: /root/dev/fantasy-craft/apps/app/.next
+          after_script: |
+            cd /root/dev/fantasy-craft
+            pm2 reload ecosystem.config.js --env production
+
+            echo "Deployment successful"

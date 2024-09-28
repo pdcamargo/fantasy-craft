@@ -41,7 +41,7 @@
 #             #pm2 start ecosystem.config.js --env production
 
 #             # Attempt to build only the affected app
-#             if pnpm install && pnpm turbo run build --filter=app; then
+#             if pnpm install --frozen-lockfile && pnpm turbo run build --filter=app; then
 #               echo "Build successful, proceeding with deployment"
 
 #               pm2 reload ecosystem.config.js --env production
@@ -57,66 +57,3 @@
 #               echo "Rollback successful, restarting the app"
 #               pm2 reload ecosystem.config.js --env production
 #             fi
-name: Deploy to Production
-
-on:
-  push:
-    branches:
-      - main
-
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup SSH Agent and add key
-        uses: webfactory/ssh-agent@v0.9.0
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
-      - name: Add remote server to known_hosts
-        run: |
-          ssh-keyscan 89.116.51.219 >> ~/.ssh/known_hosts
-
-      - name: Pull latest changes from repository
-        run: |
-          ssh root@89.116.51.219 << EOF
-          export NVM_DIR=~/.nvm
-          source ~/.nvm/nvm.sh
-          cd /root/dev/fantasy-craft
-          git pull origin main
-          EOF
-
-      - name: Backup current build
-        run: |
-          ssh root@89.116.51.219 << EOF
-          cd /root/dev/fantasy-craft
-          cp -r apps/app/.next ../backup_next
-          cp -r apps/app/node_modules ../backup_node_modules
-          EOF
-
-      - name: Install dependencies and build
-        run: |
-          ssh root@89.116.51.219 << EOF
-          cd /root/dev/fantasy-craft
-          pnpm install
-          pnpm turbo run build --filter=app
-          EOF
-        continue-on-error: true # Allow this step to fail but proceed to the next step
-
-      - name: Deploy the app or rollback if build failed
-        run: |
-          ssh root@89.116.51.219 << EOF
-          cd /root/dev/fantasy-craft
-          if pnpm turbo run build --filter=app; then
-            echo "Build succeeded, deploying..."
-            pm2 reload ecosystem.config.js --env production
-          else
-            echo "Build failed, rolling back to previous version"
-            cp -r ../backup_node_modules apps/app/node_modules
-            cp -r ../backup_next apps/app/.next
-            pm2 reload ecosystem.config.js --env production
-          fi
-          EOF
