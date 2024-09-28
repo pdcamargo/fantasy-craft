@@ -38,15 +38,24 @@ jobs:
 
       - name: SSH Server Deploy
         uses: kostya-ten/ssh-server-deploy@v4
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+          API_URL: https://api.fantasycraft.io
+          NEXTAUTH_URL: https://fantasycraft.io
+          PRISMA_SCHEMA_DISABLE_ADVISORY_LOCK: true
         with:
           host: 89.116.51.219
           port: 22
           username: root
           private_key: ${{ secrets.SSH_PRIVATE_KEY }}
-          scp_source: apps/app/.next
-          scp_target: /root/dev/fantasy-craft/apps/app/.next
+          scp_source: apps/app
+          scp_target: /root/dev/fantasy-craft
           after_script: |
-            cd /root/dev/fantasy-craft
-            pm2 reload ecosystem.config.js --env production
+            export NVM_DIR=~/.nvm
+            source ~/.nvm/nvm.sh
 
-            echo "Deployment successful"
+            # Navigate to the project directory
+            cd /root/dev/fantasy-craft
+
+            pm2 start npm --name "app" -- start --cwd . --env NODE_ENV=production --env NEXTAUTH_URL=https://fantasycraft.io --env PRISMA_SCHEMA_DISABLE_ADVISORY_LOCK=true
