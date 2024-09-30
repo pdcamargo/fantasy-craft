@@ -11,7 +11,7 @@ export const createN5eCharacter = authActionClient
   .schema(
     z.object({
       name: z.string().optional(),
-    }),
+    })
   )
   .metadata({ actionName: "createN5eCharacter" })
   .action(async ({ ctx: { user }, parsedInput }) => {
@@ -40,14 +40,14 @@ const abilitiesSchema = z.record(
   z.object({
     value: z.number(),
     customBonus: z.number().optional(),
-  }),
+  })
 );
 
 const savingThrowSchema = z.record(
   z.object({
     customBonus: z.number().optional(),
     isProficient: z.boolean(),
-  }),
+  })
 );
 
 const skillSchema = z.object({
@@ -78,7 +78,7 @@ enum JutsuTypes {
 
 const jutsuCastingRecordSchema = z.record(
   z.nativeEnum(JutsuTypes),
-  jutsuCastingSchema,
+  jutsuCastingSchema
 );
 
 const armorClassSchema = z.object({
@@ -147,19 +147,27 @@ const hpcpConfigSchema = z
 const weaponSchema = z
   .object({
     name: z.string(),
+    damageDice: z.string(),
     ability: z.string(),
+    addProficiency: z.boolean(),
+    addAbilityModifierToAttack: z.boolean(),
+    addAbilityModifierToDamage: z.boolean(),
+    damageType: z.string(),
     customAttackBonus: z.number(),
-    type: z.string(),
-    damage: z.string(),
-    properties: z.array(z.string()),
+    customDamageBonus: z.number(),
+    traits: z.string(),
   })
   .default({
     name: "",
-    ability: "Strength",
+    damageDice: "",
+    ability: "",
+    addProficiency: false,
+    addAbilityModifierToAttack: false,
+    addAbilityModifierToDamage: false,
+    damageType: "",
     customAttackBonus: 0,
-    type: "Slash",
-    damage: "",
-    properties: [],
+    customDamageBonus: 0,
+    traits: "",
   });
 
 const updateCharacterSchema = z.object({

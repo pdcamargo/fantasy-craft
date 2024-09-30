@@ -76,6 +76,7 @@ import PuffLoader from "react-spinners/PuffLoader";
 import { N5eCharacter } from "@lib/models/n5e-character";
 import { N5eCharacters } from "@prisma/client";
 import { Cog, EllipsisVertical } from "lucide-react";
+import { AddWeaponTable } from "./components/add-weapon-table";
 
 const jutsuGroups = [
   {
@@ -159,87 +160,7 @@ const Attacks: React.FC<{ character: N5eCharacterWrapper }> = observer(
   ({ character }) => {
     const addWeaponSheet = useAddWeaponSheet();
 
-    return (
-      <>
-        <span className="text-white font-semibold text-xs uppercase">
-          Weapons/Attacks{" "}
-          <Button
-            variant="red"
-            size="xs"
-            onClick={() => addWeaponSheet.show({ character })}
-          >
-            +
-          </Button>
-        </span>
-        {/* <Table className="flex-1 w-full p-2 border-2 border-muted rounded mb-3"> */}
-        <Table className="p-2 border-2 border-muted rounded mb-3">
-          <TableCaption>A list of your weapons/attacks.</TableCaption>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Name</TableHead>
-              <TableHead>Damage</TableHead>
-              <TableHead>Type</TableHead>
-              <TableHead>Ability</TableHead>
-              <TableHead>Custom Attack Bonus</TableHead>
-              <TableHead>Properties</TableHead>
-              <TableHead>Edit</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody className="text-white">
-            {character.weapons.map((weapon, idx) => (
-              <TableRow key={weapon.name}>
-                <TableCell>{weapon.name}</TableCell>
-                <TableCell>{weapon.damage}</TableCell>
-                <TableCell>{weapon.type}</TableCell>
-                <TableCell>{weapon.ability}</TableCell>
-                <TableCell>{weapon.customAttackBonus}</TableCell>
-                <TableCell>{weapon.properties.join(", ")}</TableCell>
-                <TableCell>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button size="xs">
-                        <EllipsisVertical />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuPortal>
-                      <DropdownMenuContent>
-                        <DropdownMenuLabel>
-                          Edit Weapon/Attack
-                        </DropdownMenuLabel>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem
-                          onClick={() =>
-                            addWeaponSheet.show({
-                              character,
-                              weapon: {
-                                ...weapon,
-                                index: idx,
-                              },
-                            })
-                          }
-                        >
-                          Update
-                          <DropdownMenuShortcut>E</DropdownMenuShortcut>
-                        </DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem
-                          onClick={() => {
-                            character.removeWeapon(idx);
-                          }}
-                        >
-                          Delete
-                          <DropdownMenuShortcut>Del</DropdownMenuShortcut>
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenuPortal>
-                  </DropdownMenu>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </>
-    );
+    return <AddWeaponTable character={character} />;
   }
 );
 

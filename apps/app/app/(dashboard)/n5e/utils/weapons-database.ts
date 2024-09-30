@@ -2,6 +2,15 @@ import weapons from "app/(dashboard)/n5e/data/weapons.json";
 
 export type Weapon = (typeof weapons)[number];
 
+export const weaponDamageTypes = [
+  "Piercing",
+  "Slashing",
+  "Bludgeoning",
+  "Fire",
+  "Variable",
+  "Slashing/Piercing",
+] as const;
+
 export class WeaponQuery {
   private data: Weapon[];
 

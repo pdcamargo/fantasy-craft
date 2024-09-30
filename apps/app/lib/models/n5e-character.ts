@@ -1,10 +1,13 @@
-export type AbilityName =
-  | "Strength"
-  | "Dexterity"
-  | "Constitution"
-  | "Intelligence"
-  | "Wisdom"
-  | "Charisma";
+export const abilities = [
+  "Strength",
+  "Dexterity",
+  "Constitution",
+  "Intelligence",
+  "Wisdom",
+  "Charisma",
+] as const;
+
+export type AbilityName = (typeof abilities)[number];
 
 export type ElementalAffinity =
   | "fire"
@@ -118,11 +121,15 @@ export class HPCPConfig {
 
 export class Weapon {
   name: string;
-  ability: AbilityName;
+  damageDice: string;
+  ability: string;
+  addProficiency: boolean;
+  addAbilityModifierToAttack: boolean;
+  addAbilityModifierToDamage: boolean;
+  damageType: string;
   customAttackBonus: number;
-  type: string;
-  damage: string;
-  properties: string[];
+  customDamageBonus: number;
+  traits: string;
 }
 
 export class N5eCharacter {
