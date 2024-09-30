@@ -10,4 +10,4 @@ export * from "./jutsu-select";
 export * from "./jutsu-list";
 export * from "./hpcp-sheet";
 export * from "./other-config-sheet";
-export * from "./add-weapon-sheet";
+export * from "./add-weapon-table";

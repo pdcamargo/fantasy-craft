@@ -63,9 +63,8 @@ import {
   ClassModSelect,
   CharacterFeatures,
   compactAbilities,
-  useJutsuConfigSheet,
+  AddWeaponTable,
   useOtherConfigSheet,
-  useAddWeaponSheet,
 } from "./components";
 import { useRelativeTime } from "@craft/ui/hooks";
 import { JutsuGroup } from "./components/jutsu-group";
@@ -76,7 +75,6 @@ import PuffLoader from "react-spinners/PuffLoader";
 import { N5eCharacter } from "@lib/models/n5e-character";
 import { N5eCharacters } from "@prisma/client";
 import { Cog, EllipsisVertical } from "lucide-react";
-import { AddWeaponTable } from "./components/add-weapon-table";
 
 const jutsuGroups = [
   {
@@ -158,8 +156,6 @@ const Jutsus: React.FC<{ character: N5eCharacterWrapper }> = observer(
 
 const Attacks: React.FC<{ character: N5eCharacterWrapper }> = observer(
   ({ character }) => {
-    const addWeaponSheet = useAddWeaponSheet();
-
     return <AddWeaponTable character={character} />;
   }
 );
