@@ -41,11 +41,11 @@
   --radius: 0.5rem;
 }
 
-body[data-scroll-locked] {
+body[data-lock-scroll] {
   --removed-body-scroll-bar-size: 6px;
 }
 
-body[data-scroll-locked] {
+body[data-lock-scroll] {
   overflow: hidden !important;
   overscroll-behavior: contain;
   position: relative !important;

@@ -1,3 +1,16 @@
+export const emptyWeapon = {
+  name: "",
+  damageDice: "",
+  ability: "",
+  addProficiency: true,
+  addAbilityModifierToAttack: true,
+  addAbilityModifierToDamage: true,
+  damageType: "",
+  customAttackBonus: 0,
+  customDamageBonus: 0,
+  traits: "",
+};
+
 export const abilities = [
   "Strength",
   "Dexterity",

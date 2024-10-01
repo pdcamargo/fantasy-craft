@@ -12,10 +12,10 @@ const useLockBodyScroll = (open: boolean, enabled = true) => {
       return;
     }
 
-    document.body.setAttribute("data-scroll-locked", "");
+    document.body.setAttribute("data-lock-scroll", "");
 
     return () => {
-      document.body.removeAttribute("data-scroll-locked");
+      document.body.removeAttribute("data-lock-scroll");
     };
   }, [open, enabled]);
 };

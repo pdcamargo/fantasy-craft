@@ -1,3 +1,5 @@
+"use client";
+
 import { X } from "lucide-react";
 import { cn } from "./utils";
 import React from "react";
@@ -13,16 +15,16 @@ const multiSelectVariants = cva(
         transparent:
           "border border-input bg-transparent rounded-md min-h-9 px-3 py-1 shadow-sm",
       },
-      size: { default: "" },
+      size: { default: "", sm: "" },
     },
     defaultVariants: {
       variant: "default",
       size: "default",
     },
-  },
+  }
 );
 type MultiSelectProps = Omit<
-  React.InputHTMLAttributes<HTMLInputElement>,
+  Omit<React.InputHTMLAttributes<HTMLInputElement>, "size">,
   "value" | "onChange"
 > & {
   value: string[];
@@ -36,9 +38,12 @@ const MultiSelect = ({
   onKeyDown,
   variant,
   size,
+  placeholder,
   ...inputProps
 }: MultiSelectProps) => {
+  const [inputValue, setInputValue] = React.useState("");
   const inputRef = React.useRef<HTMLInputElement>(null);
+  const containerRef = React.useRef<HTMLDivElement>(null);
 
   const handleInputChange = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (onKeyDown) {
@@ -62,9 +67,21 @@ const MultiSelect = ({
     }
   };
 
+  const finalPlaceholder = placeholder || "Type...";
+
+  const maxLength = 20;
+  const typeInputLength = Math.min(
+    Math.max(inputValue.length, finalPlaceholder.length),
+    maxLength
+  );
+
   return (
     <div
-      className={cn(multiSelectVariants({ className, variant }))}
+      ref={containerRef}
+      className={cn(
+        multiSelectVariants({ className, variant }),
+        "max-h-16 overflow-y-auto"
+      )}
       onClick={(e) => {
         if (e.target === e.currentTarget) {
           inputRef.current?.focus();
@@ -75,7 +92,14 @@ const MultiSelect = ({
         {value.map((proficiency) => (
           <Badge
             key={proficiency}
-            className="flex items-center gap-2 pointer-events-auto cursor-pointer"
+            size={size}
+            className={cn(
+              "flex items-center pointer-events-auto cursor-pointer",
+              {
+                "gap-2": size !== "sm",
+                "gap-1": size === "sm",
+              }
+            )}
             onClick={() => {
               const newValue = value.filter((v) => v !== proficiency);
 
@@ -90,10 +114,24 @@ const MultiSelect = ({
 
         <input
           ref={inputRef}
-          placeholder="Type..."
-          className="inline-flex bg-transparent outline-none text-sm w-auto h-[22px] placeholder:text-gray-600"
+          placeholder={finalPlaceholder}
+          className={cn(
+            "inline-flex bg-transparent outline-none text-sm w-auto h-[22px] placeholder:text-gray-600",
+            {
+              "text-xs": size === "sm",
+            }
+          )}
           onKeyDown={handleInputChange}
+          value={inputValue}
+          onChange={(e) => {
+            setInputValue(e.currentTarget.value);
+          }}
           {...inputProps}
+          maxLength={maxLength}
+          style={{
+            ...inputProps?.style,
+            width: `${typeInputLength}ch`,
+          }}
         />
       </div>
     </div>

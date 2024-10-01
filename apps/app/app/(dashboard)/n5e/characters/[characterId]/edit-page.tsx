@@ -592,12 +592,7 @@ const EditPage: React.FC<{
                 </div>
               </div>
 
-              <div
-                className="relative w-full h-[600px] border-[20px] overflow-hidden"
-                style={{
-                  borderImage: "url(/fancy-box-2-bg.svg) 60 60 60 60 fill",
-                }}
-              >
+              <div className="relative w-full overflow-y-auto bg-[#10161a] border-4 rounded border-[#c53131] p-3">
                 <Tabs defaultValue="jutsusAndAttacks" variant="underline">
                   <TabsList className="px-0 md:px-1">
                     <TabsScrollButton className="md:hidden" direction="left" />
@@ -613,10 +608,7 @@ const EditPage: React.FC<{
                     <TabsScrollButton className="md:hidden" direction="right" />
                   </TabsList>
 
-                  <TabsContent
-                    value="jutsusAndAttacks"
-                    className="overflow-y-auto h-[calc(600px-36px)]"
-                  >
+                  <TabsContent value="jutsusAndAttacks">
                     <div className="mb-2">
                       <ToggleGroup
                         size="sm"
@@ -654,17 +646,11 @@ const EditPage: React.FC<{
                     )}
                   </TabsContent>
 
-                  <TabsContent
-                    value="features"
-                    className="overflow-y-auto h-[calc(600px-36px)]"
-                  >
+                  <TabsContent value="features">
                     <CharacterFeatures character={character} />
                   </TabsContent>
 
-                  <TabsContent
-                    value="notes"
-                    className="overflow-y-auto h-[calc(600px-36px)]"
-                  >
+                  <TabsContent value="notes">
                     <div className="flex flex-col w-full gap-2">
                       <span className="block border-b border-red-600 w-full uppercase text-red-600 font-semibold text-xs">
                         Backstory

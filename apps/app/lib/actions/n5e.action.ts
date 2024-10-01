@@ -144,31 +144,18 @@ const hpcpConfigSchema = z
     perLevelBonus: 0,
   });
 
-const weaponSchema = z
-  .object({
-    name: z.string(),
-    damageDice: z.string(),
-    ability: z.string(),
-    addProficiency: z.boolean(),
-    addAbilityModifierToAttack: z.boolean(),
-    addAbilityModifierToDamage: z.boolean(),
-    damageType: z.string(),
-    customAttackBonus: z.number(),
-    customDamageBonus: z.number(),
-    traits: z.string(),
-  })
-  .default({
-    name: "",
-    damageDice: "",
-    ability: "",
-    addProficiency: false,
-    addAbilityModifierToAttack: false,
-    addAbilityModifierToDamage: false,
-    damageType: "",
-    customAttackBonus: 0,
-    customDamageBonus: 0,
-    traits: "",
-  });
+const weaponSchema = z.object({
+  name: z.string(),
+  damageDice: z.string(),
+  ability: z.string(),
+  addProficiency: z.boolean(),
+  addAbilityModifierToAttack: z.boolean(),
+  addAbilityModifierToDamage: z.boolean(),
+  damageType: z.string(),
+  customAttackBonus: z.number(),
+  customDamageBonus: z.number(),
+  traits: z.string(),
+});
 
 const updateCharacterSchema = z.object({
   name: z.string().optional().nullable(),

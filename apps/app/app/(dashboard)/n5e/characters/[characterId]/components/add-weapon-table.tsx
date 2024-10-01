@@ -24,7 +24,7 @@ import {
   Checkbox,
   MultiSelect,
 } from "@craft/ui";
-import { abilities } from "@lib/models/n5e-character";
+import { abilities, emptyWeapon } from "@lib/models/n5e-character";
 import { N5eCharacterWrapper } from "app/(dashboard)/n5e/utils/n5e-character-wrapper";
 import {
   Weapon,
@@ -33,6 +33,7 @@ import {
 } from "app/(dashboard)/n5e/utils/weapons-database";
 import { produce } from "immer";
 import { EllipsisVertical } from "lucide-react";
+import { toJS } from "mobx";
 import { observer } from "mobx-react-lite";
 import React from "react";
 
@@ -42,21 +43,8 @@ export type AddWeaponTableProps = {
 
 const allWeapons = WeaponDatabase.all;
 
-const emptyWeapon = {
-  name: "",
-  damageDice: "",
-  ability: "",
-  addProficiency: false,
-  addAbilityModifierToAttack: false,
-  addAbilityModifierToDamage: false,
-  damageType: "",
-  customAttackBonus: 0,
-  customDamageBonus: 0,
-  traits: "",
-};
-
 export const AddWeaponTable = observer(({ character }: AddWeaponTableProps) => {
-  const [weapon, setWeapon] = React.useState<Weapon | null>(null);
+  const [weaponToAdd, setWeaponToAdd] = React.useState<Weapon>(emptyWeapon);
 
   return (
     <>
@@ -75,29 +63,46 @@ export const AddWeaponTable = observer(({ character }: AddWeaponTableProps) => {
         <TableCaption>A list of your weapons/attacks.</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead>Name</TableHead>
-            <TableHead>Damage Dice</TableHead>
-            <TableHead>Ability</TableHead>
-            <TableHead>Add Prof.</TableHead>
-            <TableHead>Ability to Atk.</TableHead>
-            <TableHead>Ability to Dmg.</TableHead>
-            <TableHead>Dmg. Type</TableHead>
-            <TableHead>Custom Atk. Bonus</TableHead>
-            <TableHead>Custom Dmg. Bonus</TableHead>
-            <TableHead>Traits</TableHead>
-            <TableHead>#</TableHead>
+            <TableHead className="uppercase text-[10px] leading-[1] text-nowrap">
+              Name
+            </TableHead>
+            <TableHead className="uppercase text-[10px] leading-[1] text-nowrap">
+              Dmg Dice
+            </TableHead>
+            <TableHead className="uppercase text-[10px] leading-[1] text-nowrap">
+              Ability
+            </TableHead>
+            <TableHead className="uppercase text-[10px] leading-[1] text-nowrap">
+              Add Prof.
+            </TableHead>
+            <TableHead className="uppercase text-[10px] leading-[1] text-nowrap">
+              Dmg. Type
+            </TableHead>
+            <TableHead className="uppercase text-[10px] leading-[1] max-w-[80px]">
+              Custom Atk. Bonus
+            </TableHead>
+            <TableHead className="uppercase text-[10px] leading-[1] max-w-[80px]">
+              Custom Dmg. Bonus
+            </TableHead>
+            <TableHead className="uppercase text-[10px] leading-[1] text-nowrap">
+              Traits
+            </TableHead>
+            <TableHead className="uppercase text-[10px] leading-[1] text-nowrap">
+              #
+            </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody className="text-white">
           {character.weapons.map((weapon, idx) => (
-            <TableRow key={weapon?.name}>
+            <TableRow key={idx}>
               <TableCell>
                 <ContentEditable
                   placeholder="Weapon Name"
+                  className="text-xs text-nowrap"
                   onChange={(newWeaponName: string) => {
                     character.updateWeapon(
                       idx,
-                      produce(weapon, (draft) => {
+                      produce(toJS(weapon), (draft) => {
                         draft.name = newWeaponName;
                       })
                     );
@@ -108,11 +113,12 @@ export const AddWeaponTable = observer(({ character }: AddWeaponTableProps) => {
               </TableCell>
               <TableCell>
                 <ContentEditable
-                  placeholder="Damage Dice"
+                  placeholder="Dmg. Dice"
+                  className="text-nowrap text-xs text-center"
                   onChange={(newDamageDice: string) => {
                     character.updateWeapon(
                       idx,
-                      produce(weapon, (draft) => {
+                      produce(toJS(weapon), (draft) => {
                         draft.damageDice = newDamageDice;
                       })
                     );
@@ -127,13 +133,13 @@ export const AddWeaponTable = observer(({ character }: AddWeaponTableProps) => {
                   onValueChange={(val) => {
                     character.updateWeapon(
                       idx,
-                      produce(weapon, (draft) => {
+                      produce(toJS(weapon), (draft) => {
                         draft.ability = val;
                       })
                     );
                   }}
                 >
-                  <SelectTrigger>
+                  <SelectTrigger className="text-xs text-nowrap">
                     <SelectValue placeholder="Ability" />
                   </SelectTrigger>
                   <SelectContent>
@@ -145,43 +151,15 @@ export const AddWeaponTable = observer(({ character }: AddWeaponTableProps) => {
                   </SelectContent>
                 </Select>
               </TableCell>
-              <TableCell>
+              <TableCell className="px-0">
                 <Checkbox
-                  className="border-gray-500"
+                  className="border-gray-500 block mx-auto"
                   checked={weapon?.addProficiency}
                   onCheckedChange={(checkedState) => {
                     character.updateWeapon(
                       idx,
-                      produce(weapon, (draft) => {
+                      produce(toJS(weapon), (draft) => {
                         draft.addProficiency = !!checkedState;
-                      })
-                    );
-                  }}
-                />
-              </TableCell>
-              <TableCell>
-                <Checkbox
-                  className="border-gray-500"
-                  checked={weapon?.addAbilityModifierToAttack}
-                  onCheckedChange={(checkedState) => {
-                    character.updateWeapon(
-                      idx,
-                      produce(weapon, (draft) => {
-                        draft.addAbilityModifierToAttack = !!checkedState;
-                      })
-                    );
-                  }}
-                />
-              </TableCell>
-              <TableCell>
-                <Checkbox
-                  className="border-gray-500"
-                  checked={weapon?.addAbilityModifierToDamage}
-                  onCheckedChange={(checkedState) => {
-                    character.updateWeapon(
-                      idx,
-                      produce(weapon, (draft) => {
-                        draft.addAbilityModifierToDamage = !!checkedState;
                       })
                     );
                   }}
@@ -193,14 +171,14 @@ export const AddWeaponTable = observer(({ character }: AddWeaponTableProps) => {
                   onValueChange={(val) => {
                     character.updateWeapon(
                       idx,
-                      produce(weapon, (draft) => {
+                      produce(toJS(weapon), (draft) => {
                         draft.damageType = val;
                       })
                     );
                   }}
                 >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Damage Type" />
+                  <SelectTrigger className="text-xs text-nowrap">
+                    <SelectValue placeholder="Dmg. Type" />
                   </SelectTrigger>
                   <SelectContent>
                     {weaponDamageTypes.map((damageType) => (
@@ -213,12 +191,13 @@ export const AddWeaponTable = observer(({ character }: AddWeaponTableProps) => {
               </TableCell>
               <TableCell>
                 <ContentEditable
+                  className="text-nowrap text-xs text-center"
                   placeholder="Custom Attack Bonus"
                   type="number"
                   onChange={(newCustomAttackBonus) => {
                     character.updateWeapon(
                       idx,
-                      produce(weapon, (draft) => {
+                      produce(toJS(weapon), (draft) => {
                         draft.customAttackBonus = newCustomAttackBonus;
                       })
                     );
@@ -229,12 +208,13 @@ export const AddWeaponTable = observer(({ character }: AddWeaponTableProps) => {
               </TableCell>
               <TableCell>
                 <ContentEditable
+                  className="text-nowrap text-xs text-center"
                   placeholder="Custom Damage Bonus"
                   type="number"
                   onChange={(newCustomDamageBonus: number) => {
                     character.updateWeapon(
                       idx,
-                      produce(weapon, (draft) => {
+                      produce(toJS(weapon), (draft) => {
                         draft.customDamageBonus = newCustomDamageBonus;
                       })
                     );
@@ -243,13 +223,15 @@ export const AddWeaponTable = observer(({ character }: AddWeaponTableProps) => {
                   {weapon?.customDamageBonus}
                 </ContentEditable>
               </TableCell>
-              <TableCell>
+              <TableCell className="max-w-56">
                 <MultiSelect
+                  variant="transparent"
+                  size="sm"
                   value={weapon?.traits ? weapon?.traits.split(", ") : []}
                   onChange={(newTraits) => {
                     character.updateWeapon(
                       idx,
-                      produce(weapon, (draft) => {
+                      produce(toJS(weapon), (draft) => {
                         draft.traits = newTraits.join(", ");
                       })
                     );
@@ -257,19 +239,23 @@ export const AddWeaponTable = observer(({ character }: AddWeaponTableProps) => {
                 />
               </TableCell>
               <TableCell>
-                <EllipsisVertical />
+                <EllipsisVertical
+                  onClick={() => {
+                    character.removeWeapon(idx);
+                  }}
+                />
               </TableCell>
             </TableRow>
           ))}
-          <TableRow key={weapon?.name}>
+          <TableRow key={weaponToAdd?.name}>
             <TableCell>
               <Select
-                value={weapon?.name}
+                value={weaponToAdd?.name}
                 onValueChange={(val) => {
                   const weapon = allWeapons.find(
                     (weapon) => weapon.name === val
                   );
-                  setWeapon(weapon!);
+                  setWeaponToAdd(weapon!);
                 }}
               >
                 <SelectTrigger>
@@ -286,31 +272,31 @@ export const AddWeaponTable = observer(({ character }: AddWeaponTableProps) => {
             </TableCell>
             <TableCell>
               <ContentEditable
-                placeholder="Damage Dice"
-                className="text-nowrap"
+                placeholder="Dmg. Dice"
+                className="text-nowrap text-xs text-center"
                 onChange={(newDamageDice: string) => {
-                  setWeapon(
-                    produce(weapon || emptyWeapon, (draft) => {
+                  setWeaponToAdd(
+                    produce(weaponToAdd, (draft) => {
                       draft.damageDice = newDamageDice;
                     })
                   );
                 }}
               >
-                {weapon?.damageDice}
+                {weaponToAdd?.damageDice}
               </ContentEditable>
             </TableCell>
             <TableCell>
               <Select
-                value={weapon?.ability}
+                value={weaponToAdd?.ability}
                 onValueChange={(val) => {
-                  setWeapon(
-                    produce(weapon || emptyWeapon, (draft) => {
+                  setWeaponToAdd(
+                    produce(weaponToAdd, (draft) => {
                       draft.ability = val;
                     })
                   );
                 }}
               >
-                <SelectTrigger>
+                <SelectTrigger className="text-xs text-nowrap">
                   <SelectValue placeholder="Ability" />
                 </SelectTrigger>
                 <SelectContent>
@@ -322,13 +308,13 @@ export const AddWeaponTable = observer(({ character }: AddWeaponTableProps) => {
                 </SelectContent>
               </Select>
             </TableCell>
-            <TableCell>
+            <TableCell className="px-0">
               <Checkbox
-                className="border-gray-500"
-                checked={weapon?.addProficiency}
+                className="border-gray-500 block mx-auto"
+                checked={weaponToAdd?.addProficiency}
                 onCheckedChange={(checkedState) => {
-                  setWeapon(
-                    produce(weapon || emptyWeapon, (draft) => {
+                  setWeaponToAdd(
+                    produce(weaponToAdd, (draft) => {
                       draft.addProficiency = !!checkedState;
                     })
                   );
@@ -336,44 +322,18 @@ export const AddWeaponTable = observer(({ character }: AddWeaponTableProps) => {
               />
             </TableCell>
             <TableCell>
-              <Checkbox
-                className="border-gray-500"
-                checked={weapon?.addAbilityModifierToAttack}
-                onCheckedChange={(checkedState) => {
-                  setWeapon(
-                    produce(weapon || emptyWeapon, (draft) => {
-                      draft.addAbilityModifierToAttack = !!checkedState;
-                    })
-                  );
-                }}
-              />
-            </TableCell>
-            <TableCell>
-              <Checkbox
-                className="border-gray-500"
-                checked={weapon?.addAbilityModifierToDamage}
-                onCheckedChange={(checkedState) => {
-                  setWeapon(
-                    produce(weapon || emptyWeapon, (draft) => {
-                      draft.addAbilityModifierToDamage = !!checkedState;
-                    })
-                  );
-                }}
-              />
-            </TableCell>
-            <TableCell>
               <Select
-                value={weapon?.damageType}
+                value={weaponToAdd?.damageType}
                 onValueChange={(val) => {
-                  setWeapon(
-                    produce(weapon || emptyWeapon, (draft) => {
+                  setWeaponToAdd(
+                    produce(weaponToAdd, (draft) => {
                       draft.damageType = val;
                     })
                   );
                 }}
               >
-                <SelectTrigger>
-                  <SelectValue placeholder="Damage Type" />
+                <SelectTrigger className="text-xs text-nowrap">
+                  <SelectValue placeholder="Dmg. Type" />
                 </SelectTrigger>
                 <SelectContent>
                   {weaponDamageTypes.map((damageType) => (
@@ -386,40 +346,46 @@ export const AddWeaponTable = observer(({ character }: AddWeaponTableProps) => {
             </TableCell>
             <TableCell>
               <ContentEditable
+                className="text-nowrap text-xs text-center"
                 placeholder="Custom Attack Bonus"
                 type="number"
                 onChange={(newCustomAttackBonus) => {
-                  setWeapon(
-                    produce(weapon || emptyWeapon, (draft) => {
+                  setWeaponToAdd(
+                    produce(weaponToAdd, (draft) => {
                       draft.customAttackBonus = newCustomAttackBonus;
                     })
                   );
                 }}
               >
-                {weapon?.customAttackBonus}
+                {weaponToAdd?.customAttackBonus}
               </ContentEditable>
             </TableCell>
             <TableCell>
               <ContentEditable
+                className="text-nowrap text-xs text-center"
                 placeholder="Custom Damage Bonus"
                 type="number"
                 onChange={(newCustomDamageBonus: number) => {
-                  setWeapon(
-                    produce(weapon || emptyWeapon, (draft) => {
+                  setWeaponToAdd(
+                    produce(weaponToAdd, (draft) => {
                       draft.customDamageBonus = newCustomDamageBonus;
                     })
                   );
                 }}
               >
-                {weapon?.customDamageBonus}
+                {weaponToAdd?.customDamageBonus}
               </ContentEditable>
             </TableCell>
             <TableCell>
               <MultiSelect
-                value={weapon?.traits ? weapon?.traits.split(", ") : []}
+                variant="transparent"
+                size="sm"
+                value={
+                  weaponToAdd?.traits ? weaponToAdd?.traits.split(", ") : []
+                }
                 onChange={(newTraits) => {
-                  setWeapon(
-                    produce(weapon || emptyWeapon, (draft) => {
+                  setWeaponToAdd(
+                    produce(weaponToAdd, (draft) => {
                       draft.traits = newTraits.join(", ");
                     })
                   );
@@ -429,10 +395,10 @@ export const AddWeaponTable = observer(({ character }: AddWeaponTableProps) => {
             <TableCell>
               <Button
                 variant="secondary"
-                disabled={!weapon}
+                disabled={!weaponToAdd}
                 onClick={() => {
-                  character.addWeapon(weapon!);
-                  setWeapon(null);
+                  character.addWeapon(weaponToAdd!);
+                  setWeaponToAdd(emptyWeapon);
                 }}
               >
                 Add

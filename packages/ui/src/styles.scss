@@ -28,5 +28,11 @@
 
       content: attr(data-placeholder);
     }
+    // when empty and with placeholder, need to account for text alignment
+    &.text-center {
+      &:empty::before {
+        justify-content: center;
+      }
+    }
   }
 }

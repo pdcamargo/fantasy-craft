@@ -3,12 +3,12 @@
 import skills from "app/(dashboard)/n5e/data/skills.json";
 
 import { evaluate } from "mathjs";
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, toJS } from "mobx";
 import { JutsuDatabase, JutsuGroupType } from "./jutsu-database";
 import { FeatDatabase } from "./feat-database";
 import { ClanDatabase, ClanFeature, ClanNames } from "./clan-database";
 import { ClassDatabase, ClassNames } from "./class-database";
-import { N5eCharacter } from "@lib/models/n5e-character";
+import { emptyWeapon, N5eCharacter } from "@lib/models/n5e-character";
 
 export type AbilityName =
   | "Strength"
@@ -558,7 +558,10 @@ export class N5eCharacterWrapper {
       this.character.weapons = [];
     }
 
-    this.character.weapons.push(weapon);
+    this.character.weapons.push({
+      ...emptyWeapon,
+      ...weapon,
+    });
 
     this.saveFunction({
       data: this.character,
@@ -570,10 +573,17 @@ export class N5eCharacterWrapper {
       this.character.weapons = [];
     }
 
+    if (!this.character.weapons[index]) {
+      return;
+    }
+
     this.character.weapons[index] = {
+      ...emptyWeapon,
       ...this.character.weapons[index],
       ...newWeapon,
     };
+
+    console.log("new weapon", toJS(this.character.weapons[index]));
 
     this.saveFunction({
       data: this.character,

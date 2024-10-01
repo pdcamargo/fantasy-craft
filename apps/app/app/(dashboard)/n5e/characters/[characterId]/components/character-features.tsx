@@ -52,12 +52,10 @@ export const CharacterFeatures: React.FC<{
         </ToggleGroupItem>
       </ToggleGroup>
 
-      <div className={cn("h-[470px] overflow-y-auto")}>
-        <div className="h-fit flex flex-col gap-3">
-          {shouldDisplay("clan") && <ClanFeatures character={character} />}
-          {shouldDisplay("class") && <ClassFeatures character={character} />}
-          {shouldDisplay("feat") && <Feats character={character} />}
-        </div>
+      <div className="h-fit flex flex-col gap-3">
+        {shouldDisplay("clan") && <ClanFeatures character={character} />}
+        {shouldDisplay("class") && <ClassFeatures character={character} />}
+        {shouldDisplay("feat") && <Feats character={character} />}
       </div>
     </div>
   );
@@ -131,7 +129,7 @@ const Feats: React.FC<{ character: N5eCharacterWrapper }> = observer(
         </div>
       </div>
     );
-  },
+  }
 );
 
 const ClassFeatures: React.FC<{ character: N5eCharacterWrapper }> = observer(
@@ -169,7 +167,7 @@ const ClassFeatures: React.FC<{ character: N5eCharacterWrapper }> = observer(
                         className="inline-flex text-sm"
                         dangerouslySetInnerHTML={{
                           __html: parseMarkdown(
-                            `**${item.title}**: ${item.details}`,
+                            `**${item.title}**: ${item.details}`
                           ),
                         }}
                       />
@@ -182,7 +180,7 @@ const ClassFeatures: React.FC<{ character: N5eCharacterWrapper }> = observer(
         </div>
       </div>
     );
-  },
+  }
 );
 
 const ClanFeatures: React.FC<{ character: N5eCharacterWrapper }> = observer(
@@ -220,7 +218,7 @@ const ClanFeatures: React.FC<{ character: N5eCharacterWrapper }> = observer(
                         className="inline-flex text-sm"
                         dangerouslySetInnerHTML={{
                           __html: parseMarkdown(
-                            `**${item.title}**: ${item.details}`,
+                            `**${item.title}**: ${item.details}`
                           ),
                         }}
                       />
@@ -233,5 +231,5 @@ const ClanFeatures: React.FC<{ character: N5eCharacterWrapper }> = observer(
         </div>
       </div>
     );
-  },
+  }
 );
